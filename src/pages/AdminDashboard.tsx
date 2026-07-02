@@ -32,7 +32,8 @@ import {
   getTestimonialsApi,
   saveTestimonialApi,
   deleteTestimonialApi,
-  Testimonial
+  Testimonial,
+  API_URL
 } from "@/data/records";
 import { 
   Trophy, 
@@ -318,7 +319,7 @@ const AdminDashboard = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })

@@ -209,7 +209,7 @@ export const saveSubmissions = (items: StoredSubmission[]) => {
 
 // ================= BACKEND API INTEGRATIONS =================
 
-export const API_URL = "http://localhost:5000/api";
+export const API_URL = import.meta.env.VITE_API_URL || "https://book-of-archery.onrender.com/api";
 
 // 1. Records API
 export const getRecordsApi = async (): Promise<RecordItem[]> => {

@@ -24,7 +24,8 @@ import { toast } from "sonner";
 import { 
   getMySubmissionsApi, 
   deleteSubmissionApi,
-  StoredSubmission 
+  StoredSubmission,
+  API_URL
 } from "@/data/records";
 import { cn } from "@/lib/utils";
 
@@ -83,7 +84,7 @@ const UserLogin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
@@ -113,7 +114,7 @@ const UserLogin = () => {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
