@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Archery Book of World Records — Black / Gold / Deep Red */
+@layer base {
+  :root {
+    --background: 193 100% 95%;
+    --foreground: 0 0% 9%;
+
+    --card: 193 100% 97%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 193 100% 98%;
+    --popover-foreground: 0 0% 9%;
+
+    /* Gold - slightly darker/higher contrast for light backgrounds */
+    --primary: 43 65% 38%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 43 75% 45%;
+
+    /* Deep red */
+    --secondary: 0 67% 28%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 43 55% 94%;
+    --accent-foreground: 43 65% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 43 65% 38%;
+
+    --radius: 0.25rem;
+
+     --gradient-gold: linear-gradient(135deg, hsl(222 80% 35%), hsl(197 95% 55%));
+     --gradient-dark: linear-gradient(180deg, hsla(193, 100%, 95%, 0) 0%, hsla(193, 100%, 95%, 0.6) 50%, hsla(193, 100%, 95%, 0.8) 100%);
+     --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(210 90% 40% / 0.08), transparent 60%);
+ 
+     --shadow-gold: 0 10px 30px -10px hsl(222 80% 35% / 0.2);
+    --shadow-deep: 0 15px 30px -10px hsl(0 0% 0% / 0.15);
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 43 65% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 89%;
+    --sidebar-ring: 43 65% 38%;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 40 30% 94%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 40 30% 94%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 40 30% 94%;
+
+    /* Gold */
+    --primary: 43 55% 54%;
+    --primary-foreground: 0 0% 6%;
+    --primary-glow: 45 80% 68%;
+
+    /* Deep red */
+    --secondary: 0 67% 32%;
+    --secondary-foreground: 40 30% 96%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 40 10% 65%;
+
+    --accent: 43 55% 54%;
+    --accent-foreground: 0 0% 6%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 40 30% 96%;
+
+    --border: 40 20% 18%;
+    --input: 0 0% 14%;
+    --ring: 43 55% 54%;
+
+    --gradient-gold: linear-gradient(135deg, hsl(43 55% 54%), hsl(45 80% 68%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 4% / 0) 0%, hsl(0 0% 4% / 0.6) 50%, hsl(0 0% 4%) 100%);
+    --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(43 55% 54% / 0.18), transparent 60%);
+
+    --shadow-gold: 0 10px 40px -10px hsl(43 55% 54% / 0.45);
+    --shadow-deep: 0 30px 60px -20px hsla(0, 0%, 0%, 0.8);
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 40 30% 94%;
+    --sidebar-primary: 43 55% 54%;
+    --sidebar-primary-foreground: 0 0% 6%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 40 30% 94%;
+    --sidebar-border: 40 20% 18%;
+    --sidebar-ring: 43 55% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Work Sans', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+  html:not(.dark) body {
+    background-color: hsla(193, 100%, 95%, 0.8) !important;
+  }
+  html:not(.dark) footer {
+    --primary: 193 100% 90%;
+    --foreground: 0 0% 100%;
+    --muted-foreground: 193 100% 85%;
+    --border: 193 100% 95% / 0.2;
+    background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%)) !important;
+  }
+  html:not(.dark) header {
+    --primary: 193 100% 90%;
+    --foreground: 0 0% 100%;
+    --muted-foreground: 193 100% 85%;
+    --border: 193 100% 95% / 0.15;
+    --background: 222 80% 20%;
+  }
+  html:not(.dark) header:not(.bg-transparent) {
+    background: linear-gradient(135deg, hsla(222, 80%, 20%, 0.95), hsla(205, 90%, 40%, 0.95)) !important;
+    border-bottom-color: hsla(193, 100%, 95%, 0.15) !important;
+  }
+}
+
+@layer utilities {
+  .text-primary {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .bg-gradient-dark {
+    background: var(--gradient-dark);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .shadow-deep {
+    box-shadow: var(--shadow-deep);
+  }
+
+  .gold-line {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
+  }
+
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(hsl(40 20% 80% / 0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.9s var(--transition-smooth);
+  }
+
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
