@@ -2,6 +2,8 @@ import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, ShieldCheck, ClipboardCheck } from "lucide-react";
 import { toast } from "sonner";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface DownloadItem {
   id: string;
@@ -41,19 +43,29 @@ const downloadItems: DownloadItem[] = [
     icon: <ClipboardCheck className="text-primary h-6 w-6" />,
     fileSize: "6.4 KB",
     fileUrl: "/Archery_Record_Claim_Form.pdf"
-  },
-  // {
-  //   id: "rules-handbook",
-  //   title: "ABWR Standard Procedure & Rules",
-  //   filename: "ABWR_Standard_Procedure_And_Rules.txt",
-  //   description: "The complete guidelines, safety protocols, target dimension standards, and shooting definitions for all official registry categories.",
-  //   icon: <ShieldCheck className="text-primary h-6 w-6" />,
-  //   fileSize: "2.4 MB",
-  //   content: `ARCHERY BOOK OF WORLD RECORDS\nSTANDARD PROCEDURE & RULES HANDBOOK (2026 EDITION)\n==================================================\n\nSECTION A: GENERAL STANDARDS\n1. All attempts must be witnessed by at least two independent, qualified observers who have no affiliation or personal connection with the candidate.\n2. Calibration of any measuring equipment (tape measures, laser devices, stopwatches, wind gauges) must be verified and documented before shooting begins.\n3. No modified or prohibited auxiliary sights, mechanical releases, or stabilizing gear is permitted unless specifically authorized by the class rules.\n\nSECTION B: ARCHERY DIVISIONS\n1. RECURVE / TARGET ARCHERY: Standard FITA targets. Arrow diameters must not exceed 9.3mm.\n2. ENDURANCE & RANGE: Attempt must be conducted in open air under natural wind conditions.\n3. KIDS / JUNIOR CIRCUIT: Open to ages 7 to 15 under strict parental and range supervisor oversight.\n\nSECTION C: SAFETY PROTOCOLS\n1. A designated Safety Marshal must be present on-site.\n2. Attempt will be suspended if wind speeds exceed 25 knots or visibility drops below target distance.`
-  // }
+  }
 ];
 
 const Downloads = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setRevealed(true);
+        } else {
+          setRevealed(false);
+        }
+      });
+    }, { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const handleDownload = (item: DownloadItem) => {
     try {
       if (item.fileUrl) {
@@ -89,12 +101,18 @@ const Downloads = () => {
         description="Access official application packets, claim checklists, and regulatory rulebooks. Prepare your attempt according to ABWR global standards."
       />
 
-      <section className="container pb-32">
+      <section ref={sectionRef} className="container pb-32">
         <div className="max-w-4xl mx-auto space-y-8">
-          {downloadItems.map((item) => (
+          {downloadItems.map((item, idx) => (
             <div
               key={item.id}
-              className="group relative flex flex-col md:flex-row items-start md:items-center justify-between p-8 border border-border/60 bg-card/60 backdrop-blur-md hover:border-primary/40 transition-all duration-500 rounded-lg gap-6"
+              className={cn(
+                "group relative flex flex-col md:flex-row items-start md:items-center justify-between p-8 border border-border/60 bg-card/60 backdrop-blur-md hover:border-primary/40 transition-all duration-500 rounded-lg gap-6",
+                "reveal-card",
+                idx % 2 === 0 ? "reveal-left" : "reveal-right",
+                revealed && "revealed"
+              )}
+              style={{ transitionDelay: `${idx * 150}ms` }}
             >
               {/* Gold accent line */}
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-all duration-500 rounded-l-lg" />
@@ -128,7 +146,14 @@ const Downloads = () => {
           ))}
 
           {/* Quick Notice */}
-          <div className="bg-primary/5 border text-justify border-primary/20 p-6 rounded-lg text-sm text-foreground/80 leading-relaxed">
+          <div 
+            className={cn(
+              "bg-primary/5 border text-justify border-primary/20 p-6 rounded-lg text-sm text-[#aa771c] dark:text-[#d4af37] leading-relaxed",
+              "reveal-card reveal-left",
+              revealed && "revealed"
+            )}
+            style={{ transitionDelay: `${downloadItems.length * 150}ms` }}
+          >
             <strong>Important Note:</strong> All forms must be filled out completely. Scanned digital copies or text entries should be uploaded directly via the online portal. For on-site adjudications, please mail physical copies to our Geneva headquarters at least 30 days before your attempt.
           </div>
         </div>

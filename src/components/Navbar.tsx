@@ -80,7 +80,7 @@ const Navbar = () => {
             className="h-[60px] w-[60px] md:h-[68px] md:w-[68px] object-contain group-hover:rotate-6 transition-transform duration-500 shrink-0"
           />
           <div className="flex flex-col justify-center leading-none">
-            <div className="font-display text-lg sm:text-xl md:text-2xl lg:text-[25px] font-bold tracking-wider uppercase text-foreground">
+            <div className="font-display text-base sm:text-lg md:text-xl lg:text-[22px] font-bold tracking-wider uppercase text-foreground">
               Archery Book of World Records
             </div>
             <div className="text-[8px] sm:text-[9px] md:text-[10px] uppercase tracking-[0.24em] text-primary font-medium mt-1">
@@ -90,12 +90,12 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-3 xl:gap-6 shrink-0 whitespace-nowrap">
           <RouterNavLink
             to="/about"
             className={({ isActive }) =>
               cn(
-                "text-sm uppercase tracking-[0.18em] transition-all duration-300 px-4 py-2 rounded-full",
+                "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
                   ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
                   : "text-foreground/80 hover:text-primary hover:bg-muted/40"
@@ -111,7 +111,7 @@ const Navbar = () => {
             onMouseEnter={() => setActiveMenu("apply")}
             onMouseLeave={() => setActiveMenu(null)}
           >
-            <button className="text-sm uppercase tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors flex items-center gap-1.5 focus:outline-none select-none">
+            <button className="text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors flex items-center gap-1 focus:outline-none select-none whitespace-nowrap">
               Apply for record <ChevronDown className={cn("h-3 w-3 transition-transform duration-300", activeMenu === "apply" && "rotate-180")} />
             </button>
 
@@ -159,7 +159,7 @@ const Navbar = () => {
             onMouseEnter={() => setActiveMenu("downloads")}
             onMouseLeave={() => setActiveMenu(null)}
           >
-            <button className="text-sm uppercase tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors flex items-center gap-1.5 focus:outline-none select-none">
+            <button className="text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors flex items-center gap-1 focus:outline-none select-none whitespace-nowrap">
               Downloads <ChevronDown className={cn("h-3 w-3 transition-transform duration-300", activeMenu === "downloads" && "rotate-180")} />
             </button>
 
@@ -194,7 +194,7 @@ const Navbar = () => {
             to="/records"
             className={({ isActive }) =>
               cn(
-                "text-sm uppercase tracking-[0.18em] transition-all duration-300 px-4 py-2 rounded-full",
+                "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
                   ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
                   : "text-foreground/80 hover:text-primary hover:bg-muted/40"
@@ -208,7 +208,7 @@ const Navbar = () => {
             to="/contact"
             className={({ isActive }) =>
               cn(
-                "text-sm uppercase tracking-[0.18em] transition-all duration-300 px-4 py-2 rounded-full",
+                "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
                   ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
                   : "text-foreground/80 hover:text-primary hover:bg-muted/40"
@@ -221,7 +221,7 @@ const Navbar = () => {
 
         </nav>
 
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
           <ThemeToggle />
           {isLoggedIn ? (
             <>

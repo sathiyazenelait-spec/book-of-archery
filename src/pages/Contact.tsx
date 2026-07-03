@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { z } from "zod";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { saveContactApi } from "@/data/records";
+import { cn } from "@/lib/utils";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(100),
@@ -17,11 +18,32 @@ const schema = z.object({
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setRevealed(true);
+        } else {
+          setRevealed(false);
+        }
+      });
+    }, { threshold: 0.1 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(form);
-    if (!r.success) { toast.error(r.error.issues[0].message); return; }
+    if (!r.success) {
+      toast.error(r.error.issues[0].message);
+      return;
+    }
     
     const success = await saveContactApi(form);
     if (success) {
@@ -37,11 +59,16 @@ const Contact = () => {
       <PageHeader
         eyebrow="Contact"
         title={<>Reach the <em className="text-gradient-gold not-italic">registry.</em></>}
-        description="Whether you're applying, appealing or simply curious — our adjudication office responds within 48 hours."
+        description="Whether you are actively preparing your first official application, appealing a certification decision, or simply curious about our global verification standards — our international adjudication office is here to guide you. Our team of certified expert coordinators is dedicated to answering your logistics, safety, and evidence requirements. We aim to review and respond to all inquiries within 48 hours, helping you take the next step toward archery history."
       />
 
-      <section className="container py-20 grid lg:grid-cols-5 gap-12">
-        <div className="lg:col-span-2 space-y-8">
+      <section ref={sectionRef} className="container py-20 grid lg:grid-cols-5 gap-12 overflow-hidden">
+        <div 
+          className={cn(
+            "lg:col-span-2 space-y-8 reveal-card reveal-left",
+            revealed && "revealed"
+          )}
+        >
           <Info icon={MapPin} label="Headquarters" value={"14 Laurel Court\nGeneva, Switzerland"} />
           <Info icon={Mail} label="Email" value="records@abwr.org" />
           <Info icon={Phone} label="Telephone" value="+41 22 555 0184" />
@@ -55,7 +82,14 @@ const Contact = () => {
           </div>
         </div>
 
-        <form onSubmit={submit} className="lg:col-span-3 bg-card border border-border/60 p-10 space-y-6">
+        <form 
+          onSubmit={submit} 
+          className={cn(
+            "lg:col-span-3 bg-card border border-border/60 p-10 space-y-6 reveal-card reveal-right",
+            revealed && "revealed"
+          )}
+          style={{ transitionDelay: "150ms" }}
+        >
           <h2 className="font-display text-3xl mb-2">Send us a message</h2>
           <div className="space-y-2">
             <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Name</Label>

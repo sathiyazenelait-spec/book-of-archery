@@ -1,15 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "@/components/PageHeader";
 import { getRecordsApi, categories, RecordCategory, RecordItem } from "@/data/records";
 import { Input } from "@/components/ui/input";
 import { Search, MapPin, Calendar, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Records = () => {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<RecordCategory | "All">("All");
   const [allRecords, setAllRecords] = useState<RecordItem[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -32,16 +41,38 @@ const Records = () => {
     });
   }, [allRecords, query, active]);
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    setRevealed(false); // Reset animation state on filter change
+
+    const timer = setTimeout(() => {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setRevealed(true);
+          } else {
+            setRevealed(false);
+          }
+        });
+      }, { threshold: 0.02 });
+      io.observe(el);
+      return () => io.disconnect();
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [filtered]);
+
   return (
     <>
       <PageHeader
         eyebrow="The Registry"
         title={<>All <em className="text-gradient-gold not-italic">certified</em> records.</>}
-        description="Browse every achievement archived by the ABWR adjudication panels. Filter by discipline or search by archer, title or location."
+        description="Explore the definitive chronicle of human potential and precision. Browse every historic milestone, record-breaking attempt, and extraordinary feat certified by the global ABWR adjudication panels. Use the filter options to narrow down by specific archery discipline or search directly by archer name, record title, or attempt location to discover the legendary achievements that continue to shape the sport of archery across generations."
       />
 
-      <section className="container py-16">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-12">
+      <section ref={sectionRef} className="container py-16">
+        <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
             <Input
@@ -51,21 +82,20 @@ const Records = () => {
               className="pl-11 h-12 bg-card border-border/60 focus-visible:ring-primary/40"
             />
           </div>
-          <div className="flex flex-wrap gap-2">
-            {(["All", ...categories] as const).map((c) => (
-              <button
-                key={c}
-                onClick={() => setActive(c)}
-                className={cn(
-                  "px-4 py-2 text-xs uppercase tracking-[0.2em] border transition-all",
-                  active === c
-                    ? "border-primary text-primary bg-primary/5"
-                    : "border-border/60 text-muted-foreground hover:text-foreground hover:border-foreground/40"
-                )}
-              >
-                {c}
-              </button>
-            ))}
+          <div className="w-full md:w-72">
+            <Select value={active} onValueChange={(val) => setActive(val as RecordCategory | "All")}>
+              <SelectTrigger className="h-12 bg-card border-border/60 focus:ring-primary/40 text-muted-foreground">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-card/95 backdrop-blur-md border-border/60">
+                <SelectItem value="All">All Categories</SelectItem>
+                {categories.map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -73,11 +103,17 @@ const Records = () => {
           <div className="text-center py-24 text-muted-foreground">No records match your search.</div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filtered.map((r) => (
+            {filtered.map((r, idx) => (
               <Link
                 key={r.id}
                 to={`/records/${r.id}`}
-                className="group border border-border/60 bg-card hover:border-primary/40 transition-all duration-500 overflow-hidden"
+                className={cn(
+                  "group border border-border/60 bg-card hover:border-primary/40 transition-all duration-500 overflow-hidden",
+                  "reveal-card",
+                  idx % 3 === 0 ? "reveal-left" : idx % 3 === 2 ? "reveal-right" : "reveal-center",
+                  revealed && "revealed"
+                )}
+                style={{ transitionDelay: `${(idx % 3) * 150}ms` }}
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img

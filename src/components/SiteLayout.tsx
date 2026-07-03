@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
+import { Outlet, ScrollRestoration, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ArcheryBackgroundAnimation from "./ArcheryBackgroundAnimation";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,7 @@ const logo = "/archery_image.png";
 const SiteLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Clear legacy localStorage key if present
@@ -75,9 +77,12 @@ const SiteLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <ArcheryBackgroundAnimation />
       <Navbar />
       <main className="flex-1">
-        <Outlet />
+        <div key={location.pathname} className="animate-page-float">
+          <Outlet />
+        </div>
       </main>
       <Footer />
       <ScrollRestoration />

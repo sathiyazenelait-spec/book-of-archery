@@ -152,10 +152,8 @@
     --muted-foreground: 193 100% 85%;
     --border: 193 100% 95% / 0.15;
     --background: 222 80% 20%;
-  }
-  html:not(.dark) header:not(.bg-transparent) {
     background: linear-gradient(135deg, hsla(222, 80%, 20%, 0.95), hsla(205, 90%, 40%, 0.95)) !important;
-    border-bottom-color: hsla(193, 100%, 95%, 0.15) !important;
+    border-bottom: 1px solid hsla(193, 100%, 95%, 0.15) !important;
   }
 }
 
@@ -210,5 +208,213 @@
   .reveal.in {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Stats Section Animations */
+  @keyframes slide-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes slide-light {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes border-flash {
+    0% {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 rgba(212, 175, 55, 0);
+      transform: scale(1);
+    }
+    30% {
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      transform: scale(1.03);
+    }
+    100% {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 rgba(212, 175, 55, 0);
+      transform: scale(1);
+    }
+  }
+
+  .stats-section-light {
+    background: linear-gradient(135deg, #f0f9ff, #ffffff, #e0f2fe, #ffffff, #f0f9ff) !important;
+    background-size: 300% 300% !important;
+    animation: slide-bg 12s ease infinite !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .stats-section-dark {
+    background: linear-gradient(135deg, #070604, #18140c, #261f12, #18140c, #070604) !important;
+    background-size: 300% 300% !important;
+    animation: slide-bg 12s ease infinite !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .stat-card {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  html:not(.dark) .stat-card {
+    background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%)) !important;
+  }
+
+  .stat-card-animate {
+    animation: border-flash 1.5s ease-in-out;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #d4af37 !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(212, 175, 55, 0.35) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  html:not(.dark) .stat-card:hover {
+    background: linear-gradient(135deg, hsl(222 80% 25%), hsl(205 90% 45%)) !important;
+  }
+
+  .dark .stat-card:hover {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Testimonial Card Animations */
+  @keyframes shine-loop {
+    0% {
+      left: -150%;
+    }
+    100% {
+      left: 150%;
+    }
+  }
+
+  .testimonial-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%), hsl(222 80% 15%), hsl(205 90% 40%), hsl(222 80% 20%)) !important;
+    background-size: 300% 300% !important;
+    animation: slide-bg 10s ease infinite !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .testimonial-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    z-index: 5;
+  }
+
+  .testimonial-card blockquote,
+  .testimonial-card figcaption div,
+  .testimonial-card .quote-icon {
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: color 0.5s ease;
+  }
+
+  .testimonial-card figcaption .title-text {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Hover State */
+  .testimonial-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: linear-gradient(135deg, #aa771c, #f3e5ab, #8a5a00, #fbf5b7, #aa771c) !important;
+    background-size: 300% 300% !important;
+    animation: slide-bg 5s ease infinite !important;
+    border-color: #d4af37 !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), 0 0 20px rgba(212, 175, 55, 0.3) !important;
+  }
+
+  .testimonial-card:hover::after {
+    opacity: 1;
+    animation: shine-loop 2s infinite linear;
+  }
+
+  .testimonial-card:hover blockquote,
+  .testimonial-card:hover figcaption div,
+  .testimonial-card:hover .quote-icon {
+    color: #ffffff !important;
+  }
+
+  .testimonial-card:hover figcaption .title-text {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  /* Reveal Section Animations */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(45px) scale(0.97);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .reveal-section.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Card Scroll Reveal (Left/Center/Right to Center) */
+  .reveal-card {
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.34, 1.3, 0.64, 1), transform 1.4s cubic-bezier(0.34, 1.3, 0.64, 1);
+    will-change: transform, opacity;
+  }
+
+  .reveal-left {
+    transform: translateX(-70px) scale(0.97);
+  }
+
+  .reveal-center {
+    transform: translateY(45px) scale(0.97);
+  }
+
+  .reveal-right {
+    transform: translateX(70px) scale(0.97);
+  }
+
+  /* When revealed, move to original center position */
+  .reveal-card.revealed {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) !important;
+  }
+
+  /* Page Float-in Animation */
+  @keyframes page-float-in {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-page-float {
+    animation: page-float-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }

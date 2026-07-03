@@ -2,17 +2,37 @@ import { Link } from "react-router-dom";
 import { getStoredRecords, RecordItem } from "@/data/records";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const FeaturedRecords = () => {
   const [featured, setFeatured] = useState<RecordItem[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     setFeatured(getStoredRecords().slice(0, 3));
   }, []);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setRevealed(true);
+        } else {
+          setRevealed(false);
+        }
+      });
+    }, { threshold: 0.1 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className="container py-28 md:py-40">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+    <section ref={sectionRef} className="container py-16 md:py-20">
+      <div className={cn("flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-section", revealed && "revealed")}>
         <div>
           <div className="flex items-center gap-3 mb-5">
             <div className="h-px w-10 bg-primary" />
@@ -32,8 +52,13 @@ const FeaturedRecords = () => {
           <Link
             key={r.id}
             to={`/records/${r.id}`}
-            className="group relative overflow-hidden rounded-sm bg-card border border-border/60 hover:border-primary/50 transition-all duration-500"
-            style={{ animationDelay: `${i * 120}ms` }}
+            className={cn(
+              "group relative overflow-hidden rounded-sm bg-card border border-border/60 hover:border-primary/50 transition-all duration-500",
+              "reveal-card",
+              i === 0 ? "reveal-left" : i === 2 ? "reveal-right" : "reveal-center",
+              revealed && "revealed"
+            )}
+            style={{ transitionDelay: `${i * 150}ms` }}
           >
             <div className="aspect-[4/5] overflow-hidden">
               <img
