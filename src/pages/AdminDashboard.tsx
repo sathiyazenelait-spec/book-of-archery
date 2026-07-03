@@ -119,6 +119,8 @@ const AdminDashboard = () => {
   const [formUsername, setFormUsername] = useState("");
   const [formPassword, setFormPassword] = useState("");
   const [formRole, setFormRole] = useState("user");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
 
   // Dialog & Form edit states for Stats
   const [editingStat, setEditingStat] = useState<HomepageStat | null>(null);
@@ -637,6 +639,8 @@ const AdminDashboard = () => {
     setFormUsername("");
     setFormPassword("");
     setFormRole("user");
+    setFormEmail("");
+    setFormPhone("");
   };
 
   const handleAddUserConfirm = async () => {
@@ -645,7 +649,13 @@ const AdminDashboard = () => {
       return;
     }
     const token = sessionStorage.getItem("abwr_admin_token") || "";
-    const newUser: UserItem = { username: formUsername, password: formPassword, role: formRole };
+    const newUser: UserItem = { 
+      username: formUsername, 
+      password: formPassword, 
+      role: formRole,
+      email: formEmail,
+      phone: formPhone
+    };
     const success = await saveUserApi(newUser, false, token);
     if (success) {
       setAddingUser(false);
@@ -662,6 +672,8 @@ const AdminDashboard = () => {
     setFormUsername(user.username);
     setFormPassword("");
     setFormRole(user.role);
+    setFormEmail(user.email || "");
+    setFormPhone(user.phone || "");
   };
 
   const handleEditUserConfirm = async () => {
@@ -671,7 +683,13 @@ const AdminDashboard = () => {
       return;
     }
     const token = sessionStorage.getItem("abwr_admin_token") || "";
-    const updatedUser: UserItem = { id: editingUser.id, username: formUsername, role: formRole };
+    const updatedUser: UserItem = { 
+      id: editingUser.id, 
+      username: formUsername, 
+      role: formRole,
+      email: formEmail,
+      phone: formPhone
+    };
     if (formPassword.trim() !== "") {
       updatedUser.password = formPassword;
     }
@@ -1132,6 +1150,8 @@ const AdminDashboard = () => {
                   <tr className="border-b border-border/60 bg-muted/30 text-muted-foreground uppercase text-[10px] tracking-wider">
                     <th className="p-4">User ID</th>
                     <th className="p-4">Username</th>
+                    <th className="p-4">Email</th>
+                    <th className="p-4">Phone</th>
                     <th className="p-4">System Role</th>
                     <th className="p-4">Created Date</th>
                     <th className="p-4 text-center">Action</th>
@@ -1142,6 +1162,8 @@ const AdminDashboard = () => {
                     <tr key={user.id} className="hover:bg-muted/10 transition-colors">
                       <td className="p-4 font-bold text-foreground">{user.id}</td>
                       <td className="p-4 font-semibold">{user.username}</td>
+                      <td className="p-4 text-muted-foreground">{user.email || "N/A"}</td>
+                      <td className="p-4 text-muted-foreground">{user.phone || "N/A"}</td>
                       <td className="p-4">
                         <span className={cn(
                           "px-2 py-0.5 rounded text-[10px] uppercase font-bold",
@@ -1758,6 +1780,14 @@ const AdminDashboard = () => {
                 <Input value={formUsername} onChange={(e) => setFormUsername(e.target.value)} placeholder="Enter username" className="bg-background border-border/60" required />
               </div>
               <div className="space-y-1.5">
+                <Label className="text-muted-foreground uppercase font-mono text-[10px]">Email Address</Label>
+                <Input type="email" value={formEmail} onChange={(e) => setFormEmail(e.target.value)} placeholder="name@example.com" className="bg-background border-border/60" />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-muted-foreground uppercase font-mono text-[10px]">Phone Number</Label>
+                <Input value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="+1 (555) 000-0000" className="bg-background border-border/60" />
+              </div>
+              <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Passcode / Password *</Label>
                 <Input type="password" value={formPassword} onChange={(e) => setFormPassword(e.target.value)} placeholder="••••••••" className="bg-background border-border/60" required />
               </div>
@@ -1797,6 +1827,14 @@ const AdminDashboard = () => {
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Username *</Label>
                 <Input value={formUsername} onChange={(e) => setFormUsername(e.target.value)} className="bg-background border-border/60" required />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-muted-foreground uppercase font-mono text-[10px]">Email Address</Label>
+                <Input type="email" value={formEmail} onChange={(e) => setFormEmail(e.target.value)} className="bg-background border-border/60" />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-muted-foreground uppercase font-mono text-[10px]">Phone Number</Label>
+                <Input value={formPhone} onChange={(e) => setFormPhone(e.target.value)} className="bg-background border-border/60" />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">New Passcode (Leave blank to keep current)</Label>

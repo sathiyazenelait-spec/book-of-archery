@@ -42,6 +42,7 @@ const UserLogin = () => {
   const [regUsername, setRegUsername] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  const [regPhone, setRegPhone] = useState("");
 
   // Member dashboard states
   const [submissionsList, setSubmissionsList] = useState<StoredSubmission[]>([]);
@@ -120,7 +121,8 @@ const UserLogin = () => {
         body: JSON.stringify({ 
           username: regUsername.trim(), 
           email: regEmail.trim(), 
-          password: regPassword.trim() 
+          password: regPassword.trim(),
+          phone: regPhone.trim()
         })
       });
       const data = await res.json();
@@ -132,6 +134,7 @@ const UserLogin = () => {
         setRegUsername("");
         setRegEmail("");
         setRegPassword("");
+        setRegPhone("");
       } else {
         toast.error(data.error || "Registration failed.");
       }
@@ -573,6 +576,17 @@ const UserLogin = () => {
                   onChange={(e) => setRegEmail(e.target.value)}
                   placeholder="name@example.com"
                   required
+                  className="bg-background border-border/60 focus-visible:ring-primary/40"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Phone Number</Label>
+                <Input 
+                  type="tel"
+                  value={regPhone}
+                  onChange={(e) => setRegPhone(e.target.value)}
+                  placeholder="+1 (555) 000-0000"
                   className="bg-background border-border/60 focus-visible:ring-primary/40"
                 />
               </div>

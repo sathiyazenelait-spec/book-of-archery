@@ -19,6 +19,15 @@ app.use(express.json());
 try {
   const [rows] = await db.query("SELECT 1");
   console.log("MySQL connection established successfully.");
+  // Ensure the phone column exists in users table
+  try {
+    await db.query("ALTER TABLE users ADD COLUMN phone VARCHAR(100) NULL");
+    console.log("Users table phone column verified/added.");
+  } catch (alterErr) {
+    if (alterErr.code !== "ER_DUP_COLUMN_NAME" && !alterErr.message.includes("Duplicate column name")) {
+      console.warn("Notice: alter users table error:", alterErr.message);
+    }
+  }
 } catch (err) {
   console.warn("WARNING: MySQL connection failed. Ensure your database server is running and configured correctly.", err.message);
 }
@@ -93,7 +102,7 @@ app.post("/api/auth/login", async (req, res) => {
 
 // Register standard user
 app.post("/api/auth/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, phone } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ error: "Username, email, and password are required." });
@@ -108,8 +117,8 @@ app.post("/api/auth/register", async (req, res) => {
 
     const hash = await bcrypt.hash(password, 10);
     await db.query(
-      "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'user')",
-      [username, email, hash]
+      "INSERT INTO users (username, email, password, phone, role) VALUES (?, ?, ?, ?, 'user')",
+      [username, email, hash, phone || null]
     );
 
     res.status(201).json({ message: "User registered successfully." });
@@ -128,7 +137,7 @@ app.get("/api/auth/me", authenticateToken, (req, res) => {
 // Get all users
 app.get("/api/users", authenticateToken, isAdmin, async (req, res) => {
   try {
-    const [users] = await db.query("SELECT id, username, role, created_at FROM users ORDER BY id DESC");
+    const [users] = await db.query("SELECT id, username, email, phone, role, created_at FROM users ORDER BY id DESC");
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: "Database error retrieving users.", details: err.message });
@@ -137,7 +146,7 @@ app.get("/api/users", authenticateToken, isAdmin, async (req, res) => {
 
 // Create new user
 app.post("/api/users", authenticateToken, isAdmin, async (req, res) => {
-  const { username, password, role } = req.body;
+  const { username, password, role, email, phone } = req.body;
 
   if (!username || !password) {
     return res.status(400).json({ error: "Username and password are required." });
@@ -148,8 +157,8 @@ app.post("/api/users", authenticateToken, isAdmin, async (req, res) => {
     const userRole = role || "user";
 
     const [result] = await db.query(
-      "INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
-      [username, hashedPassword, userRole]
+      "INSERT INTO users (username, password, role, email, phone) VALUES (?, ?, ?, ?, ?)",
+      [username, hashedPassword, userRole, email || null, phone || null]
     );
 
     res.status(201).json({
@@ -157,7 +166,9 @@ app.post("/api/users", authenticateToken, isAdmin, async (req, res) => {
       user: {
         id: result.insertId,
         username,
-        role: userRole
+        role: userRole,
+        email: email || null,
+        phone: phone || null
       }
     });
   } catch (err) {
@@ -171,20 +182,20 @@ app.post("/api/users", authenticateToken, isAdmin, async (req, res) => {
 // Update user
 app.put("/api/users/:id", authenticateToken, isAdmin, async (req, res) => {
   const { id } = req.params;
-  const { username, password, role } = req.body;
+  const { username, password, role, email, phone } = req.body;
 
   if (!username) {
     return res.status(400).json({ error: "Username is required." });
   }
 
   try {
-    let query = "UPDATE users SET username = ?, role = ? WHERE id = ?";
-    let params = [username, role || "user", id];
+    let query = "UPDATE users SET username = ?, role = ?, email = ?, phone = ? WHERE id = ?";
+    let params = [username, role || "user", email || null, phone || null, id];
 
     if (password && password.trim() !== "") {
       const hashedPassword = await bcrypt.hash(password, 10);
-      query = "UPDATE users SET username = ?, password = ?, role = ? WHERE id = ?";
-      params = [username, hashedPassword, role || "user", id];
+      query = "UPDATE users SET username = ?, password = ?, role = ?, email = ?, phone = ? WHERE id = ?";
+      params = [username, hashedPassword, role || "user", email || null, phone || null, id];
     }
 
     await db.query(query, params);

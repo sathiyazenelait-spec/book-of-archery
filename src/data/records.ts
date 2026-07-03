@@ -433,6 +433,8 @@ export interface UserItem {
   id?: number;
   username: string;
   password?: string;
+  email?: string;
+  phone?: string;
   role: string;
   created_at?: string;
 }
