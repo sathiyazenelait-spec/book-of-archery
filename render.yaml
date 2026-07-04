@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: archery-records-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: DB_HOST
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_USER
+        value: 2Hhsdmb6q88acj3.root
+      - key: DB_PASSWORD
+        value: Y85tizjJUFG6oTs5
+      - key: DB_NAME
+        value: abwr_db
+      - key: JWT_SECRET
+        value: abwr_jwt_secret_key_2026_secure
