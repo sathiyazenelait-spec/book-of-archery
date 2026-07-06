@@ -57,7 +57,7 @@ const About = () => {
       />
 
       <section ref={sectionRef1} className="container py-12 md:py-16 grid md:grid-cols-2 gap-10 items-start overflow-hidden">
-        <div 
+        <div
           className={cn(
             "bg-card border border-border/60 p-10 relative reveal-card reveal-left",
             revealed1 && "revealed"
@@ -66,7 +66,7 @@ const About = () => {
           <div className="absolute inset-x-0 top-0 h-px gold-line" />
           <div className="text-xs uppercase tracking-[0.32em] text-primary mb-5">Our Mission</div>
           <h2 className="font-display text-2xl text-justify md:text-4xl leading-tight mb-8">
-            To preserve human achievement, one arrow at a time.
+            Honoring every achievement, one arrow at a time..
           </h2>
           <p className="text-muted-foreground text-justify leading-relaxed mb-5">
             We were founded on a simple belief — that the discipline of archery deserves the same rigor of verification
@@ -79,7 +79,7 @@ const About = () => {
           </p>
         </div>
 
-        <div 
+        <div
           className={cn(
             "bg-card border border-border/60 p-10 relative reveal-card reveal-right",
             revealed1 && "revealed"
@@ -103,8 +103,8 @@ const About = () => {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((v, i) => (
-            <div 
-              key={v.title} 
+            <div
+              key={v.title}
               className={cn(
                 "border border-border/60 bg-card p-8 hover:border-primary/40 transition-colors group",
                 "reveal-card",
