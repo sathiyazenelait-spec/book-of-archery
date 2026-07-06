@@ -84,7 +84,7 @@ const Navbar = () => {
               Archery Book of World Records
             </div>
             <div className="text-[8px] sm:text-[9px] md:text-[10px] uppercase tracking-[0.24em] text-primary font-medium mt-1">
-              Your Target - Your Record - Your Pride
+              Managed by a unit of KOORMAI ELAKU Pvt Ltd
             </div>
           </div>
         </Link>
