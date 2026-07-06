@@ -374,6 +374,12 @@
     border-color: hsl(var(--primary) / 0.4) !important;
   }
 
+  /* Exclude dialog/modals from hover translations to prevent centering override and wiggling */
+  [role="dialog"].bg-card:hover {
+    transform: translate(-50%, -50%) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  }
+
   /* Testimonial Card Animations */
   @keyframes shine-loop {
     0% {
