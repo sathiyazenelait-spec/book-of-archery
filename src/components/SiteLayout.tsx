@@ -20,18 +20,11 @@ const SiteLayout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Clear legacy localStorage key if present
-    localStorage.removeItem("archery-popup-shown");
-
-    const hasShown = sessionStorage.getItem("archery-popup-shown");
-    console.log("Popup hasShown state in sessionStorage:", hasShown);
-    if (!hasShown) {
-      const timer = setTimeout(() => {
-        console.log("Showing popup now...");
-        setIsOpen(true);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      console.log("Showing popup now...");
+      setIsOpen(true);
+    }, 600);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDismiss = () => {
