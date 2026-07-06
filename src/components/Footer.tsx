@@ -38,9 +38,17 @@ const Footer = () => (
       <div>
         <h4 className="text-xs uppercase tracking-[0.25em] text-primary mb-5">Contact</h4>
         <ul className="space-y-3 text-sm text-foreground/80">
-          <li>14 Laurel Court, Geneva, CH</li>
+          <li className="font-semibold text-foreground">KOORMAI ELAKU PVT LTD</li>
+          <li>NO 45 BALAJI NAGAR KOLLUMEDU ROAD,<br />VELLANUR, CHENNAI 62</li>
           <li>records@abwr.org</li>
-          <li>+41 22 555 0184</li>
+          <li className="pt-1">
+            <span className="font-medium text-foreground block mb-1">Phone Numbers:</span>
+            <div className="space-y-0.5 font-mono text-xs">
+              <a href="tel:8668054120" className="hover:text-primary transition-colors block">8668054120</a>
+              <a href="tel:9840754120" className="hover:text-primary transition-colors block">9840754120</a>
+              <a href="tel:7305054120" className="hover:text-primary transition-colors block">7305054120</a>
+            </div>
+          </li>
         </ul>
         <div className="flex gap-4 mt-6 text-foreground/60">
           <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors"><Instagram size={18} /></a>

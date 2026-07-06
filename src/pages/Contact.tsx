@@ -69,14 +69,22 @@ const Contact = () => {
             revealed && "revealed"
           )}
         >
-          <Info icon={MapPin} label="Headquarters" value={"14 Laurel Court\nGeneva, Switzerland"} />
+          <Info 
+            icon={MapPin} 
+            label="Headquarters" 
+            value={"KOORMAI ELAKU PVT LTD\nNO 45 BALAJI NAGAR KOLLUMEDU ROAD\nVELLANUR CHENNAI 62"} 
+          />
           <Info icon={Mail} label="Email" value="records@abwr.org" />
-          <Info icon={Phone} label="Telephone" value="+41 22 555 0184" />
+          <Info 
+            icon={Phone} 
+            label="Telephone" 
+            value={"8668054120\n9840754120\n7305054120"} 
+          />
 
           <div className="border border-border/60 bg-card p-8">
             <div className="text-xs uppercase tracking-[0.25em] text-primary mb-3">Office Hours</div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Monday – Friday<br />09:00 – 17:30 CET<br /><br />
+              Monday – Saturday<br />09:30 – 18:30 IST<br /><br />
               Field adjudicators operate independently across all global time zones.
             </p>
           </div>
