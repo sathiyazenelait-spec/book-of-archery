@@ -93,25 +93,37 @@ const Contact = () => {
         <form 
           onSubmit={submit} 
           className={cn(
-            "lg:col-span-3 bg-card border border-border/60 p-10 space-y-6 reveal-card reveal-right",
+            "lg:col-span-3 relative border border-border/60 p-10 reveal-card reveal-right overflow-hidden rounded-lg",
             revealed && "revealed"
           )}
           style={{ transitionDelay: "150ms" }}
         >
-          <h2 className="font-display text-3xl mb-2">Send us a message</h2>
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Name</Label>
-            <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your full name" />
+          {/* Form Background Image and Tint Overlays */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e01a?q=80&w=1200&auto=format&fit=crop" 
+              alt="" 
+              className="w-full h-full object-cover opacity-20 dark:opacity-10 scale-105 hover:scale-100 transition-transform duration-1000"
+            />
+            <div className="absolute inset-0 bg-card/95 backdrop-blur-sm" />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Email</Label>
-            <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" />
+
+          <div className="relative z-10 space-y-6">
+            <h2 className="font-display text-3xl mb-2">Send us a message</h2>
+            <div className="space-y-2">
+              <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Name</Label>
+              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your full name" className="bg-background/50" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Email</Label>
+              <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="bg-background/50" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Message</Label>
+              <Textarea rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="How can we help?" className="bg-background/50" />
+            </div>
+            <Button type="submit" variant="hero" size="lg">Send Message</Button>
           </div>
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Message</Label>
-            <Textarea rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="How can we help?" />
-          </div>
-          <Button type="submit" variant="hero" size="lg">Send Message</Button>
         </form>
       </section>
     </>
