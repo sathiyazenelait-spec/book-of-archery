@@ -5,7 +5,7 @@ interface PageHeaderProps {
 }
 
 const PageHeader = ({ eyebrow, title, description }: PageHeaderProps) => (
-  <section className="pt-32 pb-12 md:pt-36 md:pb-16 border-b border-border/60 relative overflow-hidden">
+  <section className="pt-36 pb-12 md:pt-44 md:pb-16 border-b border-border/60 relative overflow-hidden">
     <div className="absolute inset-0 opacity-40" style={{ background: "var(--gradient-radial-gold)" }} />
     <div className="container relative">
       <div className="flex items-center gap-3 mb-6 animate-fade-in">

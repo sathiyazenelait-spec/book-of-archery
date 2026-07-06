@@ -70,7 +70,7 @@ const Navbar = () => {
           : "bg-transparent"
       )}
     >
-      <div className="container flex items-center justify-between h-20">
+      <div className="container flex items-center justify-between h-[110px] py-5">
         <Link to="/" className="flex items-center gap-4 group">
           <img
             src={logo}
