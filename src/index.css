@@ -270,26 +270,57 @@
   }
 
   html:not(.dark) .stat-card {
-    background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%)) !important;
+    background: #ffffff !important;
+    border-color: hsla(222, 80%, 30%, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
   }
 
   .stat-card-animate {
     animation: border-flash 1.5s ease-in-out;
   }
 
+  .stat-card::after {
+    content: "";
+    position: absolute;
+    right: -30px;
+    bottom: -30px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, hsl(43 75% 45% / 0.06) 10%, transparent 11%, transparent 20%, hsl(222 80% 30% / 0.05) 21%, transparent 22%, transparent 35%, hsl(43 75% 45% / 0.03) 36%, transparent 37%);
+    border-radius: 50%;
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .stat-card:hover {
     transform: translateY(-6px) scale(1.02);
     border-color: #d4af37 !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(212, 175, 55, 0.35) !important;
-    background-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(212, 175, 55, 0.2) !important;
+  }
+
+  .stat-card:hover::after {
+    transform: scale(1.25) rotate(15deg);
+    background: radial-gradient(circle, hsl(43 75% 45% / 0.12) 10%, transparent 11%, transparent 20%, hsl(222 80% 30% / 0.08) 21%, transparent 22%, transparent 35%, hsl(43 75% 45% / 0.05) 36%, transparent 37%);
   }
 
   html:not(.dark) .stat-card:hover {
-    background: linear-gradient(135deg, hsl(222 80% 25%), hsl(205 90% 45%)) !important;
+    background: #ffffff !important;
   }
 
   .dark .stat-card:hover {
     background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* General Card Hover Animations */
+  .bg-card {
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  .bg-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04), 0 0 25px rgba(212, 175, 55, 0.08) !important;
+    border-color: hsl(var(--primary) / 0.4) !important;
   }
 
   /* Testimonial Card Animations */
