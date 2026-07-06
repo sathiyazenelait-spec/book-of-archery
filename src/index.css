@@ -38,11 +38,11 @@
 
     --radius: 0.25rem;
 
-     --gradient-gold: linear-gradient(135deg, hsl(222 80% 35%), hsl(197 95% 55%));
-     --gradient-dark: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.6) 50%, hsla(0, 0%, 100%, 1) 100%);
-     --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(210 90% 40% / 0.08), transparent 60%);
- 
-     --shadow-gold: 0 10px 30px -10px hsl(222 80% 35% / 0.2);
+    --gradient-gold: linear-gradient(135deg, hsl(222 80% 35%), hsl(197 95% 55%));
+    --gradient-dark: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.6) 50%, hsla(0, 0%, 100%, 1) 100%);
+    --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(210 90% 40% / 0.08), transparent 60%);
+
+    --shadow-gold: 0 10px 30px -10px hsl(222 80% 35% / 0.2);
     --shadow-deep: 0 15px 30px -10px hsl(0 0% 0% / 0.15);
 
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
@@ -123,7 +123,9 @@
     overflow-x: hidden;
   }
 
-  p, li, .text-justify {
+  p,
+  li,
+  .text-justify {
     text-align: justify !important;
   }
 
@@ -141,9 +143,11 @@
     background: hsl(var(--primary) / 0.3);
     color: hsl(var(--foreground));
   }
+
   html:not(.dark) body {
     background-color: #ffffff !important;
   }
+
   html:not(.dark) footer {
     --primary: 193 100% 90%;
     --foreground: 0 0% 100%;
@@ -151,6 +155,7 @@
     --border: 193 100% 95% / 0.2;
     background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%)) !important;
   }
+
   html:not(.dark) header {
     --primary: 193 100% 90%;
     --foreground: 0 0% 100%;
@@ -217,15 +222,24 @@
 
   /* Stats Section Animations */
   @keyframes slide-bg {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   @keyframes slide-light {
     0% {
       background-position: 200% 0;
     }
+
     100% {
       background-position: -200% 0;
     }
@@ -237,11 +251,13 @@
       box-shadow: 0 0 0 rgba(212, 175, 55, 0);
       transform: scale(1);
     }
+
     30% {
       border-color: #d4af37;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
       transform: scale(1.03);
     }
+
     100% {
       border-color: rgba(255, 255, 255, 0.15);
       box-shadow: 0 0 0 rgba(212, 175, 55, 0);
@@ -356,6 +372,7 @@
     0% {
       left: -150%;
     }
+
     100% {
       left: 150%;
     }
@@ -378,12 +395,10 @@
     left: -150%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
     pointer-events: none;
     transition: opacity 0.5s ease;
@@ -471,6 +486,7 @@
       opacity: 0;
       transform: translateY(20px);
     }
+
     100% {
       opacity: 1;
       transform: translateY(0);
@@ -482,11 +498,12 @@
   }
 
   .bg-gold {
-    background-color: #d4af37 !important;
+    background-color: #080c1fc2 !important;
   }
 
-  .bg-gold, .bg-gold div {
-    color: #0b132b !important;
+  .bg-gold,
+  .bg-gold div {
+    color: #f0f1f7 !important;
     font-weight: 500 !important;
   }
 }

@@ -39,7 +39,7 @@ const Testimonials = () => {
   if (storiesList.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="relative py-28 md:py-36 overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-36 overflow-hidden">
       <div className="absolute inset-0 bg-card/50" />
       <div className="absolute inset-x-0 top-0 h-px gold-line" />
       <div className="absolute inset-x-0 bottom-0 h-px gold-line" />

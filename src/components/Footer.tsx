@@ -3,9 +3,9 @@ import { Instagram, Youtube, Twitter } from "lucide-react";
 const logo = "/logo.jpeg";
 
 const Footer = () => (
-  <footer className="relative mt-32 border-t border-border/60 bg-background">
+  <footer className="relative mt-16 md:mt-32 border-t border-border/60 bg-background">
     <div className="absolute inset-x-0 top-0 h-px gold-line" />
-    <div className="container py-20 grid md:grid-cols-5 gap-12">
+    <div className="container py-10 md:py-20 grid md:grid-cols-5 gap-12">
       <div className="md:col-span-2 max-w-md">
         <div className="flex items-center gap-3.5 mb-5">
           <img src={logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />

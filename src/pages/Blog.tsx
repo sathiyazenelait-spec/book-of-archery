@@ -9,7 +9,7 @@ const Blog = () => (
       title={<>Notes from the <em className="text-gradient-gold not-italic">field.</em></>}
       description="Announcements, judging standards, and stories from the global ABWR community."
     />
-    <section className="container py-20">
+    <section className="container py-10 md:py-20">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((p) => (
           <article key={p.slug} className="group border border-border/60 bg-card p-8 hover:border-primary/40 transition-colors cursor-pointer">

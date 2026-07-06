@@ -98,7 +98,7 @@ const Stats = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-24 border-y stats-section-light dark:stats-section-dark"
+      className="relative py-12 md:py-24 border-y stats-section-light dark:stats-section-dark"
     >
       <div className="container grid grid-cols-2 md:grid-cols-4 gap-8">
         {statsList.map((s, idx) => (

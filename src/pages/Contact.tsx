@@ -62,7 +62,7 @@ const Contact = () => {
         description="Whether you are actively preparing your first official application, appealing a certification decision, or simply curious about our global verification standards — our international adjudication office is here to guide you. Our team of certified expert coordinators is dedicated to answering your logistics, safety, and evidence requirements. We aim to review and respond to all inquiries within 48 hours, helping you take the next step toward archery history."
       />
 
-      <section ref={sectionRef} className="container py-20 grid lg:grid-cols-5 gap-12 overflow-hidden">
+      <section ref={sectionRef} className="container py-10 md:py-20 grid lg:grid-cols-5 gap-12 overflow-hidden">
         <div 
           className={cn(
             "lg:col-span-2 space-y-8 reveal-card reveal-left",

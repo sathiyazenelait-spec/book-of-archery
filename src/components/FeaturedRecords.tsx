@@ -31,7 +31,7 @@ const FeaturedRecords = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="container py-16 md:py-20">
+    <section ref={sectionRef} className="container py-10 md:py-20">
       <div className={cn("flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-section", revealed && "revealed")}>
         <div>
           <div className="flex items-center gap-3 mb-5">
