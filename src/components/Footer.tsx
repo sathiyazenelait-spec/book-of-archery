@@ -63,7 +63,7 @@ const Footer = () => (
         </div>
       </div>
     </div>
-    <div className="border-t border-border/40">
+    <div className="border-t border-border/40  bg-gold">
       <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
         <div>© {new Date().getFullYear()} Archery Book of World Records. All rights reserved.</div>
         <div className="tracking-[0.2em] uppercase">Veritas · Disciplina · Excellentia</div>

@@ -480,4 +480,13 @@
   .animate-page-float {
     animation: page-float-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  .bg-gold {
+    background-color: #d4af37 !important;
+  }
+
+  .bg-gold, .bg-gold div {
+    color: #0b132b !important;
+    font-weight: 500 !important;
+  }
 }
