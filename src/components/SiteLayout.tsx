@@ -15,17 +15,9 @@ import { Button } from "@/components/ui/button";
 const logo = "/archery_image.png";
 
 const SiteLayout = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("Showing popup now...");
-      setIsOpen(true);
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleDismiss = () => {
     setIsOpen(false);
