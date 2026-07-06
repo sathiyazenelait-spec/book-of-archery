@@ -5,13 +5,13 @@
 /* Archery Book of World Records — Black / Gold / Deep Red */
 @layer base {
   :root {
-    --background: 193 100% 95%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 9%;
 
-    --card: 193 100% 97%;
+    --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
 
-    --popover: 193 100% 98%;
+    --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
 
     /* Gold - slightly darker/higher contrast for light backgrounds */
@@ -19,11 +19,11 @@
     --primary-foreground: 0 0% 100%;
     --primary-glow: 43 75% 45%;
 
-    /* Deep red */
-    --secondary: 0 67% 28%;
+    /* Blue */
+    --secondary: 222 80% 30%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96%;
+    --muted: 0 0% 98%;
     --muted-foreground: 0 0% 45%;
 
     --accent: 43 55% 94%;
@@ -32,14 +32,14 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 43 65% 38%;
 
     --radius: 0.25rem;
 
      --gradient-gold: linear-gradient(135deg, hsl(222 80% 35%), hsl(197 95% 55%));
-     --gradient-dark: linear-gradient(180deg, hsla(193, 100%, 95%, 0) 0%, hsla(193, 100%, 95%, 0.6) 50%, hsla(193, 100%, 95%, 0.8) 100%);
+     --gradient-dark: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.6) 50%, hsla(0, 0%, 100%, 1) 100%);
      --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(210 90% 40% / 0.08), transparent 60%);
  
      --shadow-gold: 0 10px 30px -10px hsl(222 80% 35% / 0.2);
@@ -122,6 +122,10 @@
     font-feature-settings: "ss01", "cv11";
   }
 
+  p, li, .text-justify {
+    text-align: justify !important;
+  }
+
   h1,
   h2,
   h3,
@@ -137,7 +141,7 @@
     color: hsl(var(--foreground));
   }
   html:not(.dark) body {
-    background-color: hsla(193, 100%, 95%, 0.8) !important;
+    background-color: #ffffff !important;
   }
   html:not(.dark) footer {
     --primary: 193 100% 90%;
