@@ -270,9 +270,9 @@
   }
 
   html:not(.dark) .stat-card {
-    background: #ffffff !important;
-    border-color: hsla(222, 80%, 30%, 0.08) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    background: linear-gradient(135deg, hsl(222 80% 18%), hsl(205 90% 35%)) !important;
+    border-color: rgba(212, 175, 55, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
   }
 
   .stat-card-animate {
@@ -296,7 +296,7 @@
   .stat-card:hover {
     transform: translateY(-6px) scale(1.02);
     border-color: #d4af37 !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(212, 175, 55, 0.2) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(212, 175, 55, 0.3) !important;
   }
 
   .stat-card:hover::after {
@@ -305,11 +305,38 @@
   }
 
   html:not(.dark) .stat-card:hover {
-    background: #ffffff !important;
+    background: linear-gradient(135deg, hsl(222 80% 22%), hsl(205 90% 40%)) !important;
   }
 
   .dark .stat-card:hover {
     background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .stat-value {
+    color: #e5c158 !important;
+    transition: color 0.3s ease;
+  }
+
+  .stat-suffix {
+    color: rgba(229, 193, 88, 0.8) !important;
+    transition: color 0.3s ease;
+  }
+
+  .stat-label {
+    color: rgba(229, 193, 88, 0.95) !important;
+    transition: color 0.3s ease;
+  }
+
+  .dark .stat-value {
+    color: #ffffff !important;
+  }
+
+  .dark .stat-suffix {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .dark .stat-label {
+    color: rgba(255, 255, 255, 0.8) !important;
   }
 
   /* General Card Hover Animations */

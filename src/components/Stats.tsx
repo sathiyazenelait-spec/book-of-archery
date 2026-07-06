@@ -50,11 +50,11 @@ const StatItem = ({ value, suffix, label, index, isVisible }: StatItemProps) => 
       }}
     >
       <div className="relative z-10 text-center flex flex-col items-center justify-center">
-        <div className="font-sans font-bold text-5xl md:text-6xl text-primary dark:text-white leading-none tracking-tight">
+        <div className="font-sans font-bold text-5xl md:text-6xl stat-value leading-none tracking-tight">
           <span ref={ref}>{n.toLocaleString()}</span>
-          <span className="text-primary/70 dark:text-white/70 text-3xl ml-1 font-sans font-semibold">{suffix}</span>
+          <span className="stat-suffix text-3xl ml-1 font-sans font-semibold">{suffix}</span>
         </div>
-        <div className="mt-3.5 text-xs uppercase tracking-[0.25em] text-secondary/80 dark:text-white/80 font-semibold">{label}</div>
+        <div className="mt-3.5 text-xs uppercase tracking-[0.25em] stat-label font-semibold">{label}</div>
       </div>
     </div>
   );
