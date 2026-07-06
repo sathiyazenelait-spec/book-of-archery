@@ -85,7 +85,7 @@ const SiteLayout = () => {
         <DialogContent
           onPointerDownOutside={(e) => e.preventDefault()}
           onInteractOutside={(e) => e.preventDefault()}
-          className="sm:max-w-[550px] bg-card border border-border/60 text-card-foreground p-8 md:p-10 rounded-xl shadow-2xl overflow-hidden relative"
+          className="sm:max-w-[550px] bg-card border border-border/60 text-card-foreground p-8 md:p-10 rounded-xl shadow-2xl overflow-hidden"
         >
           {/* Subtle gold radial gradient backdrop */}
           <div className="absolute inset-0 bg-gradient-radial-gold opacity-30 z-0 pointer-events-none" />
