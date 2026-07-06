@@ -76,7 +76,7 @@ const SiteLayout = () => {
   }, [isOpen]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
       <ArcheryBackgroundAnimation />
       <Navbar />
       <main className="flex-1">
