@@ -31,6 +31,21 @@ import { cn } from "@/lib/utils";
 
 const UserLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotX = -(y / rect.height) * 12; // Max 12 deg tilt
+    const rotY = (x / rect.width) * 12;
+    setTilt({ x: rotX, y: rotY });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
   
   // Login form states
   const [username, setUsername] = useState("");
@@ -543,9 +558,72 @@ const UserLogin = () => {
         }
       />
 
-      <section className="container pb-32">
-        <div className="max-w-md mx-auto bg-card/60 backdrop-blur-md border border-border/60 p-8 rounded-lg shadow-xl relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-gold" />
+      <section 
+        className="relative container pb-32 overflow-hidden [perspective:1200px]"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* 3D Animated Grid Floor */}
+        <div 
+          className="absolute inset-0 z-0 opacity-20 pointer-events-none transition-transform duration-500 ease-out"
+          style={{
+            backgroundImage: "linear-gradient(to right, #d4af37 1px, transparent 1px), linear-gradient(to bottom, #d4af37 1px, transparent 1px)",
+            backgroundSize: "3.5rem 3.5rem",
+            transform: `rotateX(72deg) translateZ(-160px) translateY(${tilt.y * 3.5}px) translateX(${tilt.x * -3.5}px)`,
+            transformOrigin: "center bottom",
+          }}
+        />
+
+        {/* Floating 3D Target Rings */}
+        <div 
+          className="absolute top-1/4 left-6 lg:left-12 w-48 h-48 rounded-full border border-[#d4af37]/20 flex items-center justify-center opacity-30 pointer-events-none transition-transform duration-500 ease-out animate-spin"
+          style={{
+            transform: `translate3d(${tilt.y * 2.2}px, ${tilt.x * -2.2}px, 50px) rotate3d(1, 1, 0, 45deg)`,
+            animationDuration: "25s"
+          }}
+        >
+          <div className="w-36 h-36 rounded-full border border-[#d4af37]/35 flex items-center justify-center">
+            <div className="w-24 h-24 rounded-full border border-primary/50 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-primary/20" />
+            </div>
+          </div>
+        </div>
+
+        <div 
+          className="absolute bottom-1/4 right-6 lg:right-12 w-64 h-64 rounded-full border border-primary/20 flex items-center justify-center opacity-25 pointer-events-none transition-transform duration-500 ease-out animate-spin"
+          style={{
+            transform: `translate3d(${tilt.y * -2.8}px, ${tilt.x * 2.8}px, 80px) rotate3d(-1, 2, 1, 30deg)`,
+            animationDuration: "35s"
+          }}
+        >
+          <div className="w-48 h-48 rounded-full border border-[#d4af37]/30 flex items-center justify-center">
+            <div className="w-32 h-32 rounded-full border border-primary/45 flex items-center justify-center" />
+          </div>
+        </div>
+
+        {/* Glowing Perspective Orbs */}
+        <div 
+          className="absolute top-10 right-1/4 w-96 h-96 bg-gradient-radial from-[#d4af37]/10 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none transition-transform duration-500 ease-out"
+          style={{
+            transform: `translate3d(${tilt.y * -1.8}px, ${tilt.x * 1.8}px, -100px)`
+          }}
+        />
+        <div 
+          className="absolute bottom-10 left-1/4 w-96 h-96 bg-gradient-radial from-blue-900/20 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none transition-transform duration-500 ease-out"
+          style={{
+            transform: `translate3d(${tilt.y * 1.8}px, ${tilt.x * -1.8}px, -100px)`
+          }}
+        />
+
+        {/* Immersive 3D Parallax Form Card */}
+        <div 
+          className="max-w-2xl mx-auto bg-[#080c1f]/85 backdrop-blur-xl border border-[#d4af37]/35 p-16 rounded-2xl shadow-2xl relative overflow-hidden transition-transform duration-200 ease-out"
+          style={{
+            transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(30px)`,
+            boxShadow: `${tilt.y * -1}px ${tilt.x * 1}px 40px rgba(212, 175, 55, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5)`
+          }}
+        >
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-gold-real" />
           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-6">
             {isRegistering ? <UserPlus className="text-primary" size={20} /> : <Lock className="text-primary" size={20} />}
           </div>
@@ -556,7 +634,7 @@ const UserLogin = () => {
 
           {isRegistering ? (
             /* REGISTRATION FORM */
-            <form onSubmit={handleRegister} className="space-y-5">
+            <form onSubmit={handleRegister} className="space-y-6">
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Username *</Label>
                 <Input 
@@ -619,7 +697,7 @@ const UserLogin = () => {
             </form>
           ) : (
             /* LOGIN FORM */
-            <form onSubmit={handleLogin} className="space-y-5">
+            <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Username</Label>
                 <Input 

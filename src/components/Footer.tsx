@@ -5,8 +5,8 @@ const logo = "/logo.jpeg";
 const Footer = () => (
   <footer className="relative mt-16 md:mt-32 border-t border-border/60 bg-background">
     <div className="absolute inset-x-0 top-0 h-px gold-line" />
-    <div className="container py-10 md:py-20 grid md:grid-cols-5 gap-12">
-      <div className="md:col-span-2 max-w-md">
+    <div className="container py-10 md:py-20 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+      <div className="md:col-span-5 max-w-md">
         <div className="flex items-center gap-3.5 mb-5">
           <img src={logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />
           <div className="flex flex-col leading-none">
@@ -24,7 +24,7 @@ const Footer = () => (
         </p>
       </div>
 
-      <div>
+      <div className="md:col-span-2">
         <h4 className="text-xs uppercase tracking-[0.25em] text-primary mb-5">Explore</h4>
         <ul className="space-y-3 text-sm text-foreground/80">
           <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
@@ -35,7 +35,7 @@ const Footer = () => (
         </ul>
       </div>
 
-      <div>
+      <div className="md:col-span-3">
         <h4 className="text-xs uppercase tracking-[0.25em] text-primary mb-5">Contact</h4>
         <ul className="space-y-3 text-sm text-foreground/80">
           <li className="font-semibold text-foreground">KOORMAI ELAKU PVT LTD</li>
@@ -56,7 +56,7 @@ const Footer = () => (
           <a href="#" aria-label="Twitter" className="hover:text-primary transition-colors"><Twitter size={18} /></a>
         </div>
       </div>
-      <div>
+      <div className="md:col-span-2">
         <h4 className="text-xs uppercase tracking-[0.25em] text-primary mb-5">Developed By</h4>
         <div>
           <img src="/developed_logo.jpg" alt="" height={70} width={120} />

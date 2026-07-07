@@ -82,20 +82,29 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="container flex items-center justify-between h-[110px] py-5">
+      <div className={cn("container flex items-center justify-between transition-all duration-300", isLoggedIn ? "h-[85px] py-3" : "h-[110px] py-5")}>
         <Link to="/" className="flex items-center gap-4 group">
           <img
             src={logo}
             alt="ABWR emblem"
             width={68}
             height={68}
-            className="h-[60px] w-[60px] md:h-[68px] md:w-[68px] object-contain group-hover:rotate-6 transition-transform duration-500 shrink-0"
+            className={cn(
+              "object-contain group-hover:rotate-6 transition-all duration-300 shrink-0",
+              isLoggedIn ? "h-[45px] w-[45px] md:h-[52px] md:w-[52px]" : "h-[60px] w-[60px] md:h-[68px] md:w-[68px]"
+            )}
           />
           <div className="flex flex-col justify-center leading-none">
-            <div className="font-display text-base sm:text-lg md:text-xl lg:text-[22px] font-bold tracking-wider uppercase text-foreground">
+            <div className={cn(
+              "font-display font-bold tracking-wider uppercase text-foreground transition-all duration-300",
+              isLoggedIn ? "text-sm sm:text-base md:text-lg lg:text-[18px]" : "text-base sm:text-lg md:text-xl lg:text-[22px]"
+            )}>
               Archery Book of World Records
             </div>
-            <div className="text-[8px] sm:text-[9px] md:text-[10px] uppercase tracking-[0.24em] text-primary font-medium mt-1">
+            <div className={cn(
+              "uppercase tracking-[0.24em] text-primary font-medium transition-all duration-300",
+              isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[9px] mt-0.5" : "text-[8px] sm:text-[9px] md:text-[10px] mt-1"
+            )}>
               Managed by a unit of KOORMAI ELAKU Pvt Ltd
             </div>
           </div>
@@ -109,7 +118,7 @@ const Navbar = () => {
               cn(
                 "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
-                  ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
+                  ? "bg-gradient-gold-real text-[#080c1f] font-bold shadow-md"
                   : "text-foreground/80 hover:text-primary hover:bg-muted/40"
               )
             }
@@ -208,8 +217,8 @@ const Navbar = () => {
               cn(
                 "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
-                  ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
-                  : "text-foreground/80 hover:text-primary hover:bg-muted/40"
+                  ? "bg-gradient-gold-real text-[#080c1f] font-bold shadow-md"
+                  : "text-foreground/80 hover:text-white hover:bg-[#080c1f]"
               )
             }
           >
@@ -222,7 +231,7 @@ const Navbar = () => {
               cn(
                 "text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all duration-300 px-2.5 xl:px-4 py-1.5 rounded-full whitespace-nowrap",
                 isActive
-                  ? "bg-gradient-gold text-primary-foreground font-semibold shadow-md"
+                  ? "bg-gradient-gold-real text-[#080c1f] font-bold shadow-md"
                   : "text-foreground/80 hover:text-primary hover:bg-muted/40"
               )
             }

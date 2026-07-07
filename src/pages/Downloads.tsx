@@ -107,7 +107,7 @@ const Downloads = () => {
             <div
               key={item.id}
               className={cn(
-                "group relative flex flex-col md:flex-row items-start md:items-center justify-between p-8 border border-border/60 bg-card/60 backdrop-blur-md hover:border-primary/40 transition-all duration-500 rounded-lg gap-6",
+                "group relative flex flex-col md:flex-row items-start md:items-center justify-between p-8 border border-[#d4af37]/25 bg-[#080c1f] text-white hover:border-[#d4af37]/65 transition-all duration-500 rounded-lg gap-6 shadow-md",
                 "reveal-card",
                 idx % 2 === 0 ? "reveal-left" : "reveal-right",
                 revealed && "revealed"
@@ -122,14 +122,14 @@ const Downloads = () => {
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-display text-2xl text-foreground group-hover:text-primary transition-colors duration-300">
+                  <h3 className="font-display text-2xl text-white group-hover:text-primary transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-xl">
+                  <p className="text-sm text-slate-300 mt-2 leading-relaxed max-w-xl text-justify">
                     {item.description}
                   </p>
-                  <div className="flex items-center gap-3 mt-4 text-xs text-muted-foreground font-mono">
-                    <span className="bg-muted px-2 py-0.5 rounded">{item.filename}</span>
+                  <div className="flex items-center gap-3 mt-4 text-xs text-slate-400 font-mono">
+                    <span className="bg-white/10 text-slate-200 px-2 py-0.5 rounded">{item.filename}</span>
                     <span>•</span>
                     <span>Size: {item.fileSize}</span>
                   </div>

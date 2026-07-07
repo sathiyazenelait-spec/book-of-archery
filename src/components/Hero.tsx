@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 // A high-quality stock archery video. Replace VIDEO_URL with your own MP4 anytime.
-const VIDEO_URL =
-  "https://cdn.coverr.co/videos/coverr-archer-aiming-at-target-4634/1080p.mp4";
+const VIDEO_URL = "/hero1.mp4";
 
 const Hero = () => {
   return (

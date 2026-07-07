@@ -148,8 +148,6 @@
     font-family: Arial, Helvetica, sans-serif !important;
   }
 
-  p,
-  li,
   .text-justify {
     text-align: justify !important;
   }
@@ -188,7 +186,24 @@
     background: linear-gradient(135deg, hsla(222, 80%, 12%, 0.95), hsla(220, 70%, 22%, 0.95)) !important;
     border-bottom: 1px solid hsla(193, 100%, 95%, 0.15) !important;
   }
+
+  /* Add shadow to all cards and border divs */
+  .bg-card, 
+  div.border,
+  div[class*="border-border/"],
+  div[class*="border-amber-200/"],
+  div[class*="border-amber-900/"] {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
+  .dark .bg-card,
+  .dark div.border,
+  .dark div[class*="border-border/"],
+  .dark div[class*="border-amber-200/"],
+  .dark div[class*="border-amber-900/"] {
+    box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  }
 }
+
 
 @layer utilities {
   .text-primary {
@@ -204,6 +219,10 @@
 
   .bg-gradient-gold {
     background: var(--gradient-gold);
+  }
+
+  .bg-gradient-gold-real {
+    background: linear-gradient(135deg, hsl(43 55% 54%), hsl(45 80% 68%)) !important;
   }
 
   .bg-gradient-dark {
@@ -592,6 +611,181 @@
   }
 
   .animate-arrow-shoot {
-    animation: arrow-shoot 3s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+    animation: arrow-shoot 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  /* Trophy Bounce & Glow Animation */
+  @keyframes trophy-bounce {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-16px) scale(1.08);
+    }
+  }
+  .animate-trophy-bounce {
+    animation: trophy-bounce 2.6s ease-in-out infinite;
+  }
+
+  /* Document Shoot (Basketball Style) Animation */
+  @keyframes doc-shoot {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    35% {
+      transform: translate(65px, -70px) rotate(45deg);
+    }
+    68% {
+      transform: translate(120px, 105px) rotate(90deg);
+    }
+    72% {
+      transform: translate(120px, 92px) rotate(90deg);
+    }
+    76% {
+      transform: translate(120px, 105px) rotate(90deg);
+    }
+    85% {
+      opacity: 1;
+    }
+    95%, 100% {
+      opacity: 0;
+      transform: translate(120px, 105px) rotate(90deg);
+    }
+  }
+  .animate-doc-shoot {
+    animation: doc-shoot 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  }
+
+  /* Paper Airplane Loop Animation */
+  @keyframes airplane-loop {
+    0% {
+      transform: translate(-100px, 80px) rotate(15deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    40% {
+      transform: translate(-10px, -35px) rotate(-35deg);
+    }
+    60% {
+      transform: translate(50px, -20px) rotate(50deg);
+    }
+    80% {
+      transform: translate(100px, 50px) rotate(15deg);
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(140px, 60px) rotate(15deg);
+      opacity: 0;
+    }
+  }
+  .animate-airplane-loop {
+    animation: airplane-loop 2.8s ease-in-out infinite;
+  }
+
+  /* Mailbox wiggle on receipt of paper airplane */
+  @keyframes mailbox-wiggle {
+    0%, 78%, 100% {
+      transform: scale(1) rotate(0deg);
+    }
+    80% {
+      transform: scale(1.15) rotate(8deg);
+    }
+    84% {
+      transform: scale(1.15) rotate(-8deg);
+    }
+    88% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+  .animate-mailbox-wiggle {
+    animation: mailbox-wiggle 2.8s ease-in-out infinite;
+  }
+
+  /* Stamp Press Animation */
+  @keyframes stamp-press {
+    0%, 100% {
+      transform: translate(-50%, -40px);
+      opacity: 0;
+    }
+    8% {
+      opacity: 1;
+    }
+    20% {
+      transform: translate(-50%, 24px);
+    }
+    23% {
+      transform: translate(-50%, 16px);
+    }
+    27% {
+      transform: translate(-50%, 24px);
+    }
+    48% {
+      transform: translate(-50%, -40px);
+    }
+    90%, 100% {
+      opacity: 0;
+    }
+  }
+  .animate-stamp-press {
+    animation: stamp-press 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+  }
+
+  /* Stamp Imprint Appearing Animation */
+  @keyframes stamp-imprint {
+    0%, 19% {
+      opacity: 0;
+      transform: scale(1.6) rotate(-12deg);
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1) rotate(-12deg);
+    }
+    80% {
+      opacity: 1;
+    }
+    95%, 100% {
+      opacity: 0;
+    }
+  }
+  .animate-stamp-imprint {
+    animation: stamp-imprint 2.2s ease-out infinite;
+  }
+
+  /* Drifting Background Mesh Orbs Animation */
+  @keyframes drift-orb-one {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(80px, -100px) scale(1.3);
+    }
+    66% {
+      transform: translate(-40px, 60px) scale(0.85);
+    }
+  }
+  @keyframes drift-orb-two {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(-100px, 80px) scale(0.85);
+    }
+    66% {
+      transform: translate(60px, -80px) scale(1.25);
+    }
+  }
+  .animate-drift-one {
+    animation: drift-orb-one 25s ease-in-out infinite;
+  }
+  .animate-drift-two {
+    animation: drift-orb-two 30s ease-in-out infinite;
   }
 }

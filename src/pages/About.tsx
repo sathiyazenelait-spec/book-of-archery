@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const values = [
   { icon: ShieldCheck, title: "Verified", text: "Every record is reviewed by three independent ABWR adjudicators." },
-  { icon: Globe2, title: "Global", text: "Active certification panels operating across six continents." },
+  { icon: Globe2, title: "Global", text: "Deploying expert adjudication teams to validate archery milestones across six continents." },
   { icon: Trophy, title: "Permanent", text: "Each certified achievement is archived in our protected registry." },
   { icon: Scale, title: "Impartial", text: "A non-profit foundation, governed by an international archery council." },
 ];
@@ -59,39 +59,43 @@ const About = () => {
       <section ref={sectionRef1} className="container py-12 md:py-16 grid md:grid-cols-2 gap-10 items-start overflow-hidden">
         <div
           className={cn(
-            "bg-card border border-border/60 p-10 relative reveal-card reveal-left",
+            "group bg-gradient-to-br from-orange-50/90 to-amber-50/70 dark:from-orange-950/30 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 shadow-md hover:shadow-2xl hover:from-[#080c1f] hover:to-[#0b132b] dark:hover:from-[#050714] dark:hover:to-[#080c1f] hover:border-amber-500/50 dark:hover:border-amber-500/30 transition-all duration-500 p-10 relative reveal-card reveal-left",
             revealed1 && "revealed"
           )}
         >
           <div className="absolute inset-x-0 top-0 h-px gold-line" />
-          <div className="text-xs uppercase tracking-[0.32em] text-primary mb-5">Our Mission</div>
-          <h2 className="font-display text-2xl text-justify md:text-4xl leading-tight mb-8">
+          <div className="text-xs uppercase tracking-[0.32em] text-primary mb-5 group-hover:text-primary-glow transition-colors duration-500">Our Mission</div>
+          <h2 className="font-display text-2xl text-justify md:text-4xl leading-tight mb-8 group-hover:text-white transition-colors duration-500">
             Honoring every achievement, one arrow at a time..
           </h2>
-          <p className="text-muted-foreground text-justify leading-relaxed mb-5">
+          <p className="text-muted-foreground text-justify leading-relaxed mb-5 group-hover:text-slate-200 transition-colors duration-500">
             We were founded on a simple belief — that the discipline of archery deserves the same rigor of verification
-            as any global sporting institution. Where records were once whispered between clubs, ABWR ensures they are
+            as any sporting institution. Where records were once whispered between clubs, ABWR ensures they are
             measured, witnessed and archived for the public record.
           </p>
-          <p className="text-muted-foreground text-justify leading-relaxed">
-            Today, our adjudicators travel from Stockholm to Cusco, ensuring no exceptional shot goes uncelebrated and no
-            heritage form is lost to time.
+          <p className="text-muted-foreground text-justify leading-relaxed group-hover:text-slate-200 transition-colors duration-500">
+            Spanning the globe from the archery ranges of Stockholm to the sacred fields of Cusco, our adjudicators
+            travel to the frontlines of the sport—ensuring that every exceptional feat is officially celebrated and every
+            ancestral shooting technique is preserved for generations to come.
           </p>
         </div>
 
         <div
           className={cn(
-            "bg-card border border-border/60 p-10 relative reveal-card reveal-right",
+            "group bg-gradient-to-br from-orange-50/90 to-amber-50/70 dark:from-orange-950/30 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 shadow-md hover:shadow-2xl hover:from-[#080c1f] hover:to-[#0b132b] dark:hover:from-[#050714] dark:hover:to-[#080c1f] hover:border-amber-500/50 dark:hover:border-amber-500/30 transition-all duration-500 p-10 relative reveal-card reveal-right",
             revealed1 && "revealed"
           )}
           style={{ transitionDelay: "150ms" }}
         >
           <div className="absolute inset-x-0 top-0 h-px gold-line" />
-          <div className="text-xs uppercase tracking-[0.32em] text-primary mb-5">Our Vision</div>
-          <h3 className="font-display text-3xl mb-5">A global archive for precision.</h3>
-          <p className="text-muted-foreground text-justify leading-relaxed">
+          <div className="text-xs uppercase tracking-[0.32em] text-primary mb-5 group-hover:text-primary-glow transition-colors duration-500">Our Vision</div>
+          <h3 className="font-display text-3xl mb-5 group-hover:text-white transition-colors duration-500">A global archive for precision.</h3>
+          <p className="text-muted-foreground text-justify leading-relaxed mb-4 group-hover:text-slate-200 transition-colors duration-500">
             By 2030, every certified archery record on Earth — modern or ancestral — will live within a single, open and
             impartial registry. Free to read. Impossible to forge.
+          </p>
+          <p className="text-muted-foreground text-justify leading-relaxed group-hover:text-slate-200 transition-colors duration-500">
+            Through collaborative partnerships with national federations, indigenous heritage preservation councils, and sports historians worldwide, we are cataloging both contemporary athletic milestones and historically verified ancestral achievements. By establishing universal verification protocols and utilizing secure digital preservation methods, we ensure that the global legacy of archery is documented with scientific precision and remains accessible to everyone for generations to come.
           </p>
         </div>
       </section>
@@ -115,7 +119,7 @@ const About = () => {
             >
               <v.icon className="text-primary mb-6 group-hover:scale-110 transition-transform" size={32} />
               <div className="font-display text-2xl mb-3">{v.title}</div>
-              <p className="text-sm text-muted-foreground text-justify leading-relaxed">{v.text}</p>
+              <p className="text-sm text-muted-foreground  leading-relaxed">{v.text}</p>
             </div>
           ))}
         </div>

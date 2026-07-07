@@ -60,7 +60,7 @@ const FeaturedRecords = () => {
             )}
             style={{ transitionDelay: `${i * 150}ms` }}
           >
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="relative aspect-[4/5] overflow-hidden">
               <img
                 src={r.image}
                 alt={r.title}
@@ -70,6 +70,24 @@ const FeaturedRecords = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              
+              {/* Category Badge overlay */}
+              <div className={cn(
+                "absolute top-4 left-4 px-3 py-1 text-[10px] uppercase tracking-[0.25em] transition-all duration-300 font-bold z-20",
+                "bg-[#080c1f] text-white group-hover:bg-[#080c1f] group-hover:text-[#d4af37]",
+                "dark:bg-[#2a241c] dark:text-black dark:group-hover:bg-[#e2a857] dark:group-hover:text-white"
+              )}>
+                {r.category}
+              </div>
+
+              {/* Arrow button overlay */}
+              <div className={cn(
+                "absolute top-4 right-4 w-9 h-9 rounded-full border border-primary/40 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/40 backdrop-blur-sm group-hover:rotate-45 z-20",
+                "group-hover:bg-[#080c1f] group-hover:text-[#d4af37] group-hover:border-[#080c1f]",
+                "dark:group-hover:bg-[#e2a857] dark:group-hover:text-white dark:group-hover:border-[#e2a857]"
+              )}>
+                <ArrowUpRight size={14} />
+              </div>
             </div>
             <div className="absolute inset-x-0 bottom-0 p-7">
               <div className="flex items-center justify-between mb-3 text-[10px] uppercase tracking-[0.25em]">
@@ -82,9 +100,6 @@ const FeaturedRecords = () => {
               <div className="text-sm text-muted-foreground">
                 {r.participant} · <span className="text-primary/90">{r.metric}</span>
               </div>
-            </div>
-            <div className="absolute top-5 right-5 w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-45 bg-background/40 backdrop-blur-sm">
-              <ArrowUpRight size={16} />
             </div>
           </Link>
         ))}

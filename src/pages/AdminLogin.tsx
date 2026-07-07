@@ -69,7 +69,7 @@ const AdminLogin = () => {
       />
 
       <section className="container pb-32">
-        <div className="max-w-md mx-auto bg-card/60 backdrop-blur-md border border-border/60 p-8 rounded-lg shadow-xl relative overflow-hidden">
+        <div className="max-w-xl mx-auto bg-card/60 backdrop-blur-md border border-border/60 p-12 rounded-lg shadow-xl relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-gold" />
           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-6">
             <Lock className="text-primary" size={20} />
@@ -77,7 +77,7 @@ const AdminLogin = () => {
 
           <h3 className="font-display text-2xl text-center mb-6 text-foreground">Sign In</h3>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Admin Username</Label>
               <Input 
