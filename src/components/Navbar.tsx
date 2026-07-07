@@ -102,7 +102,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-3 xl:gap-6 shrink-0 whitespace-nowrap">
+        <nav className="hidden xl:flex items-center gap-3 xl:gap-6 shrink-0 whitespace-nowrap">
           <RouterNavLink
             to="/about"
             className={({ isActive }) =>
@@ -233,7 +233,7 @@ const Navbar = () => {
 
         </nav>
 
-        <div className="hidden lg:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
+        <div className="hidden xl:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
           <ThemeToggle />
           {isLoggedIn ? (
             <>
@@ -251,7 +251,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="flex lg:hidden items-center gap-3">
+        <div className="flex xl:hidden items-center gap-3">
           <ThemeToggle />
           <button
             className="text-foreground p-2"
@@ -265,7 +265,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {open && (
-        <div className="lg:hidden border-t border-border/60 bg-background/95 backdrop-blur-xl animate-fade-in max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="xl:hidden border-t border-border/60 bg-background/95 backdrop-blur-xl animate-fade-in max-h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="container py-6 flex flex-col gap-2">
             <RouterNavLink
               to="/"
