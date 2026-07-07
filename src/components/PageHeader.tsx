@@ -31,7 +31,7 @@ const PageHeader = ({ eyebrow, title, description, bgImage }: PageHeaderProps) =
   const resolvedBgImage = bgImage || getHeaderBgImage(eyebrow);
 
   return (
-    <section className="relative pt-36 pb-12 md:pt-44 md:pb-16 border-b border-border/60 overflow-hidden bg-background">
+    <section className="relative pt-44 pb-12 md:pt-52 md:pb-16 border-b border-border/60 overflow-hidden bg-background">
       {/* Dynamic Background Image */}
       {resolvedBgImage && (
         <div className="absolute inset-0 z-0">

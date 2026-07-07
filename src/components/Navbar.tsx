@@ -70,6 +70,13 @@ const Navbar = () => {
           : "bg-transparent"
       )}
     >
+      {/* Marquee Banner */}
+      <div className="w-full h-8 bg-[#d4af37] dark:bg-[#9a3412] text-[#080c1f] dark:text-white flex items-center overflow-hidden border-b border-border/20 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
+        <marquee scrollamount="5" className="py-1">
+          Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt lmt
+        </marquee>
+      </div>
+
       <div className="container flex items-center justify-between h-[110px] py-5">
         <Link to="/" className="flex items-center gap-4 group">
           <img

@@ -11,14 +11,14 @@ const Hero = () => {
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden ">
       {/* Poster image as instant LCP, video fades in over it */}
-      <img
+      {/* <img
         src={heroImg}
         alt="Archer drawing a recurve bow at golden hour"
         width={1920}
         height={1080}
         className="absolute inset-0 w-full h-full object-cover"
-      />
-      <video
+      /> */}
+      {/* <video
         className="absolute inset-0 w-full h-full object-cover animate-fade-in-slow"
         autoPlay
         loop
@@ -28,7 +28,7 @@ const Hero = () => {
         poster={heroImg}
       >
         <source src={VIDEO_URL} type="video/mp4" />
-      </video>
+      </video> */}
 
       {/* Layered overlays */}
       <div className="absolute inset-0 bg-background/55" />
