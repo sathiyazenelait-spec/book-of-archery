@@ -123,6 +123,24 @@
     overflow-x: hidden;
   }
 
+  @keyframes gradient-bg-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  html:not(.dark) body {
+    background: linear-gradient(-45deg, 
+      rgba(240, 244, 255, 0.65) 0%, 
+      rgba(255, 255, 255, 0.85) 25%, 
+      rgba(253, 248, 230, 0.55) 50%, 
+      rgba(240, 244, 255, 0.65) 75%, 
+      rgba(255, 255, 255, 0.85) 100%
+    ) !important;
+    background-size: 400% 400% !important;
+    animation: gradient-bg-flow 18s ease infinite !important;
+  }
+
   header a,
   header button,
   footer a,
@@ -368,10 +386,22 @@
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
+  /* Light theme card adjustments for blue, white, and gold theme */
+  html:not(.dark) .bg-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 247, 255, 0.85) 100%) !important;
+    border-color: rgba(222, 230, 255, 0.5) !important;
+  }
+
   .bg-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04), 0 0 25px rgba(212, 175, 55, 0.08) !important;
     border-color: hsl(var(--primary) / 0.4) !important;
+  }
+
+  /* Hover card adjustments in light mode for the gold border highlight */
+  html:not(.dark) .bg-card:hover {
+    background: linear-gradient(135deg, rgba(254, 250, 235, 0.98) 0%, rgba(244, 247, 255, 0.95) 100%) !important;
+    border-color: rgba(212, 175, 55, 0.45) !important;
   }
 
   /* Exclude dialog/modals from hover translations to prevent centering override and wiggling */
