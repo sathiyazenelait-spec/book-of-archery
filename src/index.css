@@ -19,8 +19,8 @@
     --primary-foreground: 0 0% 100%;
     --primary-glow: 43 75% 45%;
 
-    /* Blue */
-    --secondary: 222 80% 30%;
+    /* Blue -> Navy Blue */
+    --secondary: 222 80% 12%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 0 0% 98%;
@@ -38,11 +38,11 @@
 
     --radius: 0.25rem;
 
-    --gradient-gold: linear-gradient(135deg, hsl(222 80% 35%), hsl(197 95% 55%));
+    --gradient-gold: linear-gradient(135deg, hsl(222 80% 12%), hsl(220 70% 22%));
     --gradient-dark: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.6) 50%, hsla(0, 0%, 100%, 1) 100%);
-    --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(210 90% 40% / 0.08), transparent 60%);
+    --gradient-radial-gold: radial-gradient(circle at 50% 50%, hsl(222 80% 12% / 0.08), transparent 60%);
 
-    --shadow-gold: 0 10px 30px -10px hsl(222 80% 35% / 0.2);
+    --shadow-gold: 0 10px 30px -10px hsl(222 80% 12% / 0.2);
     --shadow-deep: 0 15px 30px -10px hsl(0 0% 0% / 0.15);
 
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
@@ -169,16 +169,14 @@
     color: hsl(var(--foreground));
   }
 
-  html:not(.dark) body {
-    background-color: #ffffff !important;
-  }
+  /* Allow animated gradient background on body in light mode */
 
   html:not(.dark) footer {
     --primary: 193 100% 90%;
     --foreground: 0 0% 100%;
     --muted-foreground: 193 100% 85%;
     --border: 193 100% 95% / 0.2;
-    background: linear-gradient(135deg, hsl(222 80% 20%), hsl(205 90% 40%)) !important;
+    background: linear-gradient(135deg, hsl(222 80% 12%), hsl(220 70% 22%)) !important;
   }
 
   html:not(.dark) header {
@@ -186,8 +184,8 @@
     --foreground: 0 0% 100%;
     --muted-foreground: 193 100% 85%;
     --border: 193 100% 95% / 0.15;
-    --background: 222 80% 20%;
-    background: linear-gradient(135deg, hsla(222, 80%, 20%, 0.95), hsla(205, 90%, 40%, 0.95)) !important;
+    --background: 222 80% 12%;
+    background: linear-gradient(135deg, hsla(222, 80%, 12%, 0.95), hsla(220, 70%, 22%, 0.95)) !important;
     border-bottom: 1px solid hsla(193, 100%, 95%, 0.15) !important;
   }
 }
@@ -312,7 +310,7 @@
   }
 
   html:not(.dark) .stat-card {
-    background: linear-gradient(135deg, hsl(222 80% 18%), hsl(205 90% 35%)) !important;
+    background: linear-gradient(135deg, hsl(222 80% 12%), hsl(220 70% 22%)) !important;
     border-color: rgba(212, 175, 55, 0.2) !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
   }
