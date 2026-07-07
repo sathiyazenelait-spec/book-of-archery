@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-const logo = "/archery_image.png";
+const logo = "/logo.jpeg";
 
 const SiteLayout = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -61,7 +61,7 @@ const SiteLayout = () => {
   }, [isOpen]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
+    <div className="min-h-screen  flex flex-col bg-background overflow-x-hidden">
       <ArcheryBackgroundAnimation />
       <Navbar />
       <main className="flex-1">
@@ -85,11 +85,11 @@ const SiteLayout = () => {
         <DialogContent
           onPointerDownOutside={(e) => e.preventDefault()}
           onInteractOutside={(e) => e.preventDefault()}
-          className="sm:max-w-[550px] bg-card border border-border/60 text-card-foreground p-8 md:p-10 rounded-xl shadow-2xl overflow-hidden"
+          className="sm:max-w-[550px] bg-card border border-border/60 text-card-foreground p-8 md:p-10 rounded-xl shadow-2xl overflow-visible"
         >
           {/* Subtle gold radial gradient backdrop */}
           <div className="absolute inset-0 bg-gradient-radial-gold opacity-30 z-0 pointer-events-none" />
-          
+
           {/* Top border gold line */}
           <div className="absolute inset-x-0 top-0 h-[4px] bg-gradient-gold z-10" />
 
