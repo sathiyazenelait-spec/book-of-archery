@@ -38,15 +38,15 @@ const PageHeader = ({ eyebrow, title, description, bgImage }: PageHeaderProps) =
           <img
             src={resolvedBgImage}
             alt=""
-            className="w-full h-full object-cover opacity-[0.12] dark:opacity-[0.08]"
+            className="w-full h-full object-cover opacity-[0.44] dark:opacity-[0.10]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
         </div>
       )}
-      
+
       {/* Radial Glow Overlay */}
       <div className="absolute inset-0 opacity-40 z-0" style={{ background: "var(--gradient-radial-gold)" }} />
-      
+
       <div className="container relative z-10">
         <div className="flex items-center gap-3 mb-6 animate-fade-in">
           <div className="h-px w-10 bg-primary" />

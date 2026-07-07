@@ -44,24 +44,22 @@ const Records = () => {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    setRevealed(false); // Reset animation state on filter change
 
-    const timer = setTimeout(() => {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setRevealed(true);
-          } else {
-            setRevealed(false);
-          }
-        });
-      }, { threshold: 0.02 });
-      io.observe(el);
-      return () => io.disconnect();
-    }, 50);
+    if (allRecords.length > 0) {
+      setRevealed(true);
+    }
 
-    return () => clearTimeout(timer);
-  }, [filtered]);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setRevealed(true);
+        }
+      });
+    }, { threshold: 0.02 });
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [allRecords]);
 
   return (
     <>
