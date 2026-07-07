@@ -549,4 +549,18 @@
     color: #f0f1f7 !important;
     font-weight: 500 !important;
   }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .animate-float-slow {
+    display: inline-block;
+    animation: float-slow 3.2s ease-in-out infinite;
+  }
 }
