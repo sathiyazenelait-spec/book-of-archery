@@ -71,10 +71,15 @@ const Navbar = () => {
       )}
     >
       {/* Marquee Banner */}
-      <div className="w-full h-8 bg-[#d4af37] dark:bg-[#9a3412] text-[#080c1f] dark:text-white flex items-center overflow-hidden border-b border-border/20 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
-        <marquee scrollamount="5" className="py-1">
-          Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt lmt
-        </marquee>
+      <div className="w-full h-8 bg-[#d4af37] dark:bg-[#9a3412] flex justify-center items-center overflow-hidden border-b border-border/20">
+        <div 
+          className="w-[92%] sm:w-[85%] md:w-[75%] lg:w-[65%] h-full bg-white dark:bg-[#0f172a] text-[#080c1f] dark:text-white flex items-center px-12"
+          style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 24px) 100%, 24px 100%)" }}
+        >
+          <marquee scrollamount="5" className="py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
+            Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt lmt
+          </marquee>
+        </div>
       </div>
 
       <div className="container flex items-center justify-between h-[110px] py-5">
