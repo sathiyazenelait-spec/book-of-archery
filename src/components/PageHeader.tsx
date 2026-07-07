@@ -65,25 +65,25 @@ const PageHeader = ({ eyebrow, title, description, bgImage }: PageHeaderProps) =
 
         {/* Archery Target & Shooting Arrow Animation */}
         {description && eyebrow.toLowerCase().includes("about") && (
-          <div className="relative w-48 h-36 flex items-center justify-center shrink-0 self-center md:self-end md:mb-4 bg-card/45 backdrop-blur-[2px] border border-border/30 rounded-xl p-4 shadow-sm overflow-visible animate-fade-in" style={{ animationDelay: "300ms" }}>
+          <div className="relative w-64 h-48 flex items-center justify-center shrink-0 self-center md:self-end md:mb-4 bg-card/45 backdrop-blur-[2px] border border-border/30 rounded-2xl p-6 shadow-sm overflow-visible animate-fade-in" style={{ animationDelay: "300ms" }}>
             {/* Target concentric circles */}
-            <div className="w-24 h-24 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center shadow-inner relative z-10">
-              <div className="w-18 h-18 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-red-500 dark:bg-red-600 flex items-center justify-center">
-                  <div className="w-6 h-6 rounded-full bg-yellow-400 dark:bg-yellow-500 flex items-center justify-center">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-700 dark:bg-red-800 animate-pulse" />
+            <div className="w-36 h-36 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center shadow-inner relative z-10">
+              <div className="w-28 h-28 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-red-500 dark:bg-red-600 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-yellow-400 dark:bg-yellow-500 flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-red-700 dark:bg-red-800 animate-pulse" />
                   </div>
                 </div>
               </div>
             </div>
-            
+
             {/* Animated Arrow */}
-            <div className="absolute left-[-120px] top-1/2 -translate-y-1/2 w-24 h-1 bg-slate-800 dark:bg-slate-200 flex items-center justify-end z-20 animate-arrow-shoot pointer-events-none">
+            <div className="absolute left-[-160px] top-1/2 -translate-y-1/2 w-32 h-1.5 bg-slate-800 dark:bg-slate-200 flex items-center justify-end z-20 animate-arrow-shoot pointer-events-none">
               {/* Feathers */}
-              <div className="absolute left-0 w-3 h-2 bg-red-500 dark:bg-red-600 rounded-sm skew-x-12" />
-              <div className="absolute left-1 w-3 h-2 bg-red-500 dark:bg-red-600 rounded-sm -skew-x-12" />
+              <div className="absolute left-0 w-5 h-3 bg-red-500 dark:bg-red-600 rounded-sm skew-x-12" />
+              <div className="absolute left-1.5 w-5 h-3 bg-red-500 dark:bg-red-600 rounded-sm -skew-x-12" />
               {/* Arrowhead */}
-              <div className="w-1.5 h-1.5 bg-slate-800 dark:bg-slate-200 rotate-45 transform origin-center" />
+              <div className="w-2.5 h-2.5 bg-slate-800 dark:bg-slate-200 rotate-45 transform origin-center" />
             </div>
           </div>
         )}
