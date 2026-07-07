@@ -47,18 +47,45 @@ const PageHeader = ({ eyebrow, title, description, bgImage }: PageHeaderProps) =
       {/* Radial Glow Overlay */}
       <div className="absolute inset-0 opacity-40 z-0" style={{ background: "var(--gradient-radial-gold)" }} />
 
-      <div className="container relative z-10">
-        <div className="flex items-center gap-3 mb-6 animate-fade-in">
-          <div className="h-px w-10 bg-primary" />
-          <span className="text-xs uppercase tracking-[0.32em] text-primary">{eyebrow}</span>
+      <div className="container relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-12">
+        <div className="max-w-4xl flex-1">
+          <div className="flex items-center gap-3 mb-6 animate-fade-in">
+            <div className="h-px w-10 bg-primary" />
+            <span className="text-xs uppercase tracking-[0.32em] text-primary">{eyebrow}</span>
+          </div>
+          <h1 className="font-display text-5xl md:text-7xl leading-[1.02] animate-fade-in" style={{ animationDelay: "100ms" }}>
+            {title}
+          </h1>
+          {description && (
+            <p className="mt-8 text-lg text-muted-foreground leading-relaxed animate-fade-in text-justify" style={{ animationDelay: "200ms" }}>
+              {description}
+            </p>
+          )}
         </div>
-        <h1 className="font-display text-5xl md:text-7xl leading-[1.02] max-w-4xl animate-fade-in" style={{ animationDelay: "100ms" }}>
-          {title}
-        </h1>
-        {description && (
-          <p className="mt-8 max-w-4xl text-lg text-muted-foreground leading-relaxed animate-fade-in text-justify" style={{ animationDelay: "200ms" }}>
-            {description}
-          </p>
+
+        {/* Archery Target & Shooting Arrow Animation */}
+        {description && eyebrow.toLowerCase().includes("about") && (
+          <div className="relative w-48 h-36 flex items-center justify-center shrink-0 self-center md:self-end md:mb-4 bg-card/45 backdrop-blur-[2px] border border-border/30 rounded-xl p-4 shadow-sm overflow-visible animate-fade-in" style={{ animationDelay: "300ms" }}>
+            {/* Target concentric circles */}
+            <div className="w-24 h-24 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center shadow-inner relative z-10">
+              <div className="w-18 h-18 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-red-500 dark:bg-red-600 flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-yellow-400 dark:bg-yellow-500 flex items-center justify-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-700 dark:bg-red-800 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Animated Arrow */}
+            <div className="absolute left-[-120px] top-1/2 -translate-y-1/2 w-24 h-1 bg-slate-800 dark:bg-slate-200 flex items-center justify-end z-20 animate-arrow-shoot pointer-events-none">
+              {/* Feathers */}
+              <div className="absolute left-0 w-3 h-2 bg-red-500 dark:bg-red-600 rounded-sm skew-x-12" />
+              <div className="absolute left-1 w-3 h-2 bg-red-500 dark:bg-red-600 rounded-sm -skew-x-12" />
+              {/* Arrowhead */}
+              <div className="w-1.5 h-1.5 bg-slate-800 dark:bg-slate-200 rotate-45 transform origin-center" />
+            </div>
+          </div>
         )}
       </div>
     </section>

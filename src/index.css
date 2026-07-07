@@ -561,4 +561,37 @@
     display: inline-block;
     animation: float-slow 3.2s ease-in-out infinite;
   }
+
+  @keyframes arrow-shoot {
+    0% {
+      transform: translateX(0) scale(0.9);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    35% {
+      transform: translateX(120px) scale(1);
+    }
+    38% {
+      transform: translateX(118px) translateY(-1px) scale(1);
+    }
+    41% {
+      transform: translateX(121px) translateY(1px) scale(1);
+    }
+    44% {
+      transform: translateX(120px) scale(1);
+    }
+    85% {
+      opacity: 1;
+    }
+    95%, 100% {
+      opacity: 0;
+      transform: translateX(120px) scale(1);
+    }
+  }
+
+  .animate-arrow-shoot {
+    animation: arrow-shoot 3s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
 }
