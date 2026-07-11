@@ -421,8 +421,8 @@ const Apply = () => {
             <p className="text-sm text-muted-foreground mb-8 max-w-sm mx-auto leading-relaxed">
               We have dispatched a confirmation receipt. Please retain this ID for check-ins.
             </p>
-            <Button variant="heroOutline" onClick={resetForm}>
-              Start a new submission
+            <Button asChild variant="heroOutline">
+              <Link to="/">Close</Link>
             </Button>
           </div>
         </section>
