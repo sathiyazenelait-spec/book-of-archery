@@ -101,7 +101,7 @@ const SiteLayout = () => {
             <img
               src={logo}
               alt="Archery Book of World Records Logo"
-              className="h-24 w-24 md:h-28 md:w-28 object-contain mb-6 drop-shadow-[0_4px_12px_rgba(212,175,55,0.4)] animate-pulse"
+              className="h-24 w-24 md:h-28 md:w-28 rounded-full object-contain mb-6 drop-shadow-[0_4px_12px_rgba(212,175,55,0.4)] animate-pulse"
             />
 
             <DialogHeader className="space-y-4">

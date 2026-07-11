@@ -14,7 +14,7 @@ const Footer = () => (
               Archery Book of World Records
             </div>
             <div className="text-[9px] uppercase tracking-[0.2em] text-primary font-medium mt-1">
-              Managed by a unit of KOORMAI ELAKU Pvt Ltd
+              A unit of KOORMAI ELAKU Pvt Ltd
             </div>
           </div>
         </div>

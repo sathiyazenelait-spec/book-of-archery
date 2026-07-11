@@ -29,9 +29,9 @@ const Hero = () => {
         <source src={VIDEO_URL} type="video/mp4" />
       </video>
 
-      {/* Layered overlays */}
-      <div className="absolute inset-0 bg-background/55" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/30 to-background" />
+      {/* Light overlays supporting both light (white) and dark themes */}
+      <div className="absolute inset-0 bg-background/15 dark:bg-background/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background dark:from-background/60 dark:via-background/20 dark:to-background" />
       <div className="absolute inset-0" style={{ background: "var(--gradient-radial-gold)" }} />
 
       <div className="relative z-10 h-full container flex flex-col justify-end pb-24 md:pb-32">

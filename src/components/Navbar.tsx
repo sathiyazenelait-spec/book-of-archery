@@ -72,40 +72,40 @@ const Navbar = () => {
     >
       {/* Marquee Banner */}
       <div className="w-full h-8 bg-[#d4af37] dark:bg-[#9a3412] flex justify-center items-center overflow-hidden border-b border-border/20">
-        <div 
+        <div
           className="w-[92%] sm:w-[85%] md:w-[75%] lg:w-[65%] h-full bg-white dark:bg-[#0f172a] text-[#080c1f] dark:text-white flex items-center px-12"
           style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 24px) 100%, 24px 100%)" }}
         >
           <marquee scrollamount="5" className="py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
-            Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt lmt
+            Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt ltd
           </marquee>
         </div>
       </div>
 
-      <div className={cn("container flex items-center justify-between transition-all duration-300", isLoggedIn ? "h-[85px] py-3" : "h-[110px] py-5")}>
-        <Link to="/" className="flex items-center gap-4 group">
+      <div className={cn("container flex items-center justify-between transition-all duration-300", isLoggedIn ? "h-[105px] py-4" : "h-[140px] py-7")}>
+        <Link to="/" className="flex items-center gap-5 group">
           <img
             src={logo}
             alt="ABWR emblem"
-            width={68}
-            height={68}
+            width={82}
+            height={82}
             className={cn(
               "object-contain group-hover:rotate-6 transition-all duration-300 shrink-0",
-              isLoggedIn ? "h-[45px] w-[45px] md:h-[52px] md:w-[52px]" : "h-[60px] w-[60px] md:h-[68px] md:w-[68px]"
+              isLoggedIn ? "h-[50px] w-[50px] md:h-[60px] md:w-[60px]" : "h-[70px] w-[70px] md:h-[82px] md:w-[82px]"
             )}
           />
           <div className="flex flex-col justify-center leading-none">
             <div className={cn(
               "font-display font-bold tracking-wider uppercase text-foreground transition-all duration-300",
-              isLoggedIn ? "text-sm sm:text-base md:text-lg lg:text-[18px]" : "text-base sm:text-lg md:text-xl lg:text-[22px]"
+              isLoggedIn ? "text-sm sm:text-base md:text-lg lg:text-[18px]" : "text-base sm:text-lg md:text-xl lg:text-[20px]"
             )}>
               Archery Book of World Records
             </div>
             <div className={cn(
               "uppercase tracking-[0.24em] text-primary font-medium transition-all duration-300",
-              isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[9px] mt-0.5" : "text-[8px] sm:text-[9px] md:text-[10px] mt-1"
+              isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[9px] mt-0.5" : "text-[9px] sm:text-[10px] md:text-[11px] mt-1.5"
             )}>
-              Managed by a unit of KOORMAI ELAKU Pvt Ltd
+              A unit of KOORMAI ELAKU Pvt Ltd
             </div>
           </div>
         </Link>
