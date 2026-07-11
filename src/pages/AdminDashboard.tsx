@@ -65,21 +65,13 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-// Mock images list
-import record1 from "@/assets/record-1.jpg";
-import record2 from "@/assets/record-2.jpg";
-import record3 from "@/assets/record-3.jpg";
-import record4 from "@/assets/record-4.jpg";
-import record5 from "@/assets/record-5.jpg";
-import record6 from "@/assets/record-6.jpg";
-
 const imageOptions = [
-  { name: "Kyoto Range (Recurve)", value: record1 },
-  { name: "Atacama Desert (Sunset)", value: record2 },
-  { name: "Stockholm Junior Target", value: record3 },
-  { name: "Lagos Caliper Cluster", value: record4 },
-  { name: "Telavi Mounted Heritage", value: record5 },
-  { name: "Cusco Ceremonial Bows", value: record6 }
+  { name: "Kyoto Range (Recurve)", value: "/record-1.jpg" },
+  { name: "Atacama Desert (Sunset)", value: "/record-2.jpg" },
+  { name: "Stockholm Junior Target", value: "/record-3.jpg" },
+  { name: "Lagos Caliper Cluster", value: "/record-4.jpg" },
+  { name: "Telavi Mounted Heritage", value: "/record-5.jpg" },
+  { name: "Cusco Ceremonial Bows", value: "/record-6.jpg" }
 ];
 
 const AdminDashboard = () => {

@@ -1,10 +1,3 @@
-import record1 from "@/assets/record-1.jpg";
-import record2 from "@/assets/record-2.jpg";
-import record3 from "@/assets/record-3.jpg";
-import record4 from "@/assets/record-4.jpg";
-import record5 from "@/assets/record-5.jpg";
-import record6 from "@/assets/record-6.jpg";
-
 export type RecordCategory =
   | "Archery Performance Records"
   | "Distance Records"
@@ -46,12 +39,12 @@ export const records: RecordItem[] = [
     category: "Accuracy Records",
     date: "March 14, 2025",
     location: "Kyoto, Japan",
-    image: record1,
+    image: "/record-1.jpg",
     metric: "47 bullseyes",
     shortDescription: "An unprecedented streak of precision under extreme time pressure.",
     description:
       "Under the hush of the Kyoto indoor range, Aiyana Vance shattered a record many believed unreachable — landing 47 consecutive bullseyes in a single 60-second window with a traditional recurve bow. Verified by three independent ABWR adjudicators.",
-    gallery: [record1, record4, record2],
+    gallery: ["/record-1.jpg", "/record-4.jpg", "/record-2.jpg"],
   },
   {
     id: "ABWR-2025-002",
@@ -60,12 +53,12 @@ export const records: RecordItem[] = [
     category: "Distance Records",
     date: "January 02, 2025",
     location: "Atacama Desert, Chile",
-    image: record2,
+    image: "/record-2.jpg",
     metric: "412 meters",
     shortDescription: "A single arrow, twelve seconds of flight, one perfect score.",
     description:
       "From a windswept ridge in the Atacama, Mateus Aquino loosed a single arrow that traveled 412 meters and scored within the official ABWR target zone — the longest verified accurate shot in the federation's history.",
-    gallery: [record2, record5, record4],
+    gallery: ["/record-2.jpg", "/record-5.jpg", "/record-4.jpg"],
   },
   {
     id: "ABWR-2024-118",
@@ -74,12 +67,12 @@ export const records: RecordItem[] = [
     category: "Youth Records",
     date: "November 22, 2024",
     location: "Stockholm, Sweden",
-    image: record3,
+    image: "/record-3.jpg",
     metric: "7 years, 4 months",
     shortDescription: "Focus beyond his years on the ABWR junior circuit.",
     description:
       "Theo Halvarsson became the youngest archer ever to complete the full ABWR Junior Circuit, scoring above 92% across all six classified disciplines. A composed performance that has redefined youth archery development.",
-    gallery: [record3, record1, record6],
+    gallery: ["/record-3.jpg", "/record-1.jpg", "/record-6.jpg"],
   },
   {
     id: "ABWR-2024-097",
@@ -88,12 +81,12 @@ export const records: RecordItem[] = [
     category: "Accuracy Records",
     date: "August 09, 2024",
     location: "Lagos, Nigeria",
-    image: record4,
+    image: "/record-4.jpg",
     metric: "11.2 mm spread",
     shortDescription: "Ten arrows. One impossible cluster.",
     description:
       "Measured by laser caliper, Hana Okonkwo's 10-arrow group spanned just 11.2 millimeters at competition distance. The cluster is now permanently archived in the ABWR Hall of Precision.",
-    gallery: [record4, record1, record6],
+    gallery: ["/record-4.jpg", "/record-1.jpg", "/record-6.jpg"],
   },
   {
     id: "ABWR-2024-064",
@@ -102,12 +95,12 @@ export const records: RecordItem[] = [
     category: "Horseback Archery Records",
     date: "June 18, 2024",
     location: "Telavi, Georgia",
-    image: record5,
+    image: "/record-5.jpg",
     metric: "9 hits in 14.2s",
     shortDescription: "Reviving an ancient art with modern verification.",
     description:
       "Galloping at full speed across a 99-meter heritage track, Tariel Beridze landed 9 of 9 arrows on three moving targets in 14.2 seconds — the fastest verified mounted run in ABWR Heritage Division.",
-    gallery: [record5, record2, record6],
+    gallery: ["/record-5.jpg", "/record-2.jpg", "/record-6.jpg"],
   },
   {
     id: "ABWR-2023-241",
@@ -116,12 +109,12 @@ export const records: RecordItem[] = [
     category: "Traditional Archery Records",
     date: "October 30, 2023",
     location: "Cusco, Peru",
-    image: record6,
+    image: "/record-6.jpg",
     metric: "144 archers · 1 ceremony",
     shortDescription: "The largest ceremonial volley in the modern era.",
     description:
       "The Andean Collective gathered 144 archers from 22 villages, each carrying a restored ancestral bow, to release a single coordinated ceremonial volley — entered into the ABWR registry as a cultural milestone.",
-    gallery: [record6, record5, record4],
+    gallery: ["/record-6.jpg", "/record-5.jpg", "/record-4.jpg"],
   },
 ];
 

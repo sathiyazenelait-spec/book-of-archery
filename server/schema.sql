@@ -84,11 +84,11 @@ VALUES
   'Accuracy Records', 
   'March 14, 2025', 
   'Kyoto, Japan', 
-  '/src/assets/record-1.jpg', 
+  '/record-1.jpg', 
   'An unprecedented streak of precision under extreme time pressure.', 
   'Under the hush of the Kyoto indoor range, Aiyana Vance shattered a record many believed unreachable — landing 47 consecutive bullseyes in a single 60-second window with a traditional recurve bow. Verified by three independent ABWR adjudicators.', 
   '47 bullseyes', 
-  '["/src/assets/record-1.jpg", "/src/assets/record-4.jpg", "/src/assets/record-2.jpg"]'
+  '["/record-1.jpg", "/record-4.jpg", "/record-2.jpg"]'
 ),
 (
   'ABWR-2025-002', 
@@ -97,11 +97,11 @@ VALUES
   'Distance Records', 
   'January 02, 2025', 
   'Atacama Desert, Chile', 
-  '/src/assets/record-2.jpg', 
+  '/record-2.jpg', 
   'A single arrow, twelve seconds of flight, one perfect score.', 
   'From a windswept ridge in the Atacama, Mateus Aquino loosed a single arrow that traveled 412 meters and scored within the official ABWR target zone — the longest verified accurate shot in the federation\'s history.', 
   '412 meters', 
-  '["/src/assets/record-2.jpg", "/src/assets/record-5.jpg", "/src/assets/record-4.jpg"]'
+  '["/record-2.jpg", "/record-5.jpg", "/record-4.jpg"]'
 ),
 (
   'ABWR-2024-118', 
@@ -110,11 +110,11 @@ VALUES
   'Youth Records', 
   'November 22, 2024', 
   'Stockholm, Sweden', 
-  '/src/assets/record-3.jpg', 
+  '/record-3.jpg', 
   'Focus beyond his years on the ABWR junior circuit.', 
   'Theo Halvarsson became the youngest archer ever to complete the full ABWR Junior Circuit, scoring above 92% across all six classified disciplines. A composed performance that has redefined youth archery development.', 
   '7 years, 4 months', 
-  '["/src/assets/record-3.jpg", "/src/assets/record-1.jpg", "/src/assets/record-6.jpg"]'
+  '["/record-3.jpg", "/record-1.jpg", "/record-6.jpg"]'
 ),
 (
   'ABWR-2024-097', 
@@ -123,11 +123,11 @@ VALUES
   'Accuracy Records', 
   'August 09, 2024', 
   'Lagos, Nigeria', 
-  '/src/assets/record-4.jpg', 
+  '/record-4.jpg', 
   'Ten arrows. One impossible cluster.', 
   'Measured by laser caliper, Hana Okonkwo\'s 10-arrow group spanned just 11.2 millimeters at competition distance. The cluster is now permanently archived in the ABWR Hall of Precision.', 
   '11.2 mm spread', 
-  '["/src/assets/record-4.jpg", "/src/assets/record-1.jpg", "/src/assets/record-6.jpg"]'
+  '["/record-4.jpg", "/record-1.jpg", "/record-6.jpg"]'
 ),
 (
   'ABWR-2024-064', 
@@ -136,11 +136,11 @@ VALUES
   'Horseback Archery Records', 
   'June 18, 2024', 
   'Telavi, Georgia', 
-  '/src/assets/record-5.jpg', 
+  '/record-5.jpg', 
   'Reviving an ancient art with modern verification.', 
   'Galloping at full speed across a 99-meter heritage track, Tariel Beridze landed 9 of 9 arrows on three moving targets in 14.2 seconds — the fastest verified mounted run in ABWR Heritage Division.', 
   '9 hits in 14.2s', 
-  '["/src/assets/record-5.jpg", "/src/assets/record-2.jpg", "/src/assets/record-6.jpg"]'
+  '["/record-5.jpg", "/record-2.jpg", "/record-6.jpg"]'
 ),
 (
   'ABWR-2023-241', 
@@ -149,11 +149,11 @@ VALUES
   'Traditional Archery Records', 
   'October 30, 2023', 
   'Cusco, Peru', 
-  '/src/assets/record-6.jpg', 
+  '/record-6.jpg', 
   'The largest ceremonial volley in the modern era.', 
   'The Andean Collective gathered 144 archers from 22 villages, each carrying a restored ancestral bow, to release a single coordinated ceremonial volley — entered into the ABWR registry as a cultural milestone.', 
   '144 archers · 1 ceremony', 
-  '["/src/assets/record-6.jpg", "/src/assets/record-5.jpg", "/src/assets/record-4.jpg"]'
+  '["/record-6.jpg", "/record-5.jpg", "/record-4.jpg"]'
 );
 
 -- 5. Create Homepage Stats Table
