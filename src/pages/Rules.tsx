@@ -20,6 +20,7 @@ import {
   FileText
 } from "lucide-react";
 import { toast } from "sonner";
+import { downloadRulesPdf } from "@/utils/pdfGenerator";
 
 type TabId = "rules" | "claiming" | "certification" | "adjudication";
 
@@ -94,6 +95,13 @@ export default function Rules() {
       link.click();
       document.body.removeChild(link);
       toast.success(`${filename} downloaded successfully!`);
+
+      // Trigger simultaneous download of rules PDF synchronously (bypasses browser popup blocking)
+      if (filename.includes("Application_Form")) {
+        downloadRulesPdf("application");
+      } else if (filename.includes("Claim_Form")) {
+        downloadRulesPdf("claim");
+      }
     } catch (e) {
       toast.error("Download failed, please try again.");
     }

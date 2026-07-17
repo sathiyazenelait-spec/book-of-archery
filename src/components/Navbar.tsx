@@ -137,7 +137,7 @@ const Navbar = () => {
             </button>
 
             {activeMenu === "apply" && (
-              <div className="absolute left-0 top-full bg-background/95 backdrop-blur-xl border border-border/60 p-6 rounded-lg shadow-xl min-w-[380px] grid grid-cols-2 gap-6 animate-scale-in z-50">
+              <div className="absolute left-0 top-full bg-background/95 backdrop-blur-xl border border-border/60 p-6 rounded-lg shadow-xl min-w-[420px] grid grid-cols-2 gap-6 animate-scale-in z-50">
                 <div>
                   <h4 className="text-[10px] uppercase tracking-wider text-primary font-bold mb-3 border-b border-border/40 pb-1.5 flex items-center gap-1">
                     <Shield size={11} /> Application Form
@@ -147,10 +147,7 @@ const Navbar = () => {
                       Individual Form
                     </Link>
                     <Link to="/apply?type=application&category=organization" onClick={() => setActiveMenu(null)} className="text-xs uppercase tracking-wider text-foreground/80 hover:text-primary py-2 px-2.5 rounded hover:bg-muted/40 transition-colors block">
-                      Organization Form
-                    </Link>
-                    <Link to="/apply?type=application&category=corporate" onClick={() => setActiveMenu(null)} className="text-xs uppercase tracking-wider text-foreground/80 hover:text-primary py-2 px-2.5 rounded hover:bg-muted/40 transition-colors block">
-                      Corporate Form
+                      Organization/<br />Corporate Form
                     </Link>
                   </div>
                 </div>
@@ -163,10 +160,7 @@ const Navbar = () => {
                       Individual Claim
                     </Link>
                     <Link to="/apply?type=claim&category=organization" onClick={() => setActiveMenu(null)} className="text-xs uppercase tracking-wider text-foreground/80 hover:text-primary py-2 px-2.5 rounded hover:bg-muted/40 transition-colors block">
-                      Organization Claim
-                    </Link>
-                    <Link to="/apply?type=claim&category=corporate" onClick={() => setActiveMenu(null)} className="text-xs uppercase tracking-wider text-foreground/80 hover:text-primary py-2 px-2.5 rounded hover:bg-muted/40 transition-colors block">
-                      Corporate Claim
+                      Organization/<br />Corporate Claim
                     </Link>
                   </div>
                 </div>
@@ -314,10 +308,7 @@ const Navbar = () => {
                         Individual
                       </Link>
                       <Link to="/apply?type=application&category=organization" className="text-xs uppercase tracking-wider text-foreground/75 hover:text-primary py-1 block">
-                        Organization
-                      </Link>
-                      <Link to="/apply?type=application&category=corporate" className="text-xs uppercase tracking-wider text-foreground/75 hover:text-primary py-1 block">
-                        Corporate
+                        Organization/Corporate
                       </Link>
                     </div>
                   </div>
@@ -328,10 +319,7 @@ const Navbar = () => {
                         Individual
                       </Link>
                       <Link to="/apply?type=claim&category=organization" className="text-xs uppercase tracking-wider text-foreground/75 hover:text-primary py-1 block">
-                        Organization
-                      </Link>
-                      <Link to="/apply?type=claim&category=corporate" className="text-xs uppercase tracking-wider text-foreground/75 hover:text-primary py-1 block">
-                        Corporate
+                        Organization/Corporate
                       </Link>
                     </div>
                   </div>

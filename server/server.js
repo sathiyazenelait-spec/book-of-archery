@@ -384,6 +384,7 @@ app.post("/api/submissions", async (req, res) => {
     );
     res.status(201).json({ message: "Submission stored successfully.", id });
   } catch (err) {
+    console.error("Database error storing submission:", err);
     res.status(500).json({ error: "Database error storing submission.", details: err.message });
   }
 });

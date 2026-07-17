@@ -32,7 +32,7 @@ interface TeamMember {
 
 interface ApplyForm {
   formType: "application" | "claim";
-  category: "individual" | "organization";
+  category: "individual" | "organization" | "corporate";
   
   // 1. Individual Information
   name: string;
@@ -230,6 +230,7 @@ const Apply = () => {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<ApplyForm>(emptyForm);
   const [submitted, setSubmitted] = useState<string | null>(null);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const isLoggedIn = sessionStorage.getItem("abwr_admin_is_logged_in") === "true";
 
@@ -252,12 +253,12 @@ const Apply = () => {
     const catParam = searchParams.get("category");
 
     const validTypes = ["application", "claim"];
-    const validCats = ["individual", "organization"];
+    const validCats = ["individual", "organization", "corporate"];
 
     setForm(prev => ({
       ...prev,
       formType: typeParam && validTypes.includes(typeParam) ? (typeParam as "application" | "claim") : prev.formType,
-      category: catParam && validCats.includes(catParam) ? (catParam as "individual" | "organization") : prev.category,
+      category: catParam && validCats.includes(catParam) ? (catParam as "individual" | "organization" | "corporate") : prev.category,
       name: prev.name || (currentUser ? currentUser.username : ""),
       email: prev.email || (currentUser && currentUser.email ? currentUser.email : "")
     }));
@@ -336,11 +337,11 @@ const Apply = () => {
       category: form.category,
       name: form.category === "individual" ? form.name : (form.orgAttemptType === "individual" ? form.orgIndName : "Team Attempt"),
       dob: form.category === "individual" ? form.dob : (form.orgAttemptType === "individual" ? form.orgIndDob : null),
-      orgName: form.category === "organization" ? form.orgName : null,
-      orgType: form.category === "organization" ? form.orgType : null,
-      repName: form.category === "organization" ? form.orgContactPerson : null,
-      companyName: form.category === "organization" && form.orgType === "Company" ? form.orgName : null,
-      companyReg: form.category === "organization" && form.orgType === "Company" ? form.orgRegNumber : null,
+      orgName: form.category !== "individual" ? form.orgName : null,
+      orgType: form.category !== "individual" ? form.orgType : null,
+      repName: form.category !== "individual" ? form.orgContactPerson : null,
+      companyName: form.category === "corporate" ? form.orgName : (form.category === "organization" && form.orgType === "Company" ? form.orgName : null),
+      companyReg: form.category === "corporate" ? form.orgRegNumber : (form.category === "organization" && form.orgType === "Company" ? form.orgRegNumber : null),
       email: form.category === "individual" ? form.email : form.orgContactEmail,
       phone: form.category === "individual" ? form.phone : form.orgContactPhone,
       recordTitle: form.recordTitle,
@@ -368,6 +369,7 @@ const Apply = () => {
     setForm(emptyForm);
     setStep(0);
     setSearchParams({});
+    setAcceptTerms(false);
   };
 
   const formTypeName = form.formType === "application" ? "Application" : "Official Claim";
@@ -522,28 +524,35 @@ const Apply = () => {
                   <div className="space-y-4">
                     <Label className="text-xs uppercase tracking-widest text-primary">Applicant Category</Label>
                     <div className="grid gap-4">
-                      {(["individual", "organization"] as const).map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => update("category", cat)}
-                          className={cn(
-                            "flex items-center gap-4 p-4 text-left border rounded-lg transition-all duration-300 capitalize",
-                            form.category === cat
-                              ? "border-primary bg-primary/5 shadow-md"
-                              : "border-border hover:border-foreground/30 hover:bg-muted/30"
-                          )}
-                        >
-                          <Users className="h-5 w-5 text-primary/80 shrink-0" />
-                          <div>
-                            <span className="font-semibold text-sm">{cat}</span>
-                            <p className="text-[11px] text-muted-foreground mt-0.5">
-                              {cat === "individual" && "Attempt by a single archer (Individual form)."}
-                              {cat === "organization" && "Attempt by club, school, company or team (Organisations form)."}
-                            </p>
-                          </div>
-                        </button>
-                      ))}
+                      {(["individual", "organization"] as const).map((cat) => {
+                        const isSelected = cat === "individual"
+                          ? form.category === "individual"
+                          : (form.category === "organization" || form.category === "corporate");
+                        return (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => update("category", cat === "organization" && form.category === "corporate" ? "corporate" : cat)}
+                            className={cn(
+                              "flex items-center gap-4 p-4 text-left border rounded-lg transition-all duration-300 capitalize",
+                              isSelected
+                                ? "border-primary bg-primary/5 shadow-md"
+                                : "border-border hover:border-foreground/30 hover:bg-muted/30"
+                            )}
+                          >
+                            <Users className="h-5 w-5 text-primary/80 shrink-0" />
+                            <div>
+                              <span className="font-semibold text-sm">
+                                {cat === "organization" ? "Organization/Corporate" : cat}
+                              </span>
+                              <p className="text-[11px] text-muted-foreground mt-0.5">
+                                {cat === "individual" && "Attempt by a single archer (Individual form)."}
+                                {cat === "organization" && "Attempt by club, school, company, corporate or team (Organization/Corporate form)."}
+                              </p>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -649,12 +658,21 @@ const Apply = () => {
                   /* ORGANISATION DETAILS & ATTEMPT MODE */
                   <>
                     <div className="border-b border-border/60 pb-5">
-                      <h3 className="font-display text-2xl text-foreground">Section 1. Organisation Details</h3>
+                      <h3 className="font-display text-2xl text-foreground">Section 1. Organization / Corporate Details</h3>
                       <p className="text-xs text-muted-foreground mt-1">Provide legal entity profile coordinates.</p>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                      <Field label="Organisation / Federation / Club Name *">
+                      <Field label="Category *">
+                        <Select value={form.category === "corporate" ? "corporate" : "organization"} onValueChange={(v) => update("category", v as "organization" | "corporate")}>
+                          <SelectTrigger className="text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="organization">Organization</SelectItem>
+                            <SelectItem value="corporate">Corporate</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                      <Field label="Organization / Corporate / Federation / Club Name *">
                         <Input value={form.orgName} onChange={(e) => update("orgName", e.target.value)} placeholder="Legal name" required />
                       </Field>
                       <Field label="Entity Type *">
@@ -1055,11 +1073,11 @@ const Apply = () => {
                   )}
 
                   {/* Organisation specific reps */}
-                  {form.category === "organization" && (
+                  {(form.category === "organization" || form.category === "corporate") && (
                     <div className="border border-border/40 p-5 rounded-md bg-card/30 space-y-4">
-                      <h4 className="font-bold text-xs uppercase tracking-wider text-primary">Section 5 & 6. Organisation Representative Details</h4>
+                      <h4 className="font-bold text-xs uppercase tracking-wider text-primary">Section 5 & 6. Organization/Corporate Representative Details</h4>
                       <div className="grid md:grid-cols-2 gap-4 text-xs">
-                        <Field label="Organisation Authorised Rep Name *">
+                        <Field label="Organization/Corporate Authorised Rep Name *">
                           <Input value={form.orgRepName} onChange={(e) => update("orgRepName", e.target.value)} placeholder="Rep Name" />
                         </Field>
                         <Field label="Rep Designation / Title *">
@@ -1084,7 +1102,7 @@ const Apply = () => {
                     <span className="font-medium text-right capitalize">{form.formType}</span>
                     
                     <span className="text-muted-foreground">Category Mode:</span>
-                    <span className="font-medium text-right capitalize">{form.category} {form.category === "organization" && `(${form.orgAttemptType})`}</span>
+                    <span className="font-medium text-right capitalize">{form.category} {(form.category === "organization" || form.category === "corporate") && `(${form.orgAttemptType})`}</span>
                     
                     <span className="text-muted-foreground">Applicant Entity:</span>
                     <span className="font-medium text-right truncate">
@@ -1103,6 +1121,26 @@ const Apply = () => {
                   <div className="relative border border-primary/20 bg-primary/5 p-4 rounded text-[11px] text-muted-foreground leading-relaxed text-justify mt-4">
                     <strong>Declaration:</strong> I declare that the information and evidence provided in this attempt submission are true, accurate, and complete to the best of my knowledge. Approval is subject to full verification rules of the Golden Book / Archery Book of World Records.
                   </div>
+                  <div className="flex items-start gap-2.5 mt-4 p-4 border border-border/60 bg-muted/20 rounded-md">
+                    <input
+                      type="checkbox"
+                      id="acceptTerms"
+                      checked={acceptTerms}
+                      onChange={(e) => setAcceptTerms(e.target.checked)}
+                      className="mt-1 accent-primary rounded cursor-pointer"
+                    />
+                    <label htmlFor="acceptTerms" className="text-xs text-muted-foreground leading-relaxed select-none cursor-pointer text-justify">
+                      {form.formType === "application" ? (
+                        <span>
+                          <strong>Terms & Conditions (Application):</strong> I accept the general rules of the Archery Book of World Records. I agree that this record attempt application is subject to safety, ethical, and verification criteria (including the presence of at least 2 independent witnesses), and that the ABWR committee holds sole authority over final record validation.
+                        </span>
+                      ) : (
+                        <span>
+                          <strong>Terms & Conditions (Claim):</strong> I accept the claim submission guidelines of the Archery Book of World Records. I certify that this record attempt has been completed in full compliance with the guidelines, signed off by at least 2 independent witnesses, and all uploaded media, photo, and scorecard evidence is authentic and untampered.
+                        </span>
+                      )}
+                    </label>
+                  </div>
                 </div>
               </div>
             )}
@@ -1115,7 +1153,7 @@ const Apply = () => {
               {step < stepLabels.length - 1 ? (
                 <Button variant="hero" onClick={next}>Next <ChevronRight size={16} /></Button>
               ) : (
-                <Button variant="hero" onClick={submit}>
+                <Button variant="hero" onClick={submit} disabled={!acceptTerms}>
                   Submit {formTypeName}
                 </Button>
               )}

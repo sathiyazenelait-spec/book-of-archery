@@ -1,4 +1,5 @@
 import { StoredSubmission } from "@/data/records";
+import { jsPDF } from "jspdf";
 
 const formatDate = (dateStr: string | null | undefined): string => {
   if (!dateStr) return "";
@@ -226,9 +227,9 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
         </div>
       </div>
     `;
-  } else if (category === "organization") {
-    // ORGANISATION APPLICATION FORM PDF
-    filename = `Archery_Record_Application_Form_Organisations_${submission.id}.pdf`;
+  } else if (category === "organization" || category === "corporate") {
+    // ORGANISATION/CORPORATE APPLICATION FORM PDF
+    filename = `Archery_Record_Application_Form_Organization_Corporate_${submission.id}.pdf`;
     htmlContent = `
       <!-- PAGE 1 -->
       <div class="page">
@@ -236,19 +237,19 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
           <div class="logo-box">LOGO</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
-            <div class="doc-subtitle">Record attempt application form – organisations</div>
+            <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
-            Page 1 of 3<br>Organisation details & attempt type
+            Page 1 of 3<br>Organisation/Corporate details & attempt type
           </div>
         </div>
 
         <div style="font-size: 8px; color: #555; margin-bottom: 5px; text-align: right;">* indicates a mandatory field</div>
 
         <!-- Section 1 -->
-        <div class="section-title">1. Organisation details</div>
+        <div class="section-title">1. Organisation / Corporate details</div>
         <div class="row">
-          ${renderField("Organisation / federation / club name *", data.orgName || submission.orgName, "col-55")}
+          ${renderField("Organisation / Corporate / Federation / club name *", data.orgName || submission.orgName, "col-55")}
           ${renderField("Entity type (Federation / Club / Academy / Company / Other) *", data.orgType || submission.orgType, "col-45")}
         </div>
         <div class="row">
@@ -302,7 +303,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
         </div>
 
         <div class="footer-text">
-          <span>Archery Book of World Records — Official organisation record attempt application</span>
+          <span>Archery Book of World Records — Official organisation/corporate record attempt application</span>
           <span>Page 1 of 3</span>
         </div>
       </div>
@@ -313,7 +314,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
           <div class="logo-box">LOGO</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
-            <div class="doc-subtitle">Record attempt application form – organisations</div>
+            <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
             Page 2 of 3<br>Participants & evidence
@@ -380,7 +381,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
         </div>
 
         <div class="footer-text">
-          <span>Archery Book of World Records — Official organisation record attempt application</span>
+          <span>Archery Book of World Records — Official organisation/corporate record attempt application</span>
           <span>Page 2 of 3</span>
         </div>
       </div>
@@ -391,7 +392,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
           <div class="logo-box">LOGO</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
-            <div class="doc-subtitle">Record attempt application form – organisations</div>
+            <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
             Page 3 of 3<br>Approvals & declaration
@@ -399,18 +400,18 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
         </div>
 
         <div class="banner">
-          This application is submitted by the organisation named on page 1, which acts as the approving authority for
+          This application is submitted by the organisation/corporate named on page 1, which acts as the approving authority for
           this record attempt. Approval by the Archery Book of Records is subject to its official verification rules &
           procedures and is not guaranteed by submission alone.
         </div>
 
         <!-- Section 5 -->
-        <div class="section-title">5. Organisation authorised representative (mandatory)</div>
+        <div class="section-title">5. Organisation/Corporate authorised representative (mandatory)</div>
         <div class="row">
           ${renderField("Representative full name *", data.orgRepName, "col-60")}
           ${renderField("Designation / title *", data.orgRepDesignation, "col-40")}
         </div>
-        <div style="font-size: 9px; color: #555; margin-bottom: 8px;">On behalf of the organisation named on page 1, I approve and take responsibility for this record attempt application.</div>
+        <div style="font-size: 9px; color: #555; margin-bottom: 8px;">On behalf of the organisation/corporate named on page 1, I approve and take responsibility for this record attempt application.</div>
         <div class="row" style="position: relative;">
           <div class="stamp-area" style="position: absolute; right: 0; bottom: 0;">Stamp area</div>
           ${renderField("Authorised representative signature *", "", "col-45")}
@@ -431,7 +432,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
 
         <!-- Section 7 -->
         <div class="section-title">7. Declaration</div>
-        <div style="font-size: 9px; color: #555; margin-bottom: 8px;">We declare that the information provided in this application is true, accurate, and complete to the best of our knowledge, on behalf of the organisation named herein.</div>
+        <div style="font-size: 9px; color: #555; margin-bottom: 8px;">We declare that the information provided in this application is true, accurate, and complete to the best of our knowledge, on behalf of the organisation/corporate named herein.</div>
         <div class="row">
           ${renderField("Authorised representative signature (repeat) *", "", "col-65")}
           ${renderField("Date *", "", "col-35")}
@@ -453,7 +454,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
         </div>
 
         <div class="footer-text">
-          <span>Archery Book of World Records — Official organisation record attempt application</span>
+          <span>Archery Book of World Records — Official organisation/corporate record attempt application</span>
           <span>Page 3 of 3</span>
         </div>
       </div>
@@ -871,4 +872,164 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
     </html>
   `);
   printWindow.document.close();
+};
+
+export const downloadRulesPdf = (type: "application" | "claim") => {
+  const isApp = type === "application";
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4"
+  });
+
+  const gold = [212, 175, 55];
+  const darkBlue = [8, 12, 31];
+  const darkSlate = [15, 23, 42];
+  const textMuted = [100, 116, 139];
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 20;
+  const contentWidth = pageWidth - 2 * margin;
+
+  // Header Title
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+  doc.text("ARCHERY BOOK OF WORLD RECORDS", margin, 25);
+
+  // Subtitle
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
+  doc.text(
+    isApp 
+      ? "RECORD ATTEMPT APPLICATION FORM RULES & GUIDELINES" 
+      : "RECORD CLAIM FORM RULES & GUIDELINES", 
+    margin, 
+    30
+  );
+
+  // Header line
+  doc.setDrawColor(gold[0], gold[1], gold[2]);
+  doc.setLineWidth(1.5);
+  doc.line(margin, 35, pageWidth - margin, 35);
+
+  // Section Heading
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.setTextColor(darkSlate[0], darkSlate[1], darkSlate[2]);
+  doc.text(isApp ? "General Rules of ABWR" : "Claiming Record Procedures", margin, 48);
+
+  // Intro text
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(darkSlate[0], darkSlate[1], darkSlate[2]);
+  const introText = isApp
+    ? "ABWR maintains the highest standards of safety, ethics, and record accuracy. Every record candidate must strictly adhere to the general rules outlined below to ensure eligibility for official approval."
+    : "A successful record attempt requires careful documentation. Follow the standardized procedures below to submit your record claim for formal assessment.";
+  
+  const splitIntro = doc.splitTextToSize(introText, contentWidth);
+  doc.text(splitIntro, margin, 55);
+
+  let currentY = 55 + (splitIntro.length * 5) + 10;
+
+  if (isApp) {
+    const rules = [
+      {
+        title: "1. Safety & Moral Standards",
+        desc: "ABWR does not promote or accept attempts or world records that can potentially lead to any kind of destruction or harm to property, health, morality, or general well-being of an individual, organization, or society."
+      },
+      {
+        title: "2. Verification & Witness Presence",
+        desc: "At least two independent witnesses must be present during the record attempt. The complete details, photographs, and signatures of the witnesses must be enclosed with the official claim files. All verification documents must be duly signed by all witnesses."
+      },
+      {
+        title: "3. Team Presence & Offline Documents",
+        desc: "ABWR team members do not need to be present at the attempt site. Authenticity is maintained by having a Records Management Judge (RMJ) or local witnesses. To complete verification, online claimants in special cases must also mail physical copies of all required documents to the ABWR headquarters."
+      },
+      {
+        title: "4. Sole Authority",
+        desc: "Approval or disapproval of any world record attempt and certification is wholly and solely the final decision of the ABWR adjudication committee."
+      }
+    ];
+
+    rules.forEach((rule) => {
+      // Draw left gold border line
+      doc.setDrawColor(gold[0], gold[1], gold[2]);
+      doc.setLineWidth(1);
+      doc.line(margin, currentY, margin, currentY + 18);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+      doc.text(rule.title, margin + 5, currentY + 4);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
+      const splitDesc = doc.splitTextToSize(rule.desc, contentWidth - 10);
+      doc.text(splitDesc, margin + 5, currentY + 10);
+
+      currentY += 10 + (splitDesc.length * 4.5) + 6;
+    });
+  } else {
+    const procedures = [
+      {
+        title: "Step 1: Download & Fill Application Form",
+        desc: "You have to take a print out of this form, fill it manually and send us a scanned copy. Once you've filled out the form completely you can submit it by sending an email. Incomplete forms may be rejected so try to fill all the details to the best of your knowledge."
+      },
+      {
+        title: "Step 2: Record Attempt & Witness Sign-Off",
+        desc: "Attempt the record with at least two witnesses present at the location. Ensure all witness information, photos, and signatures are collected, and all evidence documents are duly signed by the witnesses."
+      },
+      {
+        title: "Step 3: Download & Prepare Claim Form",
+        desc: "After you've attempted the record you'll need to fill the records claim form. The claim has to be supported by all required evidence including video, photo, scorecards and witness signatures."
+      },
+      {
+        title: "Step 4: Evidence Submission",
+        desc: "Send all forms and media to info@goldenbookofworldrecords.com, clearly mentioning the Claim ID, Applicant's Name, Address, and Contact Details."
+      }
+    ];
+
+    procedures.forEach((proc, index) => {
+      // Draw circular number badge
+      doc.setDrawColor(gold[0], gold[1], gold[2]);
+      doc.setLineWidth(0.5);
+      doc.setFillColor(255, 250, 240);
+      doc.circle(margin + 5, currentY + 3, 3, "FD");
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8.5);
+      doc.setTextColor(gold[0], gold[1], gold[2]);
+      doc.text((index + 1).toString(), margin + 4.2, currentY + 5.2);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+      doc.text(proc.title, margin + 12, currentY + 4);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
+      const splitDesc = doc.splitTextToSize(proc.desc, contentWidth - 15);
+      doc.text(splitDesc, margin + 12, currentY + 10);
+
+      currentY += 10 + (splitDesc.length * 4.5) + 6;
+    });
+  }
+
+  // Footer text
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
+  doc.text("Archery Book of World Records — Rules & Guidelines", margin, pageHeight - 15);
+  doc.text("Page 1 of 1", pageWidth - margin - 15, pageHeight - 15);
+
+  const filename = isApp 
+    ? "Archery_Record_Application_Form_Based_Rules.pdf" 
+    : "Official_Record_Claim_Form_Based_Rules.pdf";
+  
+  doc.save(filename);
 };

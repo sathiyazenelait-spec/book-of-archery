@@ -4,6 +4,7 @@ import { FileText, Download, ShieldCheck, ClipboardCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { downloadRulesPdf } from "@/utils/pdfGenerator";
 
 interface DownloadItem {
   id: string;
@@ -28,8 +29,8 @@ const downloadItems: DownloadItem[] = [
   },
   {
     id: "app-form-org",
-    title: "Archery Record Application Form (Organizations)",
-    filename: "Archery_Record_Application_Form_Organisations.pdf",
+    title: "Archery Record Application Form (Organization/Corporate)",
+    filename: "Archery_Record_Application_Form_Organization_Corporate.pdf",
     description: "Submit this form to request official guidelines and adjudicator assignment for organization or corporate record attempts.",
     icon: <FileText className="text-primary h-6 w-6" />,
     fileSize: "7.5 KB",
@@ -76,6 +77,13 @@ const Downloads = () => {
         link.click();
         document.body.removeChild(link);
         toast.success(`${item.filename} downloaded successfully!`);
+
+        // Trigger simultaneous download of rules PDF synchronously (bypasses browser popup blocking)
+        if (item.id === "app-form" || item.id === "app-form-org") {
+          downloadRulesPdf("application");
+        } else if (item.id === "claim-form") {
+          downloadRulesPdf("claim");
+        }
         return;
       }
       const blob = new Blob([item.content || ""], { type: "text/plain;charset=utf-8" });
