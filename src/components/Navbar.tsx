@@ -96,13 +96,13 @@ const Navbar = () => {
           />
           <div className="flex flex-col justify-center leading-none">
             <div className={cn(
-              "font-display font-bold tracking-normal uppercase text-foreground transition-all duration-300 w-fit",
-              isLoggedIn ? "text-xs sm:text-sm md:text-base lg:text-[15px]" : "text-sm sm:text-base md:text-lg lg:text-[16.5px]"
+              "font-display font-bold tracking-normal uppercase text-foreground transition-all duration-300 w-fit leading-tight",
+              isLoggedIn ? "text-xs sm:text-sm md:text-base lg:text-[16.5px]" : "text-sm sm:text-base md:text-xl lg:text-[18.5px]"
             )}>
-              Archery Book of World Records
+              Archery Book of<br />World Records
             </div>
             <div className={cn(
-              "uppercase tracking-[0.12em] text-primary font-medium transition-all duration-300 w-fit",
+              "uppercase tracking-[0.12em] text-primary font-medium transition-all duration-300 w-fit whitespace-nowrap",
               isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[8.5px] mt-0.5" : "text-[8px] sm:text-[9px] md:text-[10px] mt-1"
             )}>
               A unit of KOORMAI ELAKU Pvt Ltd
