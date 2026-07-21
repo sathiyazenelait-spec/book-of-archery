@@ -6,23 +6,23 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
-import { 
-  getRecordsApi, 
-  saveRecordApi, 
+import {
+  getRecordsApi,
+  saveRecordApi,
   deleteRecordApi,
-  getSubmissionsApi, 
-  updateSubmissionStatusApi, 
-  deleteSubmissionApi, 
-  getContactsApi, 
-  updateContactStatusApi, 
-  deleteContactApi, 
-  getUsersApi, 
-  saveUserApi, 
+  getSubmissionsApi,
+  updateSubmissionStatusApi,
+  deleteSubmissionApi,
+  getContactsApi,
+  updateContactStatusApi,
+  deleteContactApi,
+  getUsersApi,
+  saveUserApi,
   deleteUserApi,
   ContactQuery,
   UserItem,
-  RecordCategory, 
-  RecordItem, 
+  RecordCategory,
+  RecordItem,
   StoredSubmission,
   categories,
   getStatsApi,
@@ -35,25 +35,25 @@ import {
   Testimonial,
   API_URL
 } from "@/data/records";
-import { 
-  Trophy, 
-  FileText, 
-  Award, 
-  Users, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Check, 
-  X, 
-  Eye, 
-  Lock, 
-  LogOut, 
-  Search, 
-  Calendar, 
-  MapPin, 
-  ShieldAlert, 
-  Activity, 
-  EyeOff, 
+import {
+  Trophy,
+  FileText,
+  Award,
+  Users,
+  Plus,
+  Edit,
+  Trash2,
+  Check,
+  X,
+  Eye,
+  Lock,
+  LogOut,
+  Search,
+  Calendar,
+  MapPin,
+  ShieldAlert,
+  Activity,
+  EyeOff,
   CheckCircle2,
   MessageSquare,
   Mail,
@@ -76,7 +76,7 @@ const imageOptions = [
 
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+
   // Login form states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
   const [usersList, setUsersList] = useState<UserItem[]>([]);
   const [statsList, setStatsList] = useState<HomepageStat[]>([]);
   const [testimonialsList, setTestimonialsList] = useState<Testimonial[]>([]);
-  
+
   const [activeTab, setActiveTab] = useState("overview");
 
   // Filtering / Search States
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
   const [approvingClaimRecord, setApprovingClaimRecord] = useState<StoredSubmission | null>(null);
   const [editingRecord, setEditingRecord] = useState<RecordItem | null>(null);
   const [addingRecord, setAddingRecord] = useState(false);
-  
+
   // User Modal/Form States
   const [addingUser, setAddingUser] = useState(false);
   const [editingUser, setEditingUser] = useState<UserItem | null>(null);
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
   const [formRecordCategory, setFormRecordCategory] = useState<RecordCategory>("Archery Performance Records");
   const [formRecordDate, setFormRecordDate] = useState("");
   const [formRecordLocation, setFormRecordLocation] = useState("");
-  const [formRecordImage, setFormRecordImage] = useState(record1);
+  const [formRecordImage, setFormRecordImage] = useState(imageOptions[0].value);
   const [formRecordCustomImageUrl, setFormRecordCustomImageUrl] = useState("");
   const [formRecordMetric, setFormRecordMetric] = useState("");
   const [formRecordShortDesc, setFormRecordShortDesc] = useState("");
@@ -163,7 +163,7 @@ const AdminDashboard = () => {
     try {
       const recordsData = await getRecordsApi();
       setRecordsList(recordsData);
-      
+
       const parsed = getParsedToken();
       if (parsed && parsed.role === "admin") {
         const submissionsData = await getSubmissionsApi(token);
@@ -370,23 +370,23 @@ const AdminDashboard = () => {
 
   const handleOpenApproveClaim = (sub: StoredSubmission) => {
     setApprovingClaimRecord(sub);
-    
+
     // Autofill record form fields with claim details
     setFormRecordId(`ABWR-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`);
     setFormRecordTitle(sub.recordTitle);
-    
+
     let participantName = sub.name;
     if (sub.category === "organization") participantName = sub.orgName;
     if (sub.category === "corporate") participantName = sub.companyName;
     setFormRecordParticipant(participantName);
-    
+
     setFormRecordCategory(sub.recordCategory as RecordCategory);
     setFormRecordDate(sub.attemptDate);
     setFormRecordLocation(sub.venue);
     setFormRecordMetric(sub.achievedResult);
     setFormRecordShortDesc(`Verified record set by ${participantName}.`);
     setFormRecordDescription(sub.description);
-    setFormRecordImage(record1);
+    setFormRecordImage(imageOptions[0].value);
     setFormRecordCustomImageUrl("");
   };
 
@@ -409,7 +409,7 @@ const AdminDashboard = () => {
       shortDescription: formRecordShortDesc,
       description: formRecordDescription,
       metric: formRecordMetric,
-      gallery: [finalImage, record4, record2]
+      gallery: [finalImage, "/record-4.jpg", "/record-2.jpg"]
     };
 
     const token = sessionStorage.getItem("abwr_admin_token") || "";
@@ -481,7 +481,7 @@ const AdminDashboard = () => {
     setFormRecordMetric("");
     setFormRecordShortDesc("");
     setFormRecordDescription("");
-    setFormRecordImage(record1);
+    setFormRecordImage(imageOptions[0].value);
     setFormRecordCustomImageUrl("");
   };
 
@@ -504,7 +504,7 @@ const AdminDashboard = () => {
       shortDescription: formRecordShortDesc || "Certified official archery record.",
       description: formRecordDescription,
       metric: formRecordMetric,
-      gallery: [finalImage, record4, record2]
+      gallery: [finalImage, "/record-4.jpg", "/record-2.jpg"]
     };
 
     const token = sessionStorage.getItem("abwr_admin_token") || "";
@@ -525,15 +525,15 @@ const AdminDashboard = () => {
     setFormRecordTitle(rec.title);
     setFormRecordParticipant(rec.participant);
     setFormRecordCategory(rec.category);
-    
+
     let formattedDate = "";
     try {
       const parsed = Date.parse(rec.date);
       if (!isNaN(parsed)) {
         formattedDate = new Date(parsed).toISOString().split("T")[0];
       }
-    } catch (e) {}
-    
+    } catch (e) { }
+
     setFormRecordDate(formattedDate);
     setFormRecordLocation(rec.location);
     setFormRecordMetric(rec.metric);
@@ -543,7 +543,7 @@ const AdminDashboard = () => {
       setFormRecordImage(rec.image);
       setFormRecordCustomImageUrl("");
     } else {
-      setFormRecordImage(record1);
+      setFormRecordImage(imageOptions[0].value);
       setFormRecordCustomImageUrl(rec.image);
     }
   };
@@ -641,9 +641,9 @@ const AdminDashboard = () => {
       return;
     }
     const token = sessionStorage.getItem("abwr_admin_token") || "";
-    const newUser: UserItem = { 
-      username: formUsername, 
-      password: formPassword, 
+    const newUser: UserItem = {
+      username: formUsername,
+      password: formPassword,
       role: formRole,
       email: formEmail,
       phone: formPhone
@@ -675,9 +675,9 @@ const AdminDashboard = () => {
       return;
     }
     const token = sessionStorage.getItem("abwr_admin_token") || "";
-    const updatedUser: UserItem = { 
-      id: editingUser.id, 
-      username: formUsername, 
+    const updatedUser: UserItem = {
+      id: editingUser.id,
+      username: formUsername,
       role: formRole,
       email: formEmail,
       phone: formPhone
@@ -685,7 +685,7 @@ const AdminDashboard = () => {
     if (formPassword.trim() !== "") {
       updatedUser.password = formPassword;
     }
-    
+
     const success = await saveUserApi(updatedUser, true, token);
     if (success) {
       setEditingUser(null);
@@ -793,7 +793,7 @@ const AdminDashboard = () => {
             <TabsList className="bg-card border border-border/60 p-1 h-auto rounded-lg flex flex-wrap gap-1 w-full max-w-4xl justify-center md:justify-start">
               <TabsTrigger value="overview" className="rounded-md uppercase tracking-wider text-[10px] sm:text-xs font-mono py-2 px-3">Overview</TabsTrigger>
               <TabsTrigger value="submissions" className="rounded-md uppercase tracking-wider text-[10px] sm:text-xs font-mono py-2 px-3">
-                Claims ({submissionsList.filter(s=>s.status==="pending").length})
+                Claims ({submissionsList.filter(s => s.status === "pending").length})
               </TabsTrigger>
               <TabsTrigger value="records" className="rounded-md uppercase tracking-wider text-[10px] sm:text-xs font-mono py-2 px-3">Registry ({recordsList.length})</TabsTrigger>
               <TabsTrigger value="contacts" className="rounded-md uppercase tracking-wider text-[10px] sm:text-xs font-mono py-2 px-3">Inbox ({unreadContacts})</TabsTrigger>
@@ -924,54 +924,54 @@ const AdminDashboard = () => {
                         </td>
                         <td className="p-4">
                           <div className="flex items-center justify-center gap-1.5">
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => setViewingSubmission(sub)} 
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setViewingSubmission(sub)}
                               title="View Details"
                               className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                             >
                               <Eye size={14} />
                             </Button>
-                            
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => downloadSubmissionPdf(sub)} 
+
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => downloadSubmissionPdf(sub)}
                               title="Download Form PDF"
                               className="h-8 w-8 p-0 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
                             >
                               <Download size={14} />
                             </Button>
-                            
+
                             {sub.status === "pending" && (
                               <>
                                 {sub.formType === "claim" ? (
-                                  <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    onClick={() => handleOpenApproveClaim(sub)} 
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleOpenApproveClaim(sub)}
                                     title="Approve & Add to Registry"
                                     className="h-8 w-8 p-0 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
                                   >
                                     <CheckCircle2 size={14} />
                                   </Button>
                                 ) : (
-                                  <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    onClick={() => handleApproveApplication(sub)} 
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleApproveApplication(sub)}
                                     title="Acknowledge Application"
                                     className="h-8 w-8 p-0 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
                                   >
                                     <Check size={14} />
                                   </Button>
                                 )}
-                                
-                                <Button 
-                                  variant="ghost" 
-                                  size="sm" 
-                                  onClick={() => handleRejectSubmission(sub)} 
+
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleRejectSubmission(sub)}
                                   title="Reject Submission"
                                   className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                                 >
@@ -994,7 +994,7 @@ const AdminDashboard = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
               <div className="relative w-full max-w-sm">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={14} />
-                <Input 
+                <Input
                   value={recordsSearch}
                   onChange={(e) => setRecordsSearch(e.target.value)}
                   placeholder="Search records or archers"
@@ -1036,17 +1036,17 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 shrink-0">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleOpenEditRecord(rec)}
                         className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                       >
                         <Edit size={14} />
                       </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleDeleteRecord(rec.id)}
                         className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                       >
@@ -1080,8 +1080,8 @@ const AdminDashboard = () => {
             ) : (
               <div className="space-y-4">
                 {filteredContacts.map((con) => (
-                  <div 
-                    key={con.id} 
+                  <div
+                    key={con.id}
                     className={cn(
                       "border p-6 rounded-lg flex flex-col md:flex-row md:items-start justify-between gap-5 relative transition-colors",
                       con.status === "unread" ? "border-primary bg-primary/5" : "border-border/60 bg-card"
@@ -1102,7 +1102,7 @@ const AdminDashboard = () => {
                         Received: {con.created_at ? new Date(con.created_at).toLocaleString() : "Date N/A"}
                       </div>
                     </div>
-                    
+
                     <div className="flex md:flex-col gap-2 justify-end">
                       <Button
                         variant="heroOutline"
@@ -1169,17 +1169,17 @@ const AdminDashboard = () => {
                       </td>
                       <td className="p-4">
                         <div className="flex justify-center gap-2">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => handleOpenEditUser(user)}
                             className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                           >
                             <Edit size={14} />
                           </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => user.id && handleDeleteUser(user.id)}
                             className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                           >
@@ -1223,17 +1223,17 @@ const AdminDashboard = () => {
                       <td className="p-4 text-foreground">{stat.label}</td>
                       <td className="p-4">
                         <div className="flex justify-center gap-2">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => handleOpenStatForm(stat)}
                             className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                           >
                             <Edit size={14} />
                           </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => stat.id && handleDeleteStat(stat.id)}
                             className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                           >
@@ -1277,17 +1277,17 @@ const AdminDashboard = () => {
                       <td className="p-4 text-foreground">{test.title}</td>
                       <td className="p-4">
                         <div className="flex justify-center gap-2">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => handleOpenTestimonialForm(test)}
                             className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                           >
                             <Edit size={14} />
                           </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => test.id && handleDeleteTestimonial(test.id)}
                             className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                           >
@@ -1489,10 +1489,10 @@ const AdminDashboard = () => {
               </Button>
 
               <div className="flex gap-2">
-                <Button 
-                  onClick={() => downloadSubmissionPdf(viewingSubmission)} 
-                  variant="heroOutline" 
-                  size="sm" 
+                <Button
+                  onClick={() => downloadSubmissionPdf(viewingSubmission)}
+                  variant="heroOutline"
+                  size="sm"
                   className="border-amber-500/60 text-amber-400 hover:bg-amber-500/10 flex items-center gap-1.5"
                 >
                   <Download size={14} /> Download Form PDF
@@ -1777,7 +1777,7 @@ const AdminDashboard = () => {
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Phone Number</Label>
-                <Input value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="+1 (555) 000-0000" className="bg-background border-border/60" />
+                <Input value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="+91 0000-000-000" className="bg-background border-border/60" />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Passcode / Password *</Label>
@@ -1869,32 +1869,32 @@ const AdminDashboard = () => {
             <form onSubmit={handleSaveStat} className="space-y-4 text-xs">
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Value *</Label>
-                <Input 
-                  type="number" 
-                  value={statValue} 
-                  onChange={(e) => setStatValue(parseInt(e.target.value) || 0)} 
-                  placeholder="e.g. 120" 
-                  className="bg-background border-border/60" 
-                  required 
+                <Input
+                  type="number"
+                  value={statValue}
+                  onChange={(e) => setStatValue(parseInt(e.target.value) || 0)}
+                  placeholder="e.g. 120"
+                  className="bg-background border-border/60"
+                  required
                 />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Suffix</Label>
-                <Input 
-                  value={statSuffix} 
-                  onChange={(e) => setStatSuffix(e.target.value)} 
-                  placeholder="e.g. +, yrs" 
-                  className="bg-background border-border/60" 
+                <Input
+                  value={statSuffix}
+                  onChange={(e) => setStatSuffix(e.target.value)}
+                  placeholder="e.g. +, yrs"
+                  className="bg-background border-border/60"
                 />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Label / Description *</Label>
-                <Input 
-                  value={statLabel} 
-                  onChange={(e) => setStatLabel(e.target.value)} 
-                  placeholder="e.g. Verified Records" 
-                  className="bg-background border-border/60" 
-                  required 
+                <Input
+                  value={statLabel}
+                  onChange={(e) => setStatLabel(e.target.value)}
+                  placeholder="e.g. Verified Records"
+                  className="bg-background border-border/60"
+                  required
                 />
               </div>
 
@@ -1924,33 +1924,33 @@ const AdminDashboard = () => {
             <form onSubmit={handleSaveTestimonial} className="space-y-4 text-xs">
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Member Name *</Label>
-                <Input 
-                  value={testimonialName} 
-                  onChange={(e) => setTestimonialName(e.target.value)} 
-                  placeholder="e.g. Aiyana Vance" 
-                  className="bg-background border-border/60" 
-                  required 
+                <Input
+                  value={testimonialName}
+                  onChange={(e) => setTestimonialName(e.target.value)}
+                  placeholder="e.g. Aiyana Vance"
+                  className="bg-background border-border/60"
+                  required
                 />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Title / Context *</Label>
-                <Input 
-                  value={testimonialTitle} 
-                  onChange={(e) => setTestimonialTitle(e.target.value)} 
-                  placeholder="e.g. Record Holder · Kyoto, Japan" 
-                  className="bg-background border-border/60" 
-                  required 
+                <Input
+                  value={testimonialTitle}
+                  onChange={(e) => setTestimonialTitle(e.target.value)}
+                  placeholder="e.g. Record Holder · Kyoto, Japan"
+                  className="bg-background border-border/60"
+                  required
                 />
               </div>
               <div className="space-y-1.5">
                 <Label className="text-muted-foreground uppercase font-mono text-[10px]">Quote *</Label>
-                <Textarea 
+                <Textarea
                   rows={4}
-                  value={testimonialQuote} 
-                  onChange={(e) => setTestimonialQuote(e.target.value)} 
-                  placeholder="Enter the quote statement" 
-                  className="bg-background border-border/60" 
-                  required 
+                  value={testimonialQuote}
+                  onChange={(e) => setTestimonialQuote(e.target.value)}
+                  placeholder="Enter the quote statement"
+                  className="bg-background border-border/60"
+                  required
                 />
               </div>
 

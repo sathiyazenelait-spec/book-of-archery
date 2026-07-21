@@ -109,7 +109,7 @@ const SiteLayout = () => {
                 You Can Also Apply To Set OR Break The Records!!
               </DialogTitle>
               <DialogDescription className="text-muted-foreground text-[10px] md:text-sm leading-relaxed text-justify mt-1.5 max-w-md mx-auto">
-                To Apply for a Record, can you please submit your details with record achievement details in the official application form? Our adjudication team will reach out to you for evidence verification and certification. For any queries, contact us at <a href="mailto:records@abwr.org" className="text-primary hover:underline font-medium">records@abwr.org</a>.
+                To Apply for a Record, can you please submit your details with record achievement details in the official application form? Our adjudication team will reach out to you for evidence verification and certification. For any queries, contact us at <a href="mailto:info.abwr@yahoo.com" className="text-primary hover:underline font-medium">info.abwr@yahoo.com</a>.
               </DialogDescription>
             </DialogHeader>
           </div>

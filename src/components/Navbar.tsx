@@ -77,33 +77,33 @@ const Navbar = () => {
           style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 24px) 100%, 24px 100%)" }}
         >
           <marquee scrollamount="5" className="py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
-            Leading world & national records registry. A govt recognized global archery of book organization by koormai elaku pvt ltd
+            India's Leading World & National Records Registry— An Officially Certified Archery Book of Records, Organized by Koormai Elaku Pvt. Ltd
           </marquee>
         </div>
       </div>
 
-      <div className={cn("container flex items-center justify-between transition-all duration-300", isLoggedIn ? "h-[105px] py-4" : "h-[140px] py-7")}>
-        <Link to="/" className="flex items-center gap-5 group">
+      <div className={cn("container flex items-center justify-between transition-all duration-300", isLoggedIn ? "h-[92px] py-3" : "h-[118px] py-4.5")}>
+        <Link to="/" className="flex items-center gap-4 group">
           <img
             src={logo}
             alt="ABWR emblem"
-            width={82}
-            height={82}
+            width={75}
+            height={75}
             className={cn(
               "object-contain group-hover:rotate-6 transition-all duration-300 shrink-0",
-              isLoggedIn ? "h-[50px] w-[50px] md:h-[60px] md:w-[60px]" : "h-[70px] w-[70px] md:h-[82px] md:w-[82px]"
+              isLoggedIn ? "h-[48px] w-[48px] md:h-[55px] md:w-[55px]" : "h-[64px] w-[64px] md:h-[75px] md:w-[75px]"
             )}
           />
           <div className="flex flex-col justify-center leading-none">
             <div className={cn(
-              "font-display font-bold tracking-wider uppercase text-foreground transition-all duration-300",
-              isLoggedIn ? "text-sm sm:text-base md:text-lg lg:text-[18px]" : "text-base sm:text-lg md:text-xl lg:text-[20px]"
+              "font-display font-bold tracking-normal uppercase text-foreground transition-all duration-300 w-fit",
+              isLoggedIn ? "text-xs sm:text-sm md:text-base lg:text-[15px]" : "text-sm sm:text-base md:text-lg lg:text-[16.5px]"
             )}>
               Archery Book of World Records
             </div>
             <div className={cn(
-              "uppercase tracking-[0.24em] text-primary font-medium transition-all duration-300",
-              isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[9px] mt-0.5" : "text-[9px] sm:text-[10px] md:text-[11px] mt-1.5"
+              "uppercase tracking-[0.12em] text-primary font-medium transition-all duration-300 w-fit",
+              isLoggedIn ? "text-[7px] sm:text-[8px] md:text-[8.5px] mt-0.5" : "text-[8px] sm:text-[9px] md:text-[10px] mt-1"
             )}>
               A unit of KOORMAI ELAKU Pvt Ltd
             </div>
@@ -241,7 +241,9 @@ const Navbar = () => {
           {isLoggedIn ? (
             <>
               <Button asChild variant="heroOutline" size="sm">
-                <Link to={isAdmin ? "/admin" : "/login"}>Dashboard</Link>
+                <Link to={isAdmin ? "/admin" : "/login"}>
+                  {isAdmin ? "Admin Portal" : "User Portal"}
+                </Link>
               </Button>
               <Button onClick={handleLogout} variant="ghost" size="sm" className="text-xs uppercase tracking-wider font-mono hover:text-red-500 font-bold">
                 Log Out
@@ -249,7 +251,7 @@ const Navbar = () => {
             </>
           ) : (
             <Button asChild variant="hero" size="sm">
-              <Link to="/login">User Login</Link>
+              <Link to="/login">Login</Link>
             </Button>
           )}
         </div>
@@ -372,7 +374,9 @@ const Navbar = () => {
             {isLoggedIn ? (
               <>
                 <Button asChild variant="heroOutline" className="mt-4 w-full">
-                  <Link to={isAdmin ? "/admin" : "/login"}>Dashboard</Link>
+                  <Link to={isAdmin ? "/admin" : "/login"}>
+                    {isAdmin ? "Admin Portal" : "User Portal"}
+                  </Link>
                 </Button>
                 <Button onClick={handleLogout} variant="ghost" className="mt-2 w-full text-xs uppercase tracking-wider font-mono text-red-500 hover:bg-red-500/10 font-bold">
                   Log Out
@@ -380,7 +384,7 @@ const Navbar = () => {
               </>
             ) : (
               <Button asChild variant="hero" className="mt-4 w-full">
-                <Link to="/login">User Login</Link>
+                <Link to="/login">Login</Link>
               </Button>
             )}
           </div>

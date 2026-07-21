@@ -4,25 +4,25 @@ import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Eye, 
-  EyeOff, 
-  Lock, 
-  UserPlus, 
-  LogOut, 
-  FileText, 
-  Activity, 
-  CheckCircle2, 
-  X, 
-  Award, 
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  UserPlus,
+  LogOut,
+  FileText,
+  Activity,
+  CheckCircle2,
+  X,
+  Award,
   Plus,
   ShieldAlert,
   Download
 } from "lucide-react";
 import { downloadSubmissionPdf } from "@/utils/pdfGenerator";
 import { toast } from "sonner";
-import { 
-  getMySubmissionsApi, 
+import {
+  getMySubmissionsApi,
   deleteSubmissionApi,
   StoredSubmission,
   API_URL
@@ -46,7 +46,7 @@ const UserLogin = () => {
     setTilt({ x: 0, y: 0 });
   };
 
-  
+
   // Login form states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -112,7 +112,7 @@ const UserLogin = () => {
         sessionStorage.setItem("abwr_admin_is_logged_in", "true");
         toast.success(`Welcome back, ${data.user.username}`);
         loadData(data.token);
-        
+
         // Redirect standard user to homepage
         window.location.href = "/";
       } else {
@@ -133,9 +133,9 @@ const UserLogin = () => {
       const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          username: regUsername.trim(), 
-          email: regEmail.trim(), 
+        body: JSON.stringify({
+          username: regUsername.trim(),
+          email: regEmail.trim(),
           password: regPassword.trim(),
           phone: regPhone.trim()
         })
@@ -312,19 +312,19 @@ const UserLogin = () => {
                           </td>
                           <td className="p-4 text-center">
                             <div className="flex items-center justify-center gap-1.5">
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                onClick={() => setViewingSubmission(sub)} 
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setViewingSubmission(sub)}
                                 title="View Details"
                                 className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
                               >
                                 <Eye size={14} />
                               </Button>
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                onClick={() => downloadSubmissionPdf(sub)} 
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => downloadSubmissionPdf(sub)}
                                 title="Download Form PDF"
                                 className="h-8 w-8 p-0 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
                               >
@@ -527,10 +527,10 @@ const UserLogin = () => {
                     Cancel & Delete
                   </Button>
                 )}
-                <Button 
-                  onClick={() => downloadSubmissionPdf(viewingSubmission)} 
-                  variant="heroOutline" 
-                  size="sm" 
+                <Button
+                  onClick={() => downloadSubmissionPdf(viewingSubmission)}
+                  variant="heroOutline"
+                  size="sm"
                   className="border-amber-500/60 text-amber-400 hover:bg-amber-500/10 flex items-center gap-1.5"
                 >
                   <Download size={14} /> Download Form PDF
@@ -548,23 +548,23 @@ const UserLogin = () => {
     <>
       <PageHeader
         eyebrow="Member Portal"
-        title={isRegistering 
+        title={isRegistering
           ? <>User <em className="text-gradient-gold not-italic">Registration</em></>
           : <>User <em className="text-gradient-gold not-italic">Sign In</em></>
         }
-        description={isRegistering 
+        description={isRegistering
           ? "Create a member account to submit world record claims, track statuses, and customize forms."
           : "Sign in to your member account to submit record applications and verify credentials."
         }
       />
 
-      <section 
+      <section
         className="relative container pb-32 overflow-hidden [perspective:1200px]"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
         {/* 3D Animated Grid Floor */}
-        <div 
+        <div
           className="absolute inset-0 z-0 opacity-20 pointer-events-none transition-transform duration-500 ease-out"
           style={{
             backgroundImage: "linear-gradient(to right, #d4af37 1px, transparent 1px), linear-gradient(to bottom, #d4af37 1px, transparent 1px)",
@@ -575,7 +575,7 @@ const UserLogin = () => {
         />
 
         {/* Floating 3D Target Rings */}
-        <div 
+        <div
           className="absolute top-1/4 left-6 lg:left-12 w-48 h-48 rounded-full border border-[#d4af37]/20 flex items-center justify-center opacity-30 pointer-events-none transition-transform duration-500 ease-out animate-spin"
           style={{
             transform: `translate3d(${tilt.y * 2.2}px, ${tilt.x * -2.2}px, 50px) rotate3d(1, 1, 0, 45deg)`,
@@ -589,7 +589,7 @@ const UserLogin = () => {
           </div>
         </div>
 
-        <div 
+        <div
           className="absolute bottom-1/4 right-6 lg:right-12 w-64 h-64 rounded-full border border-primary/20 flex items-center justify-center opacity-25 pointer-events-none transition-transform duration-500 ease-out animate-spin"
           style={{
             transform: `translate3d(${tilt.y * -2.8}px, ${tilt.x * 2.8}px, 80px) rotate3d(-1, 2, 1, 30deg)`,
@@ -602,13 +602,13 @@ const UserLogin = () => {
         </div>
 
         {/* Glowing Perspective Orbs */}
-        <div 
+        <div
           className="absolute top-10 right-1/4 w-96 h-96 bg-gradient-radial from-[#d4af37]/10 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none transition-transform duration-500 ease-out"
           style={{
             transform: `translate3d(${tilt.y * -1.8}px, ${tilt.x * 1.8}px, -100px)`
           }}
         />
-        <div 
+        <div
           className="absolute bottom-10 left-1/4 w-96 h-96 bg-gradient-radial from-blue-900/20 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none transition-transform duration-500 ease-out"
           style={{
             transform: `translate3d(${tilt.y * 1.8}px, ${tilt.x * -1.8}px, -100px)`
@@ -616,7 +616,7 @@ const UserLogin = () => {
         />
 
         {/* Immersive 3D Parallax Form Card */}
-        <div 
+        <div
           className="max-w-2xl mx-auto bg-[#080c1f]/85 backdrop-blur-xl border border-[#d4af37]/35 p-16 rounded-2xl shadow-2xl relative overflow-hidden transition-transform duration-200 ease-out"
           style={{
             transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(30px)`,
@@ -637,7 +637,7 @@ const UserLogin = () => {
             <form onSubmit={handleRegister} className="space-y-6">
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Username *</Label>
-                <Input 
+                <Input
                   value={regUsername}
                   onChange={(e) => setRegUsername(e.target.value)}
                   placeholder="Enter username"
@@ -648,7 +648,7 @@ const UserLogin = () => {
 
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Email Address *</Label>
-                <Input 
+                <Input
                   type="email"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
@@ -660,18 +660,18 @@ const UserLogin = () => {
 
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Phone Number</Label>
-                <Input 
+                <Input
                   type="tel"
                   value={regPhone}
                   onChange={(e) => setRegPhone(e.target.value)}
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+91 0000-000-000"
                   className="bg-background border-border/60 focus-visible:ring-primary/40"
                 />
               </div>
 
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Password *</Label>
-                <Input 
+                <Input
                   type="password"
                   value={regPassword}
                   onChange={(e) => setRegPassword(e.target.value)}
@@ -686,9 +686,9 @@ const UserLogin = () => {
               </Button>
 
               <div className="text-center mt-4">
-                <button 
-                  type="button" 
-                  onClick={() => setIsRegistering(false)} 
+                <button
+                  type="button"
+                  onClick={() => setIsRegistering(false)}
                   className="text-xs text-primary hover:underline font-mono"
                 >
                   Already have an account? Sign in here
@@ -700,7 +700,7 @@ const UserLogin = () => {
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Username</Label>
-                <Input 
+                <Input
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter username"
@@ -712,7 +712,7 @@ const UserLogin = () => {
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Password</Label>
                 <div className="relative">
-                  <Input 
+                  <Input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -735,9 +735,9 @@ const UserLogin = () => {
               </Button>
 
               <div className="text-center mt-4">
-                <button 
-                  type="button" 
-                  onClick={() => setIsRegistering(true)} 
+                <button
+                  type="button"
+                  onClick={() => setIsRegistering(true)}
                   className="text-xs text-primary hover:underline font-mono"
                 >
                   Don't have an account? Register here
