@@ -2,17 +2,17 @@ import { useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { 
-  ShieldCheck, 
-  BookOpen, 
-  Award, 
-  FileSpreadsheet, 
-  Users, 
-  Calculator, 
-  Mail, 
-  Download, 
-  Check, 
-  ChevronRight, 
+import {
+  ShieldCheck,
+  BookOpen,
+  Award,
+  FileSpreadsheet,
+  Users,
+  Calculator,
+  Mail,
+  Download,
+  Check,
+  ChevronRight,
   HelpCircle,
   Clock,
   Coins,
@@ -41,8 +41,6 @@ export default function Rules() {
   const [overnightStay, setOvernightStay] = useState<boolean>(false);
 
   // Checklist State
-  const [checkedEvidence, setCheckedEvidence] = useState<string[]>([]);
-
   const evidenceItems = [
     { id: "cover-letter", label: "Cover Letter", desc: "Containing detailed description and information about your attempted record." },
     { id: "participants", label: "Record Participant Details", desc: "List of all participants with their photographs and signatures." },
@@ -52,15 +50,58 @@ export default function Rules() {
     { id: "media-coverage", label: "Media Coverage (Optional)", desc: "Any press releases, news clippings, or broadcast footage." }
   ];
 
+  const [evidenceConfig, setEvidenceConfig] = useState<Record<string, {
+    checked: boolean;
+    method: "upload" | "email" | "physical";
+    fileName?: string;
+  }>>(
+    evidenceItems.reduce((acc, item) => {
+      acc[item.id] = { checked: false, method: "email" };
+      return acc;
+    }, {} as Record<string, { checked: boolean; method: "upload" | "email" | "physical"; fileName?: string }>)
+  );
+
   const handleToggleEvidence = (id: string) => {
-    if (checkedEvidence.includes(id)) {
-      setCheckedEvidence(checkedEvidence.filter(item => item !== id));
-    } else {
-      setCheckedEvidence([...checkedEvidence, id]);
+    setEvidenceConfig(prev => {
+      const current = prev[id];
+      return {
+        ...prev,
+        [id]: {
+          ...current,
+          checked: !current.checked
+        }
+      };
+    });
+  };
+
+  const handleSetMethod = (id: string, method: "upload" | "email" | "physical") => {
+    setEvidenceConfig(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        method,
+        checked: true // Automatically check if submission method is updated
+      }
+    }));
+  };
+
+  const handleFileUpload = (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setEvidenceConfig(prev => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          fileName: file.name,
+          checked: true
+        }
+      }));
+      toast.success(`${file.name} attached to ${evidenceItems.find(item => item.id === id)?.label}`);
     }
   };
 
-  const checklistProgress = Math.round((checkedEvidence.length / evidenceItems.length) * 100);
+  const checkedCount = Object.values(evidenceConfig).filter(item => item.checked).length;
+  const checklistProgress = Math.round((checkedCount / evidenceItems.length) * 100);
 
   // Fee calculation logic
   const getProcessingFee = () => {
@@ -124,10 +165,10 @@ export default function Rules() {
 
       <section className="container py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          
+
           {/* Main Info Column (Left 2 Columns on large screens) */}
           <div className="lg:col-span-2 space-y-8">
-            
+
             {/* Tabs Navigation */}
             <div className="flex flex-wrap border-b border-border/60 gap-1 sm:gap-2">
               {tabs.map((tab) => {
@@ -136,11 +177,10 @@ export default function Rules() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all duration-300 border-b-2 outline-none -mb-[2px] ${
-                      isActive 
-                        ? "border-primary text-primary font-bold" 
-                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-                    }`}
+                    className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all duration-300 border-b-2 outline-none -mb-[2px] ${isActive
+                      ? "border-primary text-primary font-bold"
+                      : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                      }`}
                   >
                     {tab.icon}
                     {tab.label}
@@ -151,14 +191,14 @@ export default function Rules() {
 
             {/* Tab Contents */}
             <div className="bg-card/40 border border-border/60 p-8 rounded-lg backdrop-blur-md min-h-[400px] transition-all duration-300">
-              
+
               {/* Tab 1: General Rules */}
               {activeTab === "rules" && (
                 <div className="space-y-6 animate-fade-in">
                   <div className="border-l-4 border-primary pl-4 py-1">
                     <h2 className="font-display text-2xl uppercase tracking-wide">General Rules of ABWR</h2>
                   </div>
-                  
+
                   <p className="text-muted-foreground leading-relaxed text-justify">
                     ABWR maintains the highest standards of safety, ethics, and record accuracy. Every record candidate must strictly adhere to the general rules outlined below to ensure eligibility for official approval.
                   </p>
@@ -209,7 +249,7 @@ export default function Rules() {
                   <div className="border-l-4 border-primary pl-4 py-1">
                     <h2 className="font-display text-2xl uppercase tracking-wide">Claiming Record Procedures</h2>
                   </div>
-                  
+
                   <p className="text-muted-foreground leading-relaxed text-justify">
                     A successful record attempt requires careful documentation. Follow the standardized procedures below to submit your record claim for formal assessment.
                   </p>
@@ -220,7 +260,7 @@ export default function Rules() {
                       <div>
                         <h4 className="font-semibold text-foreground">Download & Fill Application Form</h4>
                         <p className="text-sm text-muted-foreground mt-1 leading-relaxed text-justify">
-                          Please <button onClick={() => handleDownload("/Archery_Record_Application_Form.pdf", "Archery_Record_Application_Form.pdf")} className="text-primary hover:underline font-semibold cursor-pointer p-0 bg-transparent border-none inline align-baseline">click here to download a record application form</button>. You have to take a print out of this form, fill it manually and send us a scanned copy. Once you’ve filled out the form completely you can submit it by sending an email to <a href="mailto:info@goldenbookofworldrecords.com" className="text-primary hover:underline font-semibold">info@goldenbookofworldrecords.com</a>. Incomplete forms may be rejected so try to fill all the details to the best of your knowledge.
+                          Please <button onClick={() => handleDownload("/Archery_Record_Application_Form.pdf", "Archery_Record_Application_Form.pdf")} className="text-primary hover:underline font-semibold cursor-pointer p-0 bg-transparent border-none inline align-baseline">click here to download a record application form</button>. You have to take a print out of this form, fill it manually and send us a scanned copy. Once you’ve filled out the form completely you can submit it by sending an email to <a href="mailto:info.abwr@yahoo.com.com" className="text-primary hover:underline font-semibold">info.abwr@yahoo.com.com</a>. Incomplete forms may be rejected so try to fill all the details to the best of your knowledge.
                         </p>
                       </div>
                     </div>
@@ -240,7 +280,7 @@ export default function Rules() {
                       <div>
                         <h4 className="font-semibold text-foreground">Download & Prepare Claim Form</h4>
                         <p className="text-sm text-muted-foreground mt-1 leading-relaxed text-justify">
-                          After you’ve attempted the record you’ll need to fill the records claim form and send an email to <a href="mailto:info@goldenbookofworldrecords.com" className="text-primary hover:underline font-semibold">info@goldenbookofworldrecords.com</a>. The claim has to be supported by all required evidence. Please <button onClick={() => handleDownload("/Archery_Record_Claim_Form.pdf", "Archery_Record_Claim_Form.pdf")} className="text-primary hover:underline font-semibold cursor-pointer p-0 bg-transparent border-none inline align-baseline">click here to download the Records Claim Form</button>.
+                          After you’ve attempted the record you’ll need to fill the records claim form and send an email to <a href="mailto:info.abwr@yahoo.com.com" className="text-primary hover:underline font-semibold">info.abwr@yahoo.com.com</a>. The claim has to be supported by all required evidence. Please <button onClick={() => handleDownload("/Archery_Record_Claim_Form.pdf", "Archery_Record_Claim_Form.pdf")} className="text-primary hover:underline font-semibold cursor-pointer p-0 bg-transparent border-none inline align-baseline">click here to download the Records Claim Form</button>.
                         </p>
                       </div>
                     </div>
@@ -250,7 +290,7 @@ export default function Rules() {
                       <div>
                         <h4 className="font-semibold text-foreground">Email Submission or Physical Media</h4>
                         <p className="text-sm text-muted-foreground mt-1 leading-relaxed text-justify">
-                          Send all forms and media to <a href="mailto:info@goldenbookofworldrecords.com" className="text-primary hover:underline font-semibold">info@goldenbookofworldrecords.com</a>, clearly mentioning the Claim ID, Applicant’s Name, Address, and Contact Details. Alternatively, a Pendrive/Hard Drive submitted as evidence can be sent to the ABWR office address with details clearly labeled.
+                          Send all forms and media to <a href="mailto:info.abwr@yahoo.com.com" className="text-primary hover:underline font-semibold">info.abwr@yahoo.com.com</a>, clearly mentioning the Claim ID, Applicant’s Name, Address, and Contact Details. Alternatively, a Pendrive/Hard Drive submitted as evidence can be sent to the ABWR office address with details clearly labeled.
                         </p>
                       </div>
                     </div>
@@ -278,7 +318,7 @@ export default function Rules() {
                   <div className="border-l-4 border-primary pl-4 py-1">
                     <h2 className="font-display text-2xl uppercase tracking-wide">Record Certification Levels</h2>
                   </div>
-                  
+
                   <p className="text-muted-foreground leading-relaxed text-justify">
                     A world record is a monumental achievement. ABWR offers multiple certification options for record holders to display, duplicate, and personalize their achievements.
                   </p>
@@ -310,7 +350,7 @@ export default function Rules() {
                       </div>
                       <h4 className="font-bold text-lg mb-2">Personalized Certificate</h4>
                       <p className="text-xs text-muted-foreground leading-relaxed text-justify">
-                        Designed for mass participation attempts. Allows participants and organizers to request edited standard certificates mentioning their specific names and coordination details as approved by GBWR/ABWR.
+                        Designed for mass participation attempts. Allows participants and organizers to request edited standard certificates mentioning their specific names and coordination details as approved by ABWR.
                       </p>
                     </div>
                   </div>
@@ -318,7 +358,7 @@ export default function Rules() {
                   <div className="bg-primary/5 border border-primary/20 p-5 rounded-md mt-6 flex gap-4 items-start">
                     <HelpCircle className="text-primary shrink-0 mt-0.5" size={20} />
                     <p className="text-xs text-muted-foreground leading-relaxed text-justify">
-                      <strong>Logo Branding:</strong> Use of ABWR's logo at record events is encouraged to generate excitement and media coverage. The GBWR logo can be printed on T-shirts, banners, and brochures with prior written permission.
+                      <strong>Logo Branding:</strong> Use of ABWR's logo at record events is encouraged to generate excitement and media coverage. The ABWR logo can be printed on T-shirts, banners, and brochures with prior written permission.
                     </p>
                   </div>
                 </div>
@@ -330,7 +370,7 @@ export default function Rules() {
                   <div className="border-l-4 border-primary pl-4 py-1">
                     <h2 className="font-display text-2xl uppercase tracking-wide">Inviting a Records Management Judge</h2>
                   </div>
-                  
+
                   <p className="text-muted-foreground leading-relaxed text-justify">
                     Invite an official ABWR Records Adjudicator (RMJ) to your location for on-the-spot recognition, instant verification, and immediate certification of your record attempt.
                   </p>
@@ -350,7 +390,7 @@ export default function Rules() {
                         <MapPin size={16} className="text-primary" /> Travel & Lodging Norms
                       </h4>
                       <p className="text-xs text-muted-foreground leading-relaxed text-justify">
-                        It is mandatory for the record attempter, organization, or sponsors to arrange and pay for the travel and lodging expenses of the assigned RMJ according to Golden Book guidelines.
+                        It is mandatory for the record attempter, organization, or sponsors to arrange and pay for the travel and lodging expenses of the assigned RMJ according to Book guidelines.
                       </p>
                     </div>
                   </div>
@@ -373,7 +413,7 @@ export default function Rules() {
               <div>
                 <h3 className="font-display text-xl font-bold text-foreground">Ready to start your record journey?</h3>
                 <p className="text-sm text-muted-foreground mt-1 max-w-xl text-justify">
-                  Download the application form, fill out the required details manually, scan it, and submit the copy to <a href="mailto:info@goldenbookofworldrecords.com" className="text-primary hover:underline font-semibold">info@goldenbookofworldrecords.com</a>.
+                  Download the application form, fill out the required details manually, scan it, and submit the copy to <a href="mailto:info.abwr@yahoo.com.com" className="text-primary hover:underline font-semibold">info.abwr@yahoo.com.com</a>.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
@@ -383,7 +423,7 @@ export default function Rules() {
                   </Link>
                 </Button>
                 <Button asChild className="w-full sm:w-auto bg-primary hover:bg-primary-glow text-primary-foreground font-mono text-xs uppercase tracking-wider py-5">
-                  <a href="mailto:info@goldenbookofworldrecords.com">
+                  <a href="mailto:info.abwr@yahoo.com.com">
                     <Mail className="mr-2 h-4 w-4" /> Send Email
                   </a>
                 </Button>
@@ -394,7 +434,7 @@ export default function Rules() {
 
           {/* Sticky Calculator & Checklist Sidebar */}
           <div className="space-y-8 lg:sticky lg:top-24">
-            
+
             {/* Calculator Card */}
             <div className="bg-card border border-border/60 p-6 rounded-lg relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-gold" />
@@ -411,11 +451,10 @@ export default function Rules() {
                       <button
                         key={type}
                         onClick={() => setApplicantType(type)}
-                        className={`text-[9px] uppercase tracking-wider py-2 font-medium rounded-sm transition-all duration-300 ${
-                          applicantType === type
-                            ? "bg-primary text-primary-foreground font-bold shadow-sm"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
+                        className={`text-[9px] uppercase tracking-wider py-2 font-medium rounded-sm transition-all duration-300 ${applicantType === type
+                          ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
+                          }`}
                       >
                         {type === "corporate" ? "Corp / Gov" : type}
                       </button>
@@ -431,11 +470,10 @@ export default function Rules() {
                       <button
                         key={speed}
                         onClick={() => setProcessingSpeed(speed)}
-                        className={`text-[9px] uppercase tracking-wider py-2 font-medium rounded-sm transition-all duration-300 ${
-                          processingSpeed === speed
-                            ? "bg-primary text-primary-foreground font-bold shadow-sm"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
+                        className={`text-[9px] uppercase tracking-wider py-2 font-medium rounded-sm transition-all duration-300 ${processingSpeed === speed
+                          ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
+                          }`}
                       >
                         {speed === "normal" ? "Normal (3-4 mo)" : "Rapid (1 mo)"}
                       </button>
@@ -449,7 +487,7 @@ export default function Rules() {
                     <span className="text-xs font-semibold text-foreground">Invite Official Adjudicator</span>
                     <span className="text-[9px] text-muted-foreground">On-the-spot verification</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => setInviteRmj(!inviteRmj)}
                     className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${inviteRmj ? 'bg-primary' : 'bg-muted-foreground/30'}`}
                   >
@@ -471,13 +509,13 @@ export default function Rules() {
                         className="w-full bg-background border border-border text-foreground px-2.5 py-1.5 text-xs rounded outline-none focus:border-primary/50 font-mono"
                       />
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
                         <span className="text-[11px] font-medium text-foreground">Overnight Stay Required</span>
                         <span className="text-[8px] text-muted-foreground">Stay exceeds 24 hours</span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setOvernightStay(!overnightStay)}
                         className={`relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${overnightStay ? 'bg-primary' : 'bg-muted-foreground/30'}`}
                       >
@@ -513,7 +551,7 @@ export default function Rules() {
                     <span className="text-xs font-bold text-foreground">Estimated Total</span>
                     <span className="text-base font-mono font-bold text-primary">INR {totalFee.toLocaleString()}</span>
                   </div>
-                  
+
                   <p className="text-[9px] text-muted-foreground text-center italic mt-2">
                     * The above estimate excludes taxes. Additional government tax is applicable.
                   </p>
@@ -527,49 +565,117 @@ export default function Rules() {
               <h3 className="font-display text-lg uppercase tracking-wider flex items-center gap-2 mb-4">
                 <ShieldCheck size={18} className="text-primary" /> Evidence Prep Tracker
               </h3>
-              
+
               {/* Progress Bar */}
-              <div className="mb-5 space-y-1.5">
+              <div className="mb-5 space-y-2">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-muted-foreground">Requirements met</span>
                   <span className="text-primary font-bold">{checklistProgress}%</span>
                 </div>
                 <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden border border-border/20">
-                  <div 
+                  <div
                     className="bg-gradient-gold h-full rounded-full transition-all duration-500 ease-out"
                     style={{ width: `${checklistProgress}%` }}
                   />
                 </div>
+                <p className="text-[10px] text-muted-foreground leading-normal mt-2 text-justify">
+                  Complete each evidence requirement by checking the box and selecting how it will be submitted (Upload file, send by Email, or Physical courier) to reach 100% completion.
+                </p>
               </div>
 
               {/* Checklist Items */}
-              <div className="space-y-3.5">
+              <div className="space-y-4">
                 {evidenceItems.map((item) => {
-                  const isChecked = checkedEvidence.includes(item.id);
+                  const isChecked = evidenceConfig[item.id]?.checked;
                   return (
-                    <div 
+                    <div
                       key={item.id}
-                      onClick={() => handleToggleEvidence(item.id)}
-                      className={`flex gap-3 items-start p-2 rounded cursor-pointer transition-colors duration-250 ${
-                        isChecked ? "bg-primary/5 hover:bg-primary/8" : "hover:bg-muted/30"
-                      }`}
+                      className={`flex gap-3 items-start p-2.5 rounded transition-all duration-250 border border-transparent ${isChecked ? "bg-primary/5 border-primary/10" : "hover:bg-muted/30"}`}
                     >
                       <button
-                        className={`h-4.5 w-4.5 rounded border flex items-center justify-center shrink-0 transition-colors mt-0.5 ${
-                          isChecked 
-                            ? "bg-primary border-primary text-primary-foreground font-bold shadow-sm" 
-                            : "border-border bg-background"
-                        }`}
+                        onClick={() => handleToggleEvidence(item.id)}
+                        className={`h-5 w-5 rounded border flex items-center justify-center shrink-0 transition-colors mt-0.5 ${isChecked
+                          ? "bg-primary border-primary text-primary-foreground font-bold shadow-sm"
+                          : "border-border bg-background hover:border-primary/50"
+                          }`}
                       >
                         {isChecked && <Check size={12} strokeWidth={3} />}
                       </button>
-                      <div>
-                        <span className={`text-xs font-semibold block leading-tight ${isChecked ? "text-foreground line-through decoration-primary/30" : "text-foreground"}`}>
+                      <div className="flex-1 min-w-0">
+                        <span 
+                          onClick={() => handleToggleEvidence(item.id)}
+                          className={`text-xs font-semibold block leading-tight cursor-pointer ${isChecked ? "text-foreground line-through decoration-primary/30" : "text-foreground hover:text-primary"}`}
+                        >
                           {item.label}
                         </span>
                         <span className="text-[10px] text-muted-foreground leading-normal mt-0.5 block">
                           {item.desc}
                         </span>
+
+                        {/* Submission method selector if checked */}
+                        {isChecked && (
+                          <div className="mt-2.5 pt-2 border-t border-primary/10 space-y-2 animate-scale-in">
+                            <span className="text-[9px] uppercase tracking-wider text-muted-foreground font-semibold block">Submission Method:</span>
+                            <div className="flex flex-col gap-1 text-[10px]">
+                              <label className="flex items-center gap-1.5 cursor-pointer text-muted-foreground hover:text-foreground">
+                                <input
+                                  type="radio"
+                                  name={`method-${item.id}`}
+                                  checked={evidenceConfig[item.id]?.method === "upload"}
+                                  onChange={() => handleSetMethod(item.id, "upload")}
+                                  className="accent-primary h-3 w-3"
+                                />
+                                <span>Upload Document</span>
+                              </label>
+                              <label className="flex items-center gap-1.5 cursor-pointer text-muted-foreground hover:text-foreground">
+                                <input
+                                  type="radio"
+                                  name={`method-${item.id}`}
+                                  checked={evidenceConfig[item.id]?.method === "email"}
+                                  onChange={() => handleSetMethod(item.id, "email")}
+                                  className="accent-primary h-3 w-3"
+                                />
+                                <span>Shared via Email</span>
+                              </label>
+                              <label className="flex items-center gap-1.5 cursor-pointer text-muted-foreground hover:text-foreground">
+                                <input
+                                  type="radio"
+                                  name={`method-${item.id}`}
+                                  checked={evidenceConfig[item.id]?.method === "physical"}
+                                  onChange={() => handleSetMethod(item.id, "physical")}
+                                  className="accent-primary h-3 w-3"
+                                />
+                                <span>Physical Courier / Copy</span>
+                              </label>
+                            </div>
+
+                            {evidenceConfig[item.id]?.method === "upload" && (
+                              <div className="flex items-center gap-2 mt-1">
+                                <input
+                                  type="file"
+                                  id={`file-upload-${item.id}`}
+                                  onChange={(e) => handleFileUpload(item.id, e)}
+                                  className="hidden"
+                                />
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => document.getElementById(`file-upload-${item.id}`)?.click()}
+                                  className="text-[9px] h-6 px-2 py-0 bg-background"
+                                >
+                                  {evidenceConfig[item.id]?.fileName ? "Change File" : "Choose File"}
+                                </Button>
+                                {evidenceConfig[item.id]?.fileName ? (
+                                  <span className="text-[9px] text-primary truncate max-w-[120px] font-mono" title={evidenceConfig[item.id]?.fileName}>
+                                    {evidenceConfig[item.id]?.fileName}
+                                  </span>
+                                ) : (
+                                  <span className="text-[8px] text-muted-foreground italic">No file chosen</span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );

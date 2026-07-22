@@ -154,7 +154,7 @@ const Downloads = () => {
           ))}
 
           {/* Quick Notice */}
-          <div 
+          <div
             className={cn(
               "bg-primary/5 border text-justify border-primary/20 p-6 rounded-lg text-sm text-[#aa771c] dark:text-[#d4af37] leading-relaxed",
               "reveal-card reveal-left",
@@ -162,7 +162,7 @@ const Downloads = () => {
             )}
             style={{ transitionDelay: `${downloadItems.length * 150}ms` }}
           >
-            <strong>Important Note:</strong> All forms must be filled out completely. Scanned digital copies or text entries should be uploaded directly via the online portal. For on-site adjudications, please mail physical copies to our Geneva headquarters at least 30 days before your attempt.
+            <strong>Important Note:</strong> All forms must be filled out completely. Scanned digital copies or text entries should be uploaded directly via the online portal. For on-site adjudications, please mail physical copies to our headquarters at least 30 days before your attempt.
           </div>
         </div>
       </section>

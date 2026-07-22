@@ -53,7 +53,7 @@ const About = () => {
       <PageHeader
         eyebrow="About"
         title={<>Guardians of <em className="text-gradient-gold not-italic">precision.</em></>}
-        description="Founded in chennai 2011, the Archery Book of World Records exists to verify, archive and celebrate the highest expressions of skill in archery — across cultures, disciplines and generations. As the supreme global authority on archery record-keeping, we serve as the absolute guardians of precision, focus, and history, documenting everything from ancient traditional shooting customs to modern Olympic achievements. Our dedicated independent verification council works tirelessly to maintain the integrity of every single submission, ensuring that each certified record stands as a permanent monument to the archer's mastery, dedication, and pride."
+        description="Founded in chennai 2020, the Archery Book of World Records exists to verify, archive and celebrate the highest expressions of skill in archery — across cultures, disciplines and generations. As the supreme global authority on archery record-keeping, we serve as the absolute guardians of precision, focus, and history, documenting everything from ancient traditional shooting customs to modern Olympic achievements. Our dedicated independent verification council works tirelessly to maintain the integrity of every single submission, ensuring that each certified record stands as a permanent monument to the archer's mastery, dedication, and pride."
       />
 
       <section ref={sectionRef1} className="container py-12 md:py-16 grid md:grid-cols-2 gap-10 items-start overflow-hidden">

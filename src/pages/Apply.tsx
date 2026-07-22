@@ -7,16 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { categories, saveSubmissionApi } from "@/data/records";
-import { 
-  Check, 
-  ChevronLeft, 
-  ChevronRight, 
-  Shield, 
-  Award, 
-  Users, 
-  CheckCircle2, 
-  ShieldAlert, 
-  UserCheck 
+import {
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Shield,
+  Award,
+  Users,
+  CheckCircle2,
+  ShieldAlert,
+  UserCheck
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,8 @@ interface TeamMember {
 interface ApplyForm {
   formType: "application" | "claim";
   category: "individual" | "organization" | "corporate";
-  
+  profilePhoto: string;
+
   // 1. Individual Information
   name: string;
   dob: string;
@@ -46,7 +47,7 @@ interface ApplyForm {
   postalCode: string;
   email: string;
   phone: string;
-  
+
   // 2. Archery Profile
   discipline: string;
   bowType: string;
@@ -54,7 +55,7 @@ interface ApplyForm {
   experienceYears: string;
   coachName: string;
   federationId: string;
-  
+
   // 3. Organisation Details
   orgName: string;
   orgType: string; // Federation / Club / Academy / Company / Other
@@ -68,10 +69,10 @@ interface ApplyForm {
   orgContactDesignation: string;
   orgContactEmail: string;
   orgContactPhone: string;
-  
+
   // Attempt Mode (Organisation only)
   orgAttemptType: "individual" | "team";
-  
+
   // Section 3A: Individual applicant details (if organisation individual attempt)
   orgIndName: string;
   orgIndDob: string;
@@ -80,10 +81,10 @@ interface ApplyForm {
   orgIndAgeCategory: string;
   orgIndDiscipline: string;
   orgIndBowType: string;
-  
+
   // Section 3B: Team roster (list of up to 5 members)
   teamRoster: TeamMember[];
-  
+
   // 4. Record/Attempt Details
   recordTitle: string;
   recordCategory: string;
@@ -95,7 +96,7 @@ interface ApplyForm {
   officiatingBody: string;
   witnessCount: string;
   equipmentDetails: string;
-  
+
   // 5. Evidence Checklist & Metadata (Claim only)
   evidenceVideo: boolean;
   evidencePhoto: boolean;
@@ -106,30 +107,30 @@ interface ApplyForm {
   evidenceDescription: string;
   thirdPartyBody: string;
   thirdPartyRef: string;
-  
+
   // 6. Parent/Guardian Approval
   parentName: string;
   parentRelationship: string;
   parentPhone: string;
   parentEmail: string;
-  
+
   // 7. School/Institution Approval
   schoolName: string;
   schoolRegId: string;
   schoolOfficialName: string;
   schoolOfficialDesignation: string;
-  
+
   // 8. Witness/Coach Approval (Claim only)
   witnessApprovalType: "witness" | "coach";
   witnessApproverName: string;
   witnessApproverRelationship: string;
-  
+
   // Organisation Rep & Witnessing Official (Organisation only)
   orgRepName: string;
   orgRepDesignation: string;
   orgWitnessName: string;
   orgWitnessDesignation: string;
-  
+
   // Common description fields
   description: string;
   achievedResult: string;
@@ -139,6 +140,7 @@ interface ApplyForm {
 const emptyForm: ApplyForm = {
   formType: "application",
   category: "individual",
+  profilePhoto: "",
   name: "",
   dob: "",
   gender: "Male",
@@ -232,6 +234,51 @@ const Apply = () => {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
+  const handlePhotoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          // Downscale the image to max 300x300 for clean preview and fast storage
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 300;
+          const MAX_HEIGHT = 300;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7); // 70% quality jpeg
+            update("profilePhoto", compressedBase64);
+          }
+        };
+        img.src = event.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById("profile-photo-hidden-input")?.click();
+  };
+
   const isLoggedIn = sessionStorage.getItem("abwr_admin_is_logged_in") === "true";
 
   const getParsedToken = () => {
@@ -247,7 +294,7 @@ const Apply = () => {
   // Sync with search query parameters and user credentials on load
   useEffect(() => {
     if (!isLoggedIn) return;
-    
+
     const currentUser = getParsedToken();
     const typeParam = searchParams.get("type");
     const catParam = searchParams.get("category");
@@ -282,7 +329,7 @@ const Apply = () => {
 
   const validateStep = () => {
     if (step === 0) return true;
-    
+
     if (step === 1) {
       if (form.category === "individual") {
         if (!form.name.trim() || !form.dob.trim() || !form.nationality.trim() || !form.address.trim() || !form.email.trim() || !form.phone.trim() || !form.bowType.trim()) {
@@ -329,7 +376,7 @@ const Apply = () => {
 
   const submit = async () => {
     const id = generateId(form.formType);
-    
+
     // Auto-populate legacy fields mapping for schema compatibility
     const submissionPayload = {
       id,
@@ -408,8 +455,8 @@ const Apply = () => {
         <PageHeader
           eyebrow="Submission Received"
           title={<>{formTypeName} <em className="text-gradient-gold not-italic">Registered.</em></>}
-          description={form.formType === "application" 
-            ? "Your application is under evaluation. An adjudicator will contact you with specific guidelines shortly." 
+          description={form.formType === "application"
+            ? "Your application is under evaluation. An adjudicator will contact you with specific guidelines shortly."
             : "Your claim assets and witness signatures have been queued for review by the official ABWR panel."}
         />
         <section className="container pb-32">
@@ -442,7 +489,7 @@ const Apply = () => {
 
       <section className="container pb-32">
         <div className="max-w-3xl mx-auto">
-          
+
           {/* Stepper */}
           <ol className="flex items-center justify-between mb-14 px-4 overflow-x-auto">
             {stepLabels.map((label, i) => (
@@ -471,6 +518,51 @@ const Apply = () => {
           <div className="bg-card/50 backdrop-blur-md border border-border/60 p-8 md:p-12 rounded-lg shadow-xl relative">
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
+            {/* Top-Left Square Placeholder as Profile Photo / Logo Preview */}
+            {step > 0 && (
+              <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-8 pb-6 border-b border-border/40">
+                <div 
+                  onClick={triggerFileInput}
+                  className="w-24 h-24 border-2 border-dashed border-border hover:border-primary/50 transition-all rounded-lg flex flex-col items-center justify-center shrink-0 overflow-hidden bg-muted/20 relative group cursor-pointer"
+                  title="Click to upload profile photo / logo"
+                >
+                  {form.profilePhoto ? (
+                    <img src={form.profilePhoto} alt="Profile/Logo" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="flex flex-col items-center text-center p-2 select-none">
+                      <div className="w-8 h-8 rounded bg-primary/10 border border-primary/20 flex items-center justify-center mb-1 group-hover:bg-primary/20 transition-colors">
+                        <Users className="text-primary h-4 w-4" />
+                      </div>
+                      <span className="text-[9px] uppercase font-mono tracking-wider text-muted-foreground">Add Photo</span>
+                    </div>
+                  )}
+                  {/* Invisible file input */}
+                  <input
+                    id="profile-photo-hidden-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoInputChange}
+                    className="hidden"
+                  />
+                </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <span className="text-[10px] uppercase tracking-wider text-primary font-mono font-bold">
+                    {formCategoryName} {formTypeName}
+                  </span>
+                  <h2 className="font-display text-2xl text-foreground mt-1">
+                    {form.category === "individual" ? (form.name || "Archer Profile") : (form.orgName || "Organization Profile")}
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                    Click the square placeholder to upload or update your {form.category === "individual" ? "profile photo" : "organization logo"}.
+                  </p>
+                </div>
+                {/* Default ABWR Logo on the right side corner */}
+                <div className="w-16 h-16 border border-border/40 rounded-lg overflow-hidden shrink-0 hidden sm:block bg-background/50">
+                  <img src="/logo.jpeg" alt="ABWR Logo" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+
             {/* STEP 0: TYPE & CATEGORY SELECTOR */}
             {step === 0 && (
               <div className="space-y-8 animate-scale-in">
@@ -478,7 +570,7 @@ const Apply = () => {
                   <h2 className="font-display text-3xl text-foreground">Select Submission Model</h2>
                   <p className="text-sm text-muted-foreground mt-2">Choose the type of submission and your applicant status to configure the form.</p>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Select Submission Type */}
                   <div className="space-y-4">
@@ -618,6 +710,14 @@ const Apply = () => {
                       <Field label="Phone Number *">
                         <Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="Primary contact phone" required />
                       </Field>
+                      <Field label="Upload Profile Photo (Optional)">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePhotoInputChange}
+                          className="cursor-pointer file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                        />
+                      </Field>
                     </div>
 
                     <div className="border-b border-border/60 pb-5 pt-6">
@@ -717,6 +817,14 @@ const Apply = () => {
                       <Field label="Contact Phone Number *">
                         <Input value={form.orgContactPhone} onChange={(e) => update("orgContactPhone", e.target.value)} placeholder="Contact number" required />
                       </Field>
+                      <Field label="Upload Organization Logo (Optional)">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePhotoInputChange}
+                          className="cursor-pointer file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                        />
+                      </Field>
                     </div>
 
                     <div className="border-b border-border/60 pb-5 pt-6">
@@ -810,16 +918,16 @@ const Apply = () => {
                               <span className="text-xs font-mono font-bold text-muted-foreground uppercase">Member #{index + 1} {index === 0 && " (Minimum Requirement)"}</span>
                               <div className="grid md:grid-cols-2 gap-4 text-xs">
                                 <Field label="Full Name *">
-                                  <Input 
-                                    value={form.teamRoster[index]?.fullName || ""} 
-                                    onChange={(e) => updateTeamMember(index, "fullName", e.target.value)} 
-                                    placeholder="Archer full name" 
-                                    required={index === 0} 
+                                  <Input
+                                    value={form.teamRoster[index]?.fullName || ""}
+                                    onChange={(e) => updateTeamMember(index, "fullName", e.target.value)}
+                                    placeholder="Archer full name"
+                                    required={index === 0}
                                   />
                                 </Field>
                                 <Field label="Role *">
-                                  <Select 
-                                    value={form.teamRoster[index]?.role || "Shooter"} 
+                                  <Select
+                                    value={form.teamRoster[index]?.role || "Shooter"}
                                     onValueChange={(v) => updateTeamMember(index, "role", v)}
                                   >
                                     <SelectTrigger className="text-[11px] h-9"><SelectValue /></SelectTrigger>
@@ -831,8 +939,8 @@ const Apply = () => {
                                   </Select>
                                 </Field>
                                 <Field label="Age Category">
-                                  <Select 
-                                    value={form.teamRoster[index]?.ageCategory || "Senior"} 
+                                  <Select
+                                    value={form.teamRoster[index]?.ageCategory || "Senior"}
                                     onValueChange={(v) => updateTeamMember(index, "ageCategory", v)}
                                   >
                                     <SelectTrigger className="text-[11px] h-9"><SelectValue /></SelectTrigger>
@@ -844,8 +952,8 @@ const Apply = () => {
                                   </Select>
                                 </Field>
                                 <Field label="Discipline">
-                                  <Select 
-                                    value={form.teamRoster[index]?.discipline || "Recurve"} 
+                                  <Select
+                                    value={form.teamRoster[index]?.discipline || "Recurve"}
                                     onValueChange={(v) => updateTeamMember(index, "discipline", v)}
                                   >
                                     <SelectTrigger className="text-[11px] h-9"><SelectValue /></SelectTrigger>
@@ -957,8 +1065,8 @@ const Apply = () => {
                         { key: "evidenceThirdParty", label: "Third-party Verification" }
                       ].map((item) => (
                         <label key={item.key} className="flex items-center gap-3 p-3 border border-border/60 rounded-md bg-card/30 hover:bg-muted/40 cursor-pointer">
-                          <input 
-                            type="checkbox" 
+                          <input
+                            type="checkbox"
                             checked={form[item.key as keyof ApplyForm] as boolean}
                             onChange={(e) => update(item.key as keyof ApplyForm, e.target.checked)}
                             className="h-4 w-4 border-border text-primary focus:ring-primary rounded"
@@ -970,11 +1078,11 @@ const Apply = () => {
 
                     <div className="grid md:grid-cols-2 gap-6 pt-4">
                       <Field label="Description of Video / Photo Evidence (File names, source, timestamps)">
-                        <Textarea 
-                          value={form.evidenceDescription} 
-                          onChange={(e) => update("evidenceDescription", e.target.value)} 
-                          placeholder="e.g. video1.mp4 - GoPro camera 1 - 0:00 to 3:00" 
-                          rows={3} 
+                        <Textarea
+                          value={form.evidenceDescription}
+                          onChange={(e) => update("evidenceDescription", e.target.value)}
+                          placeholder="e.g. video1.mp4 - GoPro camera 1 - 0:00 to 3:00"
+                          rows={3}
                         />
                       </Field>
                       <div className="space-y-4">
@@ -1040,21 +1148,21 @@ const Apply = () => {
                       <div className="grid gap-4 text-xs">
                         <div className="flex gap-4">
                           <label className="flex items-center gap-2 cursor-pointer">
-                            <input 
-                              type="radio" 
-                              name="witnessApprovalType" 
-                              checked={form.witnessApprovalType === "witness"} 
-                              onChange={() => update("witnessApprovalType", "witness")} 
+                            <input
+                              type="radio"
+                              name="witnessApprovalType"
+                              checked={form.witnessApprovalType === "witness"}
+                              onChange={() => update("witnessApprovalType", "witness")}
                               className="text-primary focus:ring-primary"
                             />
                             <span>Independent Witness present at attempt</span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
-                            <input 
-                              type="radio" 
-                              name="witnessApprovalType" 
-                              checked={form.witnessApprovalType === "coach"} 
-                              onChange={() => update("witnessApprovalType", "coach")} 
+                            <input
+                              type="radio"
+                              name="witnessApprovalType"
+                              checked={form.witnessApprovalType === "coach"}
+                              onChange={() => update("witnessApprovalType", "coach")}
                               className="text-primary focus:ring-primary"
                             />
                             <span>Coach who supervised / trained claimant</span>
@@ -1100,10 +1208,10 @@ const Apply = () => {
                   <div className="grid grid-cols-2 gap-y-3 text-xs md:text-sm">
                     <span className="text-muted-foreground">Action Type:</span>
                     <span className="font-medium text-right capitalize">{form.formType}</span>
-                    
+
                     <span className="text-muted-foreground">Category Mode:</span>
                     <span className="font-medium text-right capitalize">{form.category} {(form.category === "organization" || form.category === "corporate") && `(${form.orgAttemptType})`}</span>
-                    
+
                     <span className="text-muted-foreground">Applicant Entity:</span>
                     <span className="font-medium text-right truncate">
                       {form.category === "individual" ? form.name : form.orgName}
@@ -1119,7 +1227,7 @@ const Apply = () => {
                     <span className="font-medium text-right truncate">{form.venue}</span>
                   </div>
                   <div className="relative border border-primary/20 bg-primary/5 p-4 rounded text-[11px] text-muted-foreground leading-relaxed text-justify mt-4">
-                    <strong>Declaration:</strong> I declare that the information and evidence provided in this attempt submission are true, accurate, and complete to the best of my knowledge. Approval is subject to full verification rules of the Golden Book / Archery Book of World Records.
+                    <strong>Declaration:</strong> I declare that the information and evidence provided in this attempt submission are true, accurate, and complete to the best of my knowledge. Approval is subject to full verification rules of the Archery Book of World Records.
                   </div>
                   <div className="flex items-start gap-2.5 mt-4 p-4 border border-border/60 bg-muted/20 rounded-md">
                     <input

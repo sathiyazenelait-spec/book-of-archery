@@ -9,7 +9,7 @@ const formatDate = (dateStr: string | null | undefined): string => {
       // YYYY-MM-DD to DD/MM/YYYY
       return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-  } catch (e) {}
+  } catch (e) { }
   return dateStr;
 };
 
@@ -17,6 +17,10 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
   const data = submission.formData || {};
   const formType = submission.formType;
   const category = submission.category; // individual or organization
+
+  const logoContent = data.profilePhoto
+    ? `<img src="${data.profilePhoto}" style="width: 100%; height: 100%; object-fit: cover;" />`
+    : 'LOGO';
 
   let htmlContent = "";
   let filename = "";
@@ -42,12 +46,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 1 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Completed record attempt – claim form</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 1 of 2<br>Claimant & completed attempt details
           </div>
         </div>
@@ -126,12 +131,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 2 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Completed record attempt – claim form</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 2 of 2<br>Evidence, approvals & declaration
           </div>
         </div>
@@ -234,12 +240,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 1 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 1 of 3<br>Organisation/Corporate details & attempt type
           </div>
         </div>
@@ -311,12 +318,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 2 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 2 of 3<br>Participants & evidence
           </div>
         </div>
@@ -351,8 +359,8 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
           </thead>
           <tbody>
             ${[0, 1, 2, 3, 4].map(idx => {
-              const member = data.orgAttemptType === "team" && data.teamRoster && data.teamRoster[idx] ? data.teamRoster[idx] : {};
-              return `
+      const member = data.orgAttemptType === "team" && data.teamRoster && data.teamRoster[idx] ? data.teamRoster[idx] : {};
+      return `
                 <tr>
                   <td>${idx + 1}</td>
                   <td><b>${member.fullName || ""}</b></td>
@@ -361,7 +369,7 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
                   <td>${member.discipline || ""}</td>
                 </tr>
               `;
-            }).join("")}
+    }).join("")}
           </tbody>
         </table>
 
@@ -389,12 +397,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 3 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Record attempt application form – organisations/corporate</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 3 of 3<br>Approvals & declaration
           </div>
         </div>
@@ -466,12 +475,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 1 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Record attempt application form</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 1 of 2<br>Applicant & record attempt details
           </div>
         </div>
@@ -559,12 +569,13 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
       <!-- PAGE 2 -->
       <div class="page">
         <div class="header">
-          <div class="logo-box">LOGO</div>
+          <div class="logo-box">${logoContent}</div>
           <div class="header-titles">
             <div class="org-title">Archery Book of World Records</div>
             <div class="doc-subtitle">Record attempt application form</div>
           </div>
           <div class="page-indicator">
+            <img src="/logo.jpeg" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-bottom: 3px; display: inline-block;" /><br>
             Page 2 of 2<br>Approvals & declaration
           </div>
         </div>
@@ -700,6 +711,12 @@ export const downloadSubmissionPdf = (submission: StoredSubmission) => {
             font-size: 9px;
             color: #777;
             font-weight: bold;
+            overflow: hidden;
+          }
+          .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
           .header-titles {
             flex-grow: 1;
@@ -903,10 +920,10 @@ export const downloadRulesPdf = (type: "application" | "claim") => {
   doc.setFontSize(9);
   doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
   doc.text(
-    isApp 
-      ? "RECORD ATTEMPT APPLICATION FORM RULES & GUIDELINES" 
-      : "RECORD CLAIM FORM RULES & GUIDELINES", 
-    margin, 
+    isApp
+      ? "RECORD ATTEMPT APPLICATION FORM RULES & GUIDELINES"
+      : "RECORD CLAIM FORM RULES & GUIDELINES",
+    margin,
     30
   );
 
@@ -928,7 +945,7 @@ export const downloadRulesPdf = (type: "application" | "claim") => {
   const introText = isApp
     ? "ABWR maintains the highest standards of safety, ethics, and record accuracy. Every record candidate must strictly adhere to the general rules outlined below to ensure eligibility for official approval."
     : "A successful record attempt requires careful documentation. Follow the standardized procedures below to submit your record claim for formal assessment.";
-  
+
   const splitIntro = doc.splitTextToSize(introText, contentWidth);
   doc.text(splitIntro, margin, 55);
 
@@ -989,7 +1006,7 @@ export const downloadRulesPdf = (type: "application" | "claim") => {
       },
       {
         title: "Step 4: Evidence Submission",
-        desc: "Send all forms and media to info@goldenbookofworldrecords.com, clearly mentioning the Claim ID, Applicant's Name, Address, and Contact Details."
+        desc: "Send all forms and media to info.abwr@yahoo.com.com, clearly mentioning the Claim ID, Applicant's Name, Address, and Contact Details."
       }
     ];
 
@@ -999,7 +1016,7 @@ export const downloadRulesPdf = (type: "application" | "claim") => {
       doc.setLineWidth(0.5);
       doc.setFillColor(255, 250, 240);
       doc.circle(margin + 5, currentY + 3, 3, "FD");
-      
+
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8.5);
       doc.setTextColor(gold[0], gold[1], gold[2]);
@@ -1027,9 +1044,9 @@ export const downloadRulesPdf = (type: "application" | "claim") => {
   doc.text("Archery Book of World Records — Rules & Guidelines", margin, pageHeight - 15);
   doc.text("Page 1 of 1", pageWidth - margin - 15, pageHeight - 15);
 
-  const filename = isApp 
-    ? "Archery_Record_Application_Form_Based_Rules.pdf" 
+  const filename = isApp
+    ? "Archery_Record_Application_Form_Based_Rules.pdf"
     : "Official_Record_Claim_Form_Based_Rules.pdf";
-  
+
   doc.save(filename);
 };

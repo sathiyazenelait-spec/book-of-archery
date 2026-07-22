@@ -77,7 +77,7 @@ const Navbar = () => {
           style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 24px) 100%, 24px 100%)" }}
         >
           <marquee scrollamount="5" className="py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider font-mono">
-            India's Leading World & National Records Registry— An Officially Certified Archery Book of Records, Organized by Koormai Elaku Pvt. Ltd
+            India's Leading World & National Records Registry— An Officially Certified Archery Book of Records, Managed by Koormai Elaku Pvt. Ltd
           </marquee>
         </div>
       </div>

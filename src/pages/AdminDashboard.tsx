@@ -1314,15 +1314,22 @@ const AdminDashboard = () => {
               </Button>
             </div>
 
-            <div className="border-b border-border/40 pb-4">
-              <span className={cn(
-                "px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider",
-                viewingSubmission.formType === "application" ? "bg-blue-500/10 text-blue-400" : "bg-purple-500/10 text-purple-400"
-              )}>
-                {viewingSubmission.formType} Form
-              </span>
-              <h3 className="font-display text-2xl mt-3">{viewingSubmission.recordTitle}</h3>
-              <p className="text-xs text-muted-foreground mt-1">Reference: {viewingSubmission.id} · Registered: {new Date(viewingSubmission.submittedAt).toLocaleString()}</p>
+             <div className="border-b border-border/40 pb-4 flex gap-4 items-start">
+              {viewingSubmission.formData?.profilePhoto && (
+                <div className="w-16 h-16 border border-border rounded overflow-hidden shrink-0">
+                  <img src={viewingSubmission.formData.profilePhoto} alt="Profile/Logo" className="w-full h-full object-cover" />
+                </div>
+              )}
+              <div className="flex-1">
+                <span className={cn(
+                  "px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider",
+                  viewingSubmission.formType === "application" ? "bg-blue-500/10 text-blue-400" : "bg-purple-500/10 text-purple-400"
+                )}>
+                  {viewingSubmission.formType} Form
+                </span>
+                <h3 className="font-display text-2xl mt-3">{viewingSubmission.recordTitle}</h3>
+                <p className="text-xs text-muted-foreground mt-1">Reference: {viewingSubmission.id} · Registered: {new Date(viewingSubmission.submittedAt).toLocaleString()}</p>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 text-xs md:text-sm">

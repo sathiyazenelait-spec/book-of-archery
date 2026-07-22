@@ -64,7 +64,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="absolute right-0 -bottom-[130px] w-[400px] h-[700px] hidden md:block">
+        <div className="absolute right-[80px] -bottom-[130px] w-[400px] h-[700px] hidden md:block">
           <img src="/hero_without_background.png" alt="" className="w-full h-full object-contain" />
         </div>
 
